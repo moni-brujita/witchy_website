@@ -243,21 +243,21 @@ section{position:relative;padding:var(--gap) var(--pad)}
 @keyframes slideR{from{opacity:0;transform:translateX(135%) rotate(10deg) scale(.88)}
                   to  {opacity:1;transform:none}}
 
-/* ── racimo izquierdo: llena de arriba a abajo, ~30% del ancho ── */
-.c1{--w:clamp(230px,26vw,560px); left:-7%;  top:-3%;    z-index:1; animation-delay:.00s} /* cupido */
-.c2{--w:clamp(170px,19vw,400px); left:9%;   top:22%;    z-index:2; animation-delay:.30s} /* luna   */
-.c4{--w:clamp(280px,32vw,680px); left:-6%;  top:34%;    z-index:4; animation-delay:.15s} /* tigre  */
-.c3{--w:clamp(230px,26vw,560px); left:4%;   bottom:-10%;z-index:3; animation-delay:.60s} /* hongo  */
+/* ── racimo izquierdo: de borde a borde, arriba y abajo ── */
+.c1{--w:clamp(260px,30vw,660px); left:-9%; top:-7%;     z-index:1; animation-delay:.00s} /* cupido */
+.c2{--w:clamp(190px,22vw,480px); left:4%;  top:13%;     z-index:2; animation-delay:.30s} /* luna   */
+.c4{--w:clamp(320px,38vw,830px); left:-8%; top:25%;     z-index:4; animation-delay:.15s} /* tigre  */
+.c3{--w:clamp(290px,34vw,740px); left:-2%; bottom:-18%; z-index:3; animation-delay:.60s} /* hongo  */
 /* ── racimo derecho ── */
-.c5{--w:clamp(320px,36vw,760px); right:-8%; top:-4%;    z-index:1; animation-delay:.08s} /* árbol  */
-.c6{--w:clamp(200px,23vw,480px); right:0%;  top:42%;    z-index:3; animation-delay:.45s} /* tortuga*/
-.c7{--w:clamp(250px,28vw,590px); right:-4%; bottom:-12%;z-index:4; animation-delay:.72s} /* hada   */
+.c5{--w:clamp(340px,40vw,880px); right:-10%;top:-9%;    z-index:1; animation-delay:.08s} /* árbol  */
+.c6{--w:clamp(220px,26vw,570px); right:-2%; top:44%;    z-index:3; animation-delay:.45s} /* tortuga*/
+.c7{--w:clamp(280px,32vw,700px); right:-4%; bottom:-16%;z-index:4; animation-delay:.72s} /* hada   */
 
 /* el collage necesita alto y márgenes libres; el texto se estrecha
    para dejarle sitio en pantallas anchas */
 @media(min-width:1250px){
-  #home{min-height:min(940px,98vh);display:flex;align-items:center}
-  .hero{max-width:min(760px,38vw)}
+  #home{min-height:min(1000px,100vh);display:flex;align-items:center}
+  .hero{max-width:min(700px,34vw)}
 }
 @media(max-width:1249px){ .collage{display:none} }
 @media(prefers-reduced-motion:reduce){ .collage.in .col{opacity:1;animation:none} }
