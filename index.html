@@ -227,7 +227,33 @@ section{position:relative;padding:var(--gap) var(--pad)}
 
 /* ═══════════════ HERO ═══════════════ */
 #home{min-height:auto;padding-top:clamp(118px,15vh,150px);padding-bottom:clamp(30px,5vh,52px);overflow:hidden}
-.hero{max-width:880px;margin:0 auto;text-align:center;position:relative;z-index:2}
+
+/* ═══════════════ COLLAGE DEL HERO ═══════════════ */
+.collage{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.col{position:absolute;width:var(--w);height:auto;opacity:0;
+  filter:drop-shadow(0 10px 18px rgba(82,16,47,.18))}
+.col.L{animation:slideL .95s cubic-bezier(.22,.85,.3,1.02) forwards}
+.col.R{animation:slideR .95s cubic-bezier(.22,.85,.3,1.02) forwards}
+@keyframes slideL{from{opacity:0;transform:translateX(-118%) rotate(-7deg)}
+                  to  {opacity:1;transform:none}}
+@keyframes slideR{from{opacity:0;transform:translateX(118%) rotate(7deg)}
+                  to  {opacity:1;transform:none}}
+
+/* izquierda */
+.c1{--w:clamp(120px,13vw,215px); left:-1.5%;  top:11%;  animation-delay:.15s}
+.c2{--w:clamp(80px, 8.5vw,145px);left:12.5%;  top:30%;  animation-delay:.30s}
+.c3{--w:clamp(120px,13vw,225px); left:5%;     bottom:2%; animation-delay:.45s}
+.c4{--w:clamp(150px,17vw,290px); left:-4%;    bottom:14%;animation-delay:.22s}
+/* derecha */
+.c5{--w:clamp(160px,18vw,310px); right:-2%;   top:6%;   animation-delay:.20s}
+.c6{--w:clamp(110px,12vw,205px); right:2.5%;  bottom:26%;animation-delay:.38s}
+.c7{--w:clamp(115px,12.5vw,210px);right:8%;   bottom:-1%;animation-delay:.52s}
+
+/* el collage necesita alto para respirar, y márgenes libres a los lados */
+@media(min-width:1150px){ #home{min-height:min(820px,94vh);display:flex;align-items:center} }
+@media(max-width:1149px){ .collage{display:none} }
+@media(prefers-reduced-motion:reduce){ .col{opacity:1;animation:none} }
+.hero{max-width:880px;margin:0 auto;text-align:center;position:relative;z-index:2;width:100%}
 .wordmark{margin:0 auto 18px}
 .wordmark img{width:min(720px,94%);height:auto;margin:0 auto;display:block}
 .tagline{font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(19px,2.2vw,30px);
@@ -506,6 +532,20 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 
 <!-- ═══════════ HOME ═══════════ -->
 <section id="home">
+  <!-- ── COLLAGE: entra desde los lados al cargar ──
+       Cada pieza tiene su propia posición. Para moverla, cambia
+       top/left/right/bottom. Para cambiarle el tamaño, --w.
+       Sólo aparece en pantallas anchas: en móvil no hay márgenes
+       libres y taparía el texto. -->
+  <div class="collage" aria-hidden="true">
+    <img class="col L c1" src="pink_arrows.png"   alt="">
+    <img class="col L c2" src="pink_moon.png"     alt="">
+    <img class="col L c3" src="pink_mushroom.png" alt="">
+    <img class="col L c4" src="tiger_collage.png" alt="">
+    <img class="col R c5" src="pink_tree.png"     alt="">
+    <img class="col R c6" src="pink_turtle.png"   alt="">
+    <img class="col R c7" src="Psyche.png"        alt="">
+  </div>
   <div class="hero">
     <h1 class="wordmark"><img src="wordmark.png" alt="Moni Brujita" width="1800" height="246"></h1>
     <p class="tagline" data-en="Ancient wisdom for the modern woman.">Sabiduría antigua para la mujer moderna.</p>
