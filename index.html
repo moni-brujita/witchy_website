@@ -228,31 +228,39 @@ section{position:relative;padding:var(--gap) var(--pad)}
 /* ═══════════════ HERO ═══════════════ */
 #home{min-height:auto;padding-top:clamp(118px,15vh,150px);padding-bottom:clamp(30px,5vh,52px);overflow:hidden}
 
-/* ═══════════════ COLLAGE DEL HERO ═══════════════ */
+/* ═══════════════ COLLAGE DEL HERO ═══════════════
+   Al cargar la página NO se ve nada: el hero queda limpio.
+   En cuanto la persona hace scroll, los recortes van entrando
+   uno por uno desde su lado, escalonados como un collage que
+   se arma solo. --w controla el tamaño; z-index quién va encima. */
 .collage{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
 .col{position:absolute;width:var(--w);height:auto;opacity:0;
-  filter:drop-shadow(0 10px 18px rgba(82,16,47,.18))}
-.col.L{animation:slideL .95s cubic-bezier(.22,.85,.3,1.02) forwards}
-.col.R{animation:slideR .95s cubic-bezier(.22,.85,.3,1.02) forwards}
-@keyframes slideL{from{opacity:0;transform:translateX(-118%) rotate(-7deg)}
+  filter:drop-shadow(0 14px 22px rgba(82,16,47,.22))}
+.collage.in .col.L{animation:slideL 1.05s cubic-bezier(.16,1,.3,1) forwards}
+.collage.in .col.R{animation:slideR 1.05s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes slideL{from{opacity:0;transform:translateX(-135%) rotate(-10deg) scale(.88)}
                   to  {opacity:1;transform:none}}
-@keyframes slideR{from{opacity:0;transform:translateX(118%) rotate(7deg)}
+@keyframes slideR{from{opacity:0;transform:translateX(135%) rotate(10deg) scale(.88)}
                   to  {opacity:1;transform:none}}
 
-/* izquierda */
-.c1{--w:clamp(120px,13vw,215px); left:-1.5%;  top:11%;  animation-delay:.15s}
-.c2{--w:clamp(80px, 8.5vw,145px);left:12.5%;  top:30%;  animation-delay:.30s}
-.c3{--w:clamp(120px,13vw,225px); left:5%;     bottom:2%; animation-delay:.45s}
-.c4{--w:clamp(150px,17vw,290px); left:-4%;    bottom:14%;animation-delay:.22s}
-/* derecha */
-.c5{--w:clamp(160px,18vw,310px); right:-2%;   top:6%;   animation-delay:.20s}
-.c6{--w:clamp(110px,12vw,205px); right:2.5%;  bottom:26%;animation-delay:.38s}
-.c7{--w:clamp(115px,12.5vw,210px);right:8%;   bottom:-1%;animation-delay:.52s}
+/* ── racimo izquierdo ── */
+.c1{--w:clamp(210px,21vw,430px); left:-3.5%; top:5%;     z-index:1; animation-delay:.00s} /* cupido */
+.c2{--w:clamp(150px,15vw,305px); left:8%;    top:27%;    z-index:2; animation-delay:.30s} /* luna   */
+.c3{--w:clamp(200px,20vw,410px); left:6%;    bottom:-7%; z-index:3; animation-delay:.60s} /* hongo  */
+.c4{--w:clamp(240px,24vw,480px); left:-5%;   bottom:4%;  z-index:4; animation-delay:.15s} /* tigre  */
+/* ── racimo derecho ── */
+.c5{--w:clamp(280px,30vw,620px); right:-6%;  top:2%;     z-index:1; animation-delay:.08s} /* árbol  */
+.c6{--w:clamp(175px,18vw,360px); right:1%;   bottom:20%; z-index:3; animation-delay:.45s} /* tortuga*/
+.c7{--w:clamp(210px,21vw,430px); right:-3%;  bottom:-9%; z-index:4; animation-delay:.72s} /* hada   */
 
-/* el collage necesita alto para respirar, y márgenes libres a los lados */
-@media(min-width:1150px){ #home{min-height:min(820px,94vh);display:flex;align-items:center} }
-@media(max-width:1149px){ .collage{display:none} }
-@media(prefers-reduced-motion:reduce){ .col{opacity:1;animation:none} }
+/* el collage necesita alto y márgenes libres; el texto se estrecha
+   para dejarle sitio en pantallas anchas */
+@media(min-width:1200px){
+  #home{min-height:min(900px,96vh);display:flex;align-items:center}
+  .hero{max-width:min(880px,46vw)}
+}
+@media(max-width:1199px){ .collage{display:none} }
+@media(prefers-reduced-motion:reduce){ .collage.in .col{opacity:1;animation:none} }
 .hero{max-width:880px;margin:0 auto;text-align:center;position:relative;z-index:2;width:100%}
 .wordmark{margin:0 auto 18px}
 .wordmark img{width:min(720px,94%);height:auto;margin:0 auto;display:block}
@@ -1451,11 +1459,14 @@ document.getElementById("changeSign").addEventListener("click",function(){
 
 /* ═════════ 9. SCROLL ═════════ */
 var bar=document.querySelector("#transit i"), hdr=document.getElementById("hdr"), tick=false;
+var collage=document.querySelector(".collage");
 function onScroll(){
   var max=document.documentElement.scrollHeight-innerHeight;
   bar.style.width=((max>0?Math.min(1,scrollY/max):0)*100)+"%";
   hdr.classList.toggle("stuck",scrollY>60);
   document.body.classList.toggle("scrolled",scrollY>60);
+  /* el collage se arma en cuanto la persona empieza a bajar */
+  if (collage && scrollY>30) collage.classList.add("in");
   tick=false;
 }
 addEventListener("scroll",function(){ if(!tick){tick=true;requestAnimationFrame(onScroll);} },{passive:true});
