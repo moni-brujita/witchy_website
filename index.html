@@ -45,7 +45,7 @@
   --magenta: #E0248C;
   --hot:     #FF4FA0;
   --wine:    #52102F;
-  --gold:    #C08A2E;
+  --gold:    #9A6A14;
 
   --accent: var(--magenta);
 
@@ -207,6 +207,7 @@ section{position:relative;padding:var(--gap) var(--pad)}
    │  Para que el print se vea más fuerte o más suave,       │
    │  cambia el .55 de --veil (0 = sin velo, 1 = sólido).    │
    └─────────────────────────────────────────────────────────┘ */
+.band-print .eyebrow,.band-print .dial-mid .k{color:var(--wine)}
 .band-print{background-color:var(--paper);background-position:center center;
   background-repeat:no-repeat;background-size:cover;--veil:.55}
 .band-print::before{content:"";position:absolute;inset:0;
@@ -223,7 +224,6 @@ section{position:relative;padding:var(--gap) var(--pad)}
    quedan encima de la foto de piel que subas. */
 .sunbar.inside{position:absolute;left:0;right:0;bottom:0;background:transparent !important;z-index:3}
 .band-print{padding-bottom:calc(var(--gap) + 96px)}
-.sunbar svg{width:100%;height:38px;display:block}
 
 /* ═══════════════ HERO ═══════════════ */
 #home{min-height:auto;padding-top:clamp(118px,15vh,150px);padding-bottom:clamp(30px,5vh,52px);overflow:hidden}
@@ -270,13 +270,14 @@ section{position:relative;padding:var(--gap) var(--pad)}
 .dial-wrap svg{width:100%;height:100%;overflow:visible}
 .spinA{animation:spin 70s linear infinite;transform-origin:200px 200px;transform-box:view-box}
 .spinB{animation:spin 98s linear infinite reverse;transform-origin:200px 200px;transform-box:view-box}
-.dial-svc{font-family:var(--label);font-size:16px;letter-spacing:.2em;fill:var(--wine);
+.dial-svc{font-family:var(--retro);font-size:14px;letter-spacing:.1em;fill:var(--wine);
+  stroke:rgba(255,246,233,.92);stroke-width:3.4px;paint-order:stroke fill;
   cursor:pointer;transition:fill .25s}
 .dial-svc:hover,.dial-svc:focus-visible{fill:var(--magenta)}
-.dial-star{font-size:13px;fill:var(--rasp);opacity:.7;pointer-events:none}
+.dial-star{font-size:15px;fill:var(--rasp);pointer-events:none}
 .dial-wrap:hover .spinA,.dial-wrap:hover .spinB,
 .dial-wrap:focus-within .spinA,.dial-wrap:focus-within .spinB{animation-play-state:paused}
-.dial-mid .hint{color:var(--magenta);font-size:11px;margin-top:4px;opacity:.85}
+.dial-mid .hint{color:var(--magenta);font-size:11px;margin-top:4px;opacity:.95}
 
 /* ── popup de servicio ── */
 .modal{position:fixed;inset:0;z-index:1100;display:grid;place-items:center;padding:22px}
@@ -303,8 +304,8 @@ section{position:relative;padding:var(--gap) var(--pad)}
   0%,100%{box-shadow:9px 12px 0 var(--rasp), 0 0 0 0 rgba(224,36,140,.45)}
   50%    {box-shadow:9px 12px 0 var(--rasp), 0 0 0 14px rgba(224,36,140,0)}
 }
-.dial-ring{fill:none;stroke:var(--rasp);stroke-width:1;opacity:.55}
-.dial-glyph{stroke:var(--rasp);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.dial-ring{fill:none;stroke:var(--wine);stroke-width:1.8;opacity:.8}
+.dial-glyph{stroke:var(--rasp);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .dial-mid{position:absolute;inset:0;display:grid;place-content:center;gap:4px;text-align:center;pointer-events:none}
 .dial-mid .k{font-family:var(--retro);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
 .pull{font-family:var(--display);font-weight:900;font-size:clamp(27px,4vw,54px);line-height:.96;
@@ -329,12 +330,12 @@ section{position:relative;padding:var(--gap) var(--pad)}
 .tape.t3{bottom:-13px;left:50%;margin-left:-56px;transform:rotate(2deg)}
 .about-grid p{margin-bottom:13px}
 .natal{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin:22px 0}
-.natal div{background:var(--cream);border:1.5px solid rgba(82,16,47,.18);border-radius:14px;padding:14px 12px;
-  text-align:center;box-shadow:3px 3px 0 rgba(82,16,47,.12)}
-.natal .k{font-family:var(--retro);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
-.natal svg{width:27px;height:27px;margin:0 auto 4px;stroke:var(--magenta);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.natal .v{font-family:var(--display);font-size:17px;font-weight:700}
-.natal .v small{display:block;font-family:var(--body);font-size:12px;color:#8A4364;font-weight:400}
+.natal div{background:var(--hot);border:1.5px solid var(--wine);border-radius:14px;padding:14px 12px;
+  text-align:center;box-shadow:3px 3px 0 var(--wine)}
+.natal .k{font-family:var(--retro);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);margin-bottom:5px}
+.natal svg{width:27px;height:27px;margin:0 auto 4px;stroke:var(--cream);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.natal .v{font-family:var(--display);font-size:17px;font-weight:700;color:var(--cream)}
+.natal .v small{display:block;font-family:var(--body);font-size:12px;color:#FFE2F0;font-weight:400}
 
 /* ═══════════════ SERVICIOS ═══════════════ */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
@@ -417,7 +418,17 @@ form.bk button{cursor:pointer;margin-top:4px;align-self:flex-start}
 .contact-list a:hover{color:var(--magenta);border-color:var(--magenta)}
 
 /* ═══════════════ PIE ═══════════════ */
-footer{background:var(--wine);color:var(--rose);position:relative}
+/* ── PIE CON PIEL ──
+   Sube cheetah.png junto a index.html. Si falta, el pie queda
+   en vino liso. Ajusta --veil-foot para que el print se vea
+   más fuerte (0) o más suave (1). No bajes mucho de .55 o el
+   texto rosa deja de leerse. */
+footer{background-color:var(--wine);color:var(--rose);position:relative;
+  background-image:url("cheetah.png");background-size:cover;
+  background-position:center;background-repeat:no-repeat;--veil-foot:.74}
+footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:rgba(82,16,47,var(--veil-foot))}
+.foot-in,.copy{position:relative;z-index:1}
 .foot-in{padding:30px var(--pad) 34px;max-width:var(--maxw);margin:0 auto;display:flex;justify-content:space-between;
   gap:22px;flex-wrap:wrap;align-items:flex-end}
 .foot-in .big{font-family:var(--display);font-weight:900;font-size:clamp(32px,5vw,70px);line-height:.9}
@@ -769,7 +780,7 @@ footer{background:var(--wine);color:var(--rose);position:relative}
     </div>
   </div>
   <p class="copy">© <span id="yr"></span> Moni Brujita · Mexicali, B.C. · <span data-en="Ayurveda · Astrology · Holistic coaching">Ayurveda · Astrología · Coaching holístico</span></p>
-  <div class="sunbar" data-sunbar data-bg="#52102F" data-ink="#FFD0E4" aria-hidden="true"></div>
+  <div class="sunbar" data-sunbar data-ink="#FFD0E4" aria-hidden="true"></div>
 </footer>
 
 <script>
@@ -1000,23 +1011,26 @@ function sunPath(cx,cy,R,r,n,seed){
 }
 /* Cada divisor toma el color de la sección que tiene ARRIBA, para que se
    funda con ella. Se controla en el HTML de cada franja:
-     data-bg   = fondo (si se omite, queda transparente y se ve el cielo rosa)
-     data-ink  = color de los soles y el zigzag                                */
+     data-bg   = fondo (si se omite, queda transparente y se ve lo que hay detrás)
+     data-ink  = color de los soles y el zigzag
+   El dibujo se REPITE en horizontal a su tamaño real, así nunca se
+   recorta por arriba ni por abajo, sea cual sea el ancho de pantalla. */
 function buildSunbar(el){
   var ink=el.getAttribute("data-ink")||"#C4506E";
   var bg =el.getAttribute("data-bg");
-  var mid=19, out=16, inn=6.8, s="";
-  el.style.background = bg || "transparent";
-  for (var i=0;i<2;i++){
-    var cx=40+i*120;
-    s+='<path d="'+sunPath(cx,mid,out,inn,12,1.7+i)+'" fill="'+ink+'"/>';
-    var x0=cx+out+1, x1=cx+120-out-1, seg=(x1-x0)/6, z="M"+x0+" "+mid;
-    for (var k=1;k<=6;k++) z+="L"+(x0+seg*k).toFixed(1)+" "+(mid+(k%2?-3.6:3.6));
-    s+='<path d="'+z+'" fill="none" stroke="'+ink+'" stroke-width="2.6" stroke-linejoin="round"/>';
-  }
-  el.innerHTML='<svg viewBox="0 0 960 38" preserveAspectRatio="xMidYMid slice"><g>'+s+
-    '</g><g transform="translate(240,0)">'+s+'</g><g transform="translate(480,0)">'+s+
-    '</g><g transform="translate(720,0)">'+s+'</g></svg>';
+  var mid=19;
+  var tile='<svg xmlns="http://www.w3.org/2000/svg" width="120" height="38" viewBox="0 0 120 38">'+
+    '<path d="M0 '+mid+'H6" fill="none" stroke="'+ink+'" stroke-width="2.6"/>'+
+    '<path d="'+sunPath(20,mid,14.5,6.4,12,1.7)+'" fill="'+ink+'"/>'+
+    '<path d="M34 19L48 13.4L62 24.6L76 13.4L90 24.6L104 13.4L120 19" '+
+      'fill="none" stroke="'+ink+'" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>'+
+    '</svg>';
+  el.style.backgroundColor = bg || "transparent";
+  el.style.backgroundImage = 'url("data:image/svg+xml,'+encodeURIComponent(tile)+'")';
+  el.style.backgroundRepeat = "repeat-x";
+  el.style.backgroundSize = "120px 38px";
+  el.style.backgroundPosition = "left center";
+  el.innerHTML = "";
 }
 document.querySelectorAll("[data-sunbar]").forEach(buildSunbar);
 document.getElementById("heroSun").innerHTML =
@@ -1377,7 +1391,7 @@ function applySign(s,quiet){
     s.p.map(function(d){return '<path d="'+d+'"/>';}).join("")+'</svg>';
   Array.prototype.forEach.call(dg.children,function(g){
     var mine=g.getAttribute("data-sign")===s.id;
-    g.style.strokeWidth=mine?"2.8":"1.5";
+    g.style.strokeWidth=mine?"3.6":"2.4";
     g.style.stroke=mine?"#52102F":"";
   });
   showDaily(s);
