@@ -243,23 +243,23 @@ section{position:relative;padding:var(--gap) var(--pad)}
 @keyframes slideR{from{opacity:0;transform:translateX(135%) rotate(10deg) scale(.88)}
                   to  {opacity:1;transform:none}}
 
-/* ── racimo izquierdo ── */
-.c1{--w:clamp(210px,21vw,430px); left:-3.5%; top:5%;     z-index:1; animation-delay:.00s} /* cupido */
-.c2{--w:clamp(150px,15vw,305px); left:8%;    top:27%;    z-index:2; animation-delay:.30s} /* luna   */
-.c3{--w:clamp(200px,20vw,410px); left:6%;    bottom:-7%; z-index:3; animation-delay:.60s} /* hongo  */
-.c4{--w:clamp(240px,24vw,480px); left:-5%;   bottom:4%;  z-index:4; animation-delay:.15s} /* tigre  */
+/* ── racimo izquierdo: llena de arriba a abajo, ~30% del ancho ── */
+.c1{--w:clamp(230px,26vw,560px); left:-7%;  top:-3%;    z-index:1; animation-delay:.00s} /* cupido */
+.c2{--w:clamp(170px,19vw,400px); left:9%;   top:22%;    z-index:2; animation-delay:.30s} /* luna   */
+.c4{--w:clamp(280px,32vw,680px); left:-6%;  top:34%;    z-index:4; animation-delay:.15s} /* tigre  */
+.c3{--w:clamp(230px,26vw,560px); left:4%;   bottom:-10%;z-index:3; animation-delay:.60s} /* hongo  */
 /* ── racimo derecho ── */
-.c5{--w:clamp(280px,30vw,620px); right:-6%;  top:2%;     z-index:1; animation-delay:.08s} /* árbol  */
-.c6{--w:clamp(175px,18vw,360px); right:1%;   bottom:20%; z-index:3; animation-delay:.45s} /* tortuga*/
-.c7{--w:clamp(210px,21vw,430px); right:-3%;  bottom:-9%; z-index:4; animation-delay:.72s} /* hada   */
+.c5{--w:clamp(320px,36vw,760px); right:-8%; top:-4%;    z-index:1; animation-delay:.08s} /* árbol  */
+.c6{--w:clamp(200px,23vw,480px); right:0%;  top:42%;    z-index:3; animation-delay:.45s} /* tortuga*/
+.c7{--w:clamp(250px,28vw,590px); right:-4%; bottom:-12%;z-index:4; animation-delay:.72s} /* hada   */
 
 /* el collage necesita alto y márgenes libres; el texto se estrecha
    para dejarle sitio en pantallas anchas */
-@media(min-width:1200px){
-  #home{min-height:min(900px,96vh);display:flex;align-items:center}
-  .hero{max-width:min(880px,46vw)}
+@media(min-width:1250px){
+  #home{min-height:min(940px,98vh);display:flex;align-items:center}
+  .hero{max-width:min(760px,38vw)}
 }
-@media(max-width:1199px){ .collage{display:none} }
+@media(max-width:1249px){ .collage{display:none} }
 @media(prefers-reduced-motion:reduce){ .collage.in .col{opacity:1;animation:none} }
 .hero{max-width:880px;margin:0 auto;text-align:center;position:relative;z-index:2;width:100%}
 .wordmark{margin:0 auto 18px}
