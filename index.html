@@ -28,12 +28,12 @@
       Si falta alguna, se usa el dibujo vectorial de respaldo.
 
       RELLENO DE TÍTULOS (se recorta, no se deforma):
-        images/print-tiger.jpg      images/print-zebra.jpg
-        images/print-leopard.jpg    images/print-cow.jpg
-        images/print-python.jpg
+        print-tiger.jpg      print-zebra.jpg
+        print-leopard.jpg    print-cow.jpg
+        print-python.jpg
 
       FONDOS COMPLETOS DE SECCIÓN (a sangre):
-        images/bg-tiger.jpg         images/bg-zebra.jpg
+        bg-tiger.jpg         bg-zebra.jpg
 
       Para los títulos usa imágenes de 1200–2000 px de ancho.
       Para los fondos, 2400 px o más.
@@ -204,7 +204,7 @@ section{position:relative;padding:var(--gap) var(--pad)}
 /* ── FONDOS DE PIEL A SANGRE ── */
 /* ┌─────────────────────────────────────────────────────────┐
    │  AQUÍ VAN TUS FONDOS DE PIEL                            │
-   │  Guarda tus imágenes en /images y pon el nombre abajo.  │
+   │  Sube tus imágenes junto a index.html y pon el nombre abajo.  │
    │  Mientras no existan, la sección queda en color tostado │
    │  liso — nunca se rompe.                                 │
    │  Recomendado: 2400 px de ancho o más.                   │
@@ -216,8 +216,8 @@ section{position:relative;padding:var(--gap) var(--pad)}
 .band-print::before{content:"";position:absolute;inset:0;
   background:rgba(255,246,233,var(--veil));pointer-events:none;z-index:0}
 
-.bg-tiger{background-image:url("images/bg-tiger.jpg")}   /* ← sección de la rueda */
-.bg-zebra{background-image:url("images/bg-zebra.jpg")}   /* ← sección de testimonios */
+.bg-tiger{background-image:url("bg-tiger.jpg")}   /* ← sección de la rueda */
+.bg-zebra{background-image:url("bg-zebra.jpg")}   /* ← sección de testimonios */
 
 /* divisor de soles — franja rosa entre TODAS las secciones */
 .sunbar{display:block;width:100%;height:38px;overflow:hidden;line-height:0;
@@ -320,7 +320,7 @@ section{position:relative;padding:var(--gap) var(--pad)}
 .arch{position:relative;margin-bottom:26px;padding:14px 14px 44px;background:var(--cream);border:1.5px solid rgba(82,16,47,.2);
   border-radius:220px 220px 12px 12px;transform:rotate(-1.8deg);box-shadow:8px 10px 0 rgba(82,16,47,.18)}
 .arch .frame{aspect-ratio:3/4;border-radius:206px 206px 6px 6px;display:grid;place-items:center;overflow:hidden;
-  background-image:url("images/moni.jpg"),var(--f-tiger);background-size:cover,150px 150px;
+  background-image:url("moni.JPG"),var(--f-tiger);background-size:cover,150px 150px;
   background-position:center 42%;border:1px solid rgba(82,16,47,.14)}
 .arch .cap{position:absolute;left:0;right:0;bottom:11px;text-align:center;font-family:var(--scrawl);font-size:23px;color:var(--wine)}
 /* cinta adhesiva: cruza el borde, mitad dentro / mitad fuera */
@@ -500,7 +500,7 @@ footer{background:var(--wine);color:var(--rose);position:relative}
 <!-- ═══════════ HOME ═══════════ -->
 <section id="home">
   <div class="hero">
-    <h1 class="wordmark"><img src="images/wordmark.png" alt="Moni Brujita" width="1800" height="246"></h1>
+    <h1 class="wordmark"><img src="wordmark.png" alt="Moni Brujita" width="1800" height="246"></h1>
     <p class="tagline" data-en="Ancient wisdom for the modern woman.">Sabiduría antigua para la mujer moderna.</p>
     <p class="disciplines" data-en="Ayurveda · Astrology · Holistic coaching">Ayurveda · Astrología · Coaching holístico</p>
     <div class="hero-sun" id="heroSun" aria-hidden="true"></div>
