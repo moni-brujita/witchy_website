@@ -24,19 +24,15 @@
 */
 
 /* ═══════════════════════════════════════════════════════════
-   2) IMÁGENES DE PIEL — guárdalas en /images con estos nombres.
-      Si falta alguna, se usa el dibujo vectorial de respaldo.
+   2) FONDOS DE PIEL — súbelos junto a index.html.
 
-      RELLENO DE TÍTULOS (se recorta, no se deforma):
-        print-tiger.jpg      print-zebra.jpg
-        print-leopard.jpg    print-cow.jpg
-        print-python.jpg
+        bg-tiger.png   → sección de la rueda de servicios
+        snake.png      → sección de testimonios
 
-      FONDOS COMPLETOS DE SECCIÓN (a sangre):
-        bg-tiger.jpg         bg-zebra.jpg
-
-      Para los títulos usa imágenes de 1200–2000 px de ancho.
-      Para los fondos, 2400 px o más.
+      Si falta alguno, esa sección queda en color tostado liso;
+      nunca se rompe. Recomendado: 2400 px de ancho o más.
+      Los nombres deben coincidir EXACTAMENTE, mayúsculas
+      incluidas: GitHub Pages distingue entre .png y .PNG.
    ═══════════════════════════════════════════════════════════ */
 
 :root{
@@ -216,8 +212,8 @@ section{position:relative;padding:var(--gap) var(--pad)}
 .band-print::before{content:"";position:absolute;inset:0;
   background:rgba(255,246,233,var(--veil));pointer-events:none;z-index:0}
 
-.bg-tiger{background-image:url("bg-tiger.jpg")}   /* ← sección de la rueda */
-.bg-zebra{background-image:url("bg-zebra.jpg")}   /* ← sección de testimonios */
+.bg-tiger{background-image:url("bg-tiger.png")}   /* ← sección de la rueda */
+.bg-snake{background-image:url("snake.png")}      /* ← sección de testimonios */
 
 /* divisor de soles — franja rosa entre TODAS las secciones */
 .sunbar{display:block;width:100%;height:38px;overflow:hidden;line-height:0;
@@ -655,7 +651,7 @@ footer{background:var(--wine);color:var(--rose);position:relative}
 <div class="sunbar" data-sunbar data-ink="#C4506E" aria-hidden="true"></div>
 
 <!-- ═══════════ TESTIMONIOS ═══════════ -->
-<section id="voces" class="band-print bg-zebra">
+<section id="voces" class="band-print bg-snake">
   <div class="wrap">
     <div class="head reveal">
       <span class="eyebrow" data-en="House XI · the ones who came before">Casa XI · las que ya pasaron por aquí</span>
