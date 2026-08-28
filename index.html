@@ -250,8 +250,8 @@ section{position:relative;padding:var(--gap) var(--pad)}
   55% {opacity:1;transform:rotate(var(--r)) scale(.94)}
   100%{opacity:1;transform:rotate(var(--r)) scale(1)}
 }
-.k1{--w:clamp(110px,13vw,250px); --r:-8deg;  left:26%;  top:11%;   animation-delay:.30s}
-.k2{--w:clamp(105px,12.5vw,240px);--r:10deg;  right:26%; top:16%;   animation-delay:.65s}
+.k1{--w:clamp(110px,13vw,250px); --r:-8deg;  left:26%;  top:2%;    animation-delay:.30s}
+.k2{--w:clamp(105px,12.5vw,240px);--r:10deg;  right:26%; top:7%;    animation-delay:.65s}
 .k3{--w:clamp(110px,13vw,250px); --r:-12deg; left:20%;  bottom:10%;animation-delay:1.00s}
 .k4{--w:clamp(105px,12.5vw,240px);--r:9deg;   right:20%; bottom:12%;animation-delay:1.35s}
 @media(max-width:900px){ .k2,.k4{display:none} .claw{--w:clamp(90px,20vw,150px)} }
@@ -1494,10 +1494,24 @@ function applySign(s,quiet){
   });
   showDaily(s);
 }
+/* Secuencia del hero: la página queda rosa y vacía, entra un zarpazo
+   a la vez y, cuando los cuatro han caído, aparecen MONI BRUJITA y
+   los botones. Arranca al abrirse la portada, no al cargar la página,
+   porque hasta entonces nadie está viendo el hero. */
+var clawsEl=document.getElementById("claws"), heroEl=document.querySelector(".hero");
+function playHero(){
+  if (!heroEl) return;
+  if (!clawsEl){ heroEl.classList.add("in"); return; }
+  clawsEl.classList.remove("in"); heroEl.classList.remove("in");
+  void clawsEl.offsetWidth;                     /* reinicia la animación */
+  requestAnimationFrame(function(){ clawsEl.classList.add("in"); });
+  setTimeout(function(){ heroEl.classList.add("in"); }, 1850);
+}
 function openSite(){
   gate.classList.add("gone");
   document.body.classList.remove("locked");
   setTimeout(function(){ gate.style.display="none"; },1000);
+  playHero();
 }
 function choose(s){ applySign(s); gateInner.classList.add("hide"); explode(s,openSite); }
 
@@ -1525,14 +1539,6 @@ document.querySelectorAll(".reveal").forEach(function(el,i){
   el.style.transitionDelay=((i%4)*65)+"ms"; io.observe(el);
 });
 
-/* Secuencia de entrada: primero los cuatro zarpazos, uno por uno.
-   Cuando termina el último, aparece el texto del hero.
-   El último empieza en 1.35s y dura .42s -> el hero entra en 1.85s. */
-var claws=document.getElementById("claws"), heroEl=document.querySelector(".hero");
-if (claws && heroEl){
-  requestAnimationFrame(function(){ claws.classList.add("in"); });
-  setTimeout(function(){ heroEl.classList.add("in"); }, 1850);
-} else if (heroEl){ heroEl.classList.add("in"); }
 
 /* los recortes de "quién te lee" entran escalonados */
 var aboutArt=document.getElementById("aboutArt");
