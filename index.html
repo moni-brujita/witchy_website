@@ -243,7 +243,9 @@ section{position:relative;padding:var(--gap) var(--pad)}
      "hero"  la frase se va y entra el hero completo
    Al ir con #home delante, estas reglas pesan más que cualquier
    otra y no las puede pisar nada.                                */
-.bigline{position:absolute;top:50%;left:50%;z-index:6;width:88%;max-width:1500px;
+/* --lift sube la frase; súbelo más si la quieres más arriba */
+.bigline{--lift:7vh;
+  position:absolute;top:calc(50% - var(--lift));left:50%;z-index:6;width:88%;max-width:1500px;
   transform:translate(-50%,-50%) scale(.94);opacity:0;pointer-events:none;text-align:center;
   font-family:var(--display);font-style:italic;font-weight:700;line-height:1.05;
   font-size:clamp(34px,7vw,120px);color:var(--shock);
