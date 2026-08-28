@@ -234,9 +234,9 @@ section{position:relative;padding:var(--gap) var(--pad)}
 /* ═══════════════ HERO: DOS SOLES CON OJO ═══════════════
    El sol gira; el ojo va encima, quieto, tapando el círculo
    central. --sun controla el tamaño de los dos.                 */
-.heroline{display:flex;align-items:center;justify-content:center;gap:clamp(10px,3vw,54px)}
+.heroline{display:flex;align-items:center;justify-content:center;gap:clamp(4px,1.4vw,26px)}
 .herotext{flex:0 1 auto;min-width:0}
-.eyesun{position:relative;flex:0 0 auto;width:var(--sun);--sun:clamp(120px,17vw,300px)}
+.eyesun{position:relative;flex:0 0 auto;width:var(--sun);--sun:clamp(150px,23vw,430px)}
 .eyesun svg{width:100%;height:auto;display:block}
 .eyesun .eye{position:absolute;top:50%;left:50%;width:41%;height:auto;
   transform:translate(-50%,-50%);pointer-events:none;
@@ -258,9 +258,9 @@ section{position:relative;padding:var(--gap) var(--pad)}
 .aboutart img{position:absolute;width:var(--w);height:auto;opacity:0;
   filter:drop-shadow(0 12px 20px rgba(82,16,47,.2));
   transition:opacity .9s cubic-bezier(.2,.7,.3,1), transform .9s cubic-bezier(.2,.7,.3,1)}
-.a-tiger {--w:clamp(150px,17vw,340px); left:-5%;  bottom:4%;  transform:translateX(-30px) scale(.94)}
-.a-moon  {--w:clamp(110px,13vw,250px); right:2%;  top:-6%;    transform:translateY(-26px) scale(.94)}
-.a-shroom{--w:clamp(160px,19vw,380px); right:-4%; bottom:-8%; transform:translateX(30px) scale(.94)}
+.a-tiger {--w:clamp(210px,26vw,520px); left:-6%;  bottom:2%;  transform:translateX(-30px) scale(.94)}
+.a-moon  {--w:clamp(120px,15vw,290px); right:3%;  top:7%;     transform:translateY(-26px) scale(.94)}
+.a-snake {--w:clamp(180px,22vw,440px); right:-3%; bottom:-4%; transform:translateX(30px) scale(.94)}
 .aboutart.in img{opacity:1;transform:none}
 @media(max-width:1100px){ .aboutart{display:none} }
 @media(prefers-reduced-motion:reduce){ .aboutart img{transition:none} }
@@ -275,12 +275,12 @@ section{position:relative;padding:var(--gap) var(--pad)}
 }
 @media(max-width:1249px){ .collage{display:none} }
 @media(prefers-reduced-motion:reduce){ .collage.in .col{opacity:1;animation:none} }
-.hero{max-width:1240px;margin:0 auto;text-align:center;position:relative;z-index:2;width:100%}
+.hero{max-width:1620px;margin:0 auto;text-align:center;position:relative;z-index:2;width:100%}
 .wordmark{margin:0 auto 18px}
-.wordmark img{width:min(620px,100%);height:auto;margin:0 auto;display:block}
-.tagline{font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(19px,2.2vw,30px);
+.wordmark img{width:min(860px,100%);height:auto;margin:0 auto;display:block}
+.tagline{font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(21px,2.7vw,40px);
   line-height:1.14;margin-bottom:8px;font-variation-settings:"SOFT" 60,"WONK" 1}
-.disciplines{font-family:var(--label);font-size:clamp(12.5px,1.1vw,15px);letter-spacing:.24em;
+.disciplines{font-family:var(--label);font-size:clamp(13px,1.4vw,20px);letter-spacing:.24em;
   text-transform:uppercase;color:var(--rasp);margin-bottom:0}
 .sunspin{animation:spin 90s linear infinite;transform-origin:110px 110px;transform-box:view-box}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -606,7 +606,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
   <div class="aboutart" id="aboutArt" aria-hidden="true">
     <img class="a-tiger"  src="tiger_collage.png" alt="" width="760" height="659">
     <img class="a-moon"   src="pink_moon.png"     alt="" width="560" height="556">
-    <img class="a-shroom" src="pink_mushroom.png" alt="" width="700" height="525">
+    <img class="a-snake"  src="pink_snake.png"    alt="" width="700" height="780">
   </div>
   <div class="wrap">
     <div class="head reveal">
