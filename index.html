@@ -255,8 +255,8 @@ section{position:relative;padding:var(--gap) var(--pad)}
 #home[data-seq="hero"] .bigline{opacity:0;transform:translate(-50%,-50%) scale(1.08)}
 
 #home[data-seq="off"]  .hero,
-#home[data-seq="line"] .hero{opacity:0;transform:translateY(14px)}
-#home[data-seq="hero"] .hero{opacity:1;transform:none}
+#home[data-seq="line"] .hero{opacity:0}
+#home[data-seq="hero"] .hero{opacity:1}
 
 /* ═══════════════ ZARPAZOS DEL HERO ═══════════════
    Se quedan invisibles al cargar. Un segundo después entran de
@@ -281,7 +281,7 @@ section{position:relative;padding:var(--gap) var(--pad)}
 @media(max-width:900px){ .k2,.k4{display:none} .claw{--w:clamp(90px,20vw,150px)} }
 @media(prefers-reduced-motion:reduce){
   .claws.in .claw{animation:none;opacity:1;transform:rotate(var(--r))}
-  #home .hero{opacity:1 !important;transform:none !important;transition:none}
+  #home .hero{opacity:1 !important;transition:none}
   #home .bigline{display:none}
 }
 
@@ -326,7 +326,7 @@ section{position:relative;padding:var(--gap) var(--pad)}
         padding-top:clamp(96px,11vh,124px);padding-bottom:clamp(40px,6vh,80px)}
 }
 .hero{max-width:1620px;margin:0 auto;text-align:center;position:relative;z-index:2;width:100%;
-  transition:opacity .85s ease, transform .85s cubic-bezier(.2,.7,.3,1)}
+  transition:opacity .85s ease}
 .wordmark{margin:0 auto 18px}
 .wordmark img{width:min(860px,100%);height:auto;margin:0 auto;display:block}
 .tagline{font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(21px,2.7vw,40px);
