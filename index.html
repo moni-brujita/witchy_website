@@ -236,6 +236,16 @@ section{position:relative;padding:var(--gap) var(--pad)}
 /* ═══════════════ HERO ═══════════════ */
 #home{min-height:auto;padding-top:clamp(118px,15vh,150px);padding-bottom:clamp(30px,5vh,52px);overflow:hidden}
 
+/* frase de apertura: sola en pantalla mientras caen los zarpazos */
+.bigline{position:absolute;top:50%;left:50%;z-index:6;width:88%;max-width:1500px;
+  transform:translate(-50%,-50%) scale(.94);opacity:0;pointer-events:none;text-align:center;
+  font-family:var(--display);font-style:italic;font-weight:700;line-height:1.05;
+  font-size:clamp(34px,7vw,120px);color:var(--shock);
+  font-variation-settings:"SOFT" 70,"WONK" 1;
+  transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1)}
+.bigline.in{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.bigline.out{opacity:0;transform:translate(-50%,-50%) scale(1.08)}
+
 /* ═══════════════ ZARPAZOS DEL HERO ═══════════════
    Se quedan invisibles al cargar. Un segundo después entran de
    golpe, uno tras otro: primero un destello ampliado y luego se
@@ -260,8 +270,7 @@ section{position:relative;padding:var(--gap) var(--pad)}
 @media(prefers-reduced-motion:reduce){
   .claws.in .claw{animation:none;opacity:1;transform:rotate(var(--r))}
   .hero{opacity:1;transform:none;transition:none}
-  .hero.intro .heroline,.hero.intro .btns{opacity:1}
-  .unleash{transition:none !important;transform:none !important}
+  .bigline{display:none}
 }
 
 /* ═══════════════ HERO: DOS SOLES CON OJO ═══════════════
@@ -307,12 +316,7 @@ section{position:relative;padding:var(--gap) var(--pad)}
 .hero{max-width:1620px;margin:0 auto;text-align:center;position:relative;z-index:2;width:100%;
   opacity:0;transition:opacity .85s ease, transform .85s cubic-bezier(.2,.7,.3,1);
   transform:translateY(14px)}
-/* .intro: sólo se ve la frase, grande y al centro.
-   .in:    ya está todo el hero visible.                        */
-.hero.intro,.hero.in{opacity:1;transform:none}
-.hero.intro .heroline,.hero.intro .btns{opacity:0}
-.hero .heroline,.hero .btns{transition:opacity .8s ease .05s}
-.unleash{position:relative;z-index:6;will-change:transform}
+.hero.in{opacity:1;transform:none}
 .wordmark{margin:0 auto 18px}
 .wordmark img{width:min(860px,100%);height:auto;margin:0 auto;display:block}
 .tagline{font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(21px,2.7vw,40px);
@@ -588,6 +592,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
   <!-- ── ZARPAZOS ──
        Aparecen solos ~1s después de cargar, uno por uno, como si
        algo hubiera rasgado la página. --w tamaño, --r inclinación. -->
+  <p class="bigline" id="bigline" data-en="Unleash the Divine Feminine">Despierta lo divino femenino</p>
   <div class="claws" id="claws" aria-hidden="true">
     <img class="claw k1" src="claws1.png" alt="" width="620" height="612">
     <img class="claw k2" src="claws2.png" alt="" width="620" height="638">
@@ -1500,47 +1505,35 @@ function applySign(s,quiet){
   showDaily(s);
 }
 /* Secuencia del hero, al abrirse la portada:
-     1. "Despierta lo divino femenino" aparece grande, al centro
-     2. se encoge y baja hasta su sitio, encima de los botones
-     3. caen los cuatro zarpazos, uno a uno
-     4. entran MONI BRUJITA, los soles y los botones
-   El tamaño y la posición grandes se calculan al vuelo, así que
-   funcionan igual en cualquier pantalla.                        */
+     1. sale sola "Despierta lo divino femenino", en grande
+     2. se queda ahí mientras caen los cuatro zarpazos
+     3. la frase grande se va y, a la vez, entra el hero completo
+        (MONI BRUJITA, los soles, los botones y la misma frase
+        pequeña encima de ellos)                                  */
 var clawsEl=document.getElementById("claws"), heroEl=document.querySelector(".hero");
-var unleashEl=document.querySelector(".unleash");
-var HOLD=900, SHRINK=850;          /* cuánto aguanta grande y cuánto tarda en bajar */
+var bigEl=document.getElementById("bigline");
+var SLASHES_END=2420;    /* el cuarto zarpazo empieza en 2s y dura .42s */
+var SWAP=SLASHES_END+380;
 
 function playHero(){
   if (!heroEl) return;
-  if (!clawsEl || !unleashEl){ heroEl.classList.add("in"); return; }
+  if (!clawsEl || !bigEl){ heroEl.classList.add("in"); return; }
 
   /* reinicio, por si vuelven a elegir signo */
   clawsEl.classList.remove("in");
-  heroEl.classList.remove("in","intro");
-  unleashEl.style.transition="none";
-  unleashEl.style.transform="";
+  heroEl.classList.remove("in");
+  bigEl.classList.remove("in","out");
   void heroEl.offsetWidth;
 
-  heroEl.classList.add("intro");
-
-  /* dónde acaba la frase vs. dónde queremos que empiece */
-  var r=unleashEl.getBoundingClientRect();
-  var dx=innerWidth/2  - (r.left + r.width/2);
-  var dy=innerHeight/2 - (r.top  + r.height/2);
-  var scale=Math.min(3.4, (innerWidth*0.82)/Math.max(r.width,1));
-  unleashEl.style.transform="translate("+dx.toFixed(1)+"px,"+dy.toFixed(1)+"px) scale("+scale.toFixed(2)+")";
-
-  /* 1 -> 2: se encoge y baja */
+  /* 1 */
+  requestAnimationFrame(function(){ bigEl.classList.add("in"); });
+  /* 2 */
+  setTimeout(function(){ clawsEl.classList.add("in"); }, 260);
+  /* 3 */
   setTimeout(function(){
-    unleashEl.style.transition="transform "+SHRINK+"ms cubic-bezier(.4,0,.2,1)";
-    unleashEl.style.transform="";
-  }, HOLD);
-
-  /* 3: zarpazos, ya con la frase en su sitio */
-  var after=HOLD+SHRINK;
-  setTimeout(function(){ clawsEl.classList.add("in"); }, after);
-  /* 4: el resto del hero */
-  setTimeout(function(){ heroEl.classList.add("in"); }, after+2700);
+    bigEl.classList.add("out");
+    heroEl.classList.add("in");
+  }, SWAP);
 }
 function openSite(){
   gate.classList.add("gone");
