@@ -291,7 +291,9 @@ section{position:relative;padding:var(--gap) var(--pad)}
    El sol gira; el ojo va encima, quieto, tapando el círculo
    central. --sun controla el tamaño de los dos.                 */
 .heroline{display:flex;align-items:center;justify-content:center;gap:clamp(4px,1.4vw,26px)}
-.herotext{flex:0 1 auto;min-width:0}
+/* --drop baja el bloque de texto respecto a los dos soles */
+.herotext{--drop:5vh; flex:0 1 auto;min-width:0;
+  position:relative;top:var(--drop)}
 .eyesun{position:relative;flex:0 0 auto;width:var(--sun);--sun:clamp(150px,23vw,430px)}
 .eyesun svg{width:100%;height:auto;display:block}
 .eyesun .eye{position:absolute;top:50%;left:50%;width:41%;height:auto;
@@ -304,6 +306,7 @@ section{position:relative;padding:var(--gap) var(--pad)}
   .heroline{flex-direction:column;gap:14px}
   #sunR{display:none}
   .eyesun{--sun:clamp(120px,30vw,190px)}
+  .herotext{--drop:0}
 }
 
 /* ═══════════════ RECORTES DE "QUIÉN TE LEE" ═══════════════
