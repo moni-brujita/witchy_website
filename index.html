@@ -534,7 +534,17 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 .foot-links a{font-family:var(--label);font-size:14.5px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--rose)}
 .foot-links a:hover{color:var(--hot)}
 .copy{border-top:1px solid rgba(255,208,228,.22);padding:16px var(--pad);font-family:var(--retro);
-  font-size:12px;letter-spacing:.1em;color:var(--rose);text-align:center}
+  font-size:12px;letter-spacing:.1em;color:var(--rose);
+  display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.copy p{margin:0}
+.copy .credit{margin-left:auto;text-align:right}
+.copy .credit a{color:var(--rose);text-decoration:none;border-bottom:1px solid rgba(255,208,228,.5);
+  padding-bottom:1px;transition:color .25s,border-color .25s}
+.copy .credit a:hover{color:var(--hot);border-color:var(--hot)}
+@media(max-width:720px){
+  .copy{justify-content:center;text-align:center}
+  .copy .credit{margin-left:0;text-align:center}
+}
 
 /* ═══════════════ RESPONSIVE ═══════════════ */
 @media(max-width:980px){
@@ -897,7 +907,10 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
       <a href="https://www.instagram.com/monibrujita_/" target="_blank" rel="noopener">Instagram</a>
     </div>
   </div>
-  <p class="copy">© <span id="yr"></span> Moni Brujita · Mexicali, B.C. · <span data-en="Ayurveda · Astrology · Holistic coaching">Ayurveda · Astrología · Coaching holístico</span></p>
+  <div class="copy">
+    <p>© <span id="yr"></span> Moni Brujita · Mexicali, B.C. · <span data-en="Ayurveda · Astrology · Holistic coaching">Ayurveda · Astrología · Coaching holístico</span></p>
+    <p class="credit" data-en="Website and Branding by: &lt;a href=&quot;https://www.mommasboys.com&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Momma's Boys&lt;/a&gt;">Sitio web e identidad por: <a href="https://www.mommasboys.com" target="_blank" rel="noopener">Momma's Boys</a></p>
+  </div>
   <div class="sunbar" data-sunbar data-ink="#FFD0E4" aria-hidden="true"></div>
 </footer>
 
