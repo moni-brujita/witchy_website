@@ -242,11 +242,12 @@ section{position:relative;padding:var(--gap) var(--pad)}
      --b  cuánto se hunde por abajo                                */
 .topstack{position:relative}
 .collage{position:absolute;inset:0;z-index:5;pointer-events:none;overflow:hidden}
-.col{position:absolute;bottom:var(--b);width:var(--w);height:auto;max-width:none;opacity:0;
+.col{position:absolute;bottom:0;height:100%;width:auto;max-width:36vw;opacity:0;
+  object-fit:contain;object-position:bottom;
   filter:drop-shadow(0 16px 26px rgba(82,16,47,.24))}
-.col.L{left:var(--x);  --w:clamp(240px,26vw,540px); --x:-4%; --b:-2%;
+.col.L{left:var(--x);  --x:-3%;
        animation:slideL 1.1s cubic-bezier(.16,1,.3,1) forwards}
-.col.R{right:var(--x); --w:clamp(240px,26vw,545px); --x:-4%; --b:-2%;
+.col.R{right:var(--x); --x:-3%;
        animation:slideR 1.1s cubic-bezier(.16,1,.3,1) forwards}
 .collage .col{animation-play-state:paused}
 .collage.in .col{animation-play-state:running}
@@ -264,9 +265,13 @@ section{position:relative;padding:var(--gap) var(--pad)}
 /* el collage necesita alto y márgenes libres; el texto se estrecha
    para dejarle sitio en pantallas anchas */
 @media(min-width:1250px){
-  #home{min-height:min(1000px,100vh);display:flex;align-items:center}
-  .hero{max-width:min(700px,34vw)}
-  .daycard{max-width:min(680px,44vw)}
+  /* hero y tarjeta comparten UNA pantalla, así el collage
+     (100% del bloque) los cubre a los dos como en el diseño */
+  #home{padding-top:clamp(96px,11vh,124px);padding-bottom:8px}
+  .hero{max-width:min(720px,36vw)}
+  #daily{padding-top:6px;padding-bottom:clamp(40px,5vh,64px)}
+  .daycard{max-width:min(760px,42vw)}
+  .hero-sun{width:clamp(120px,13vw,190px);margin:10px auto 16px}
 }
 @media(max-width:1249px){ .collage{display:none} }
 @media(prefers-reduced-motion:reduce){ .collage.in .col{opacity:1;animation:none} }
