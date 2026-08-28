@@ -250,10 +250,10 @@ section{position:relative;padding:var(--gap) var(--pad)}
   55% {opacity:1;transform:rotate(var(--r)) scale(.94)}
   100%{opacity:1;transform:rotate(var(--r)) scale(1)}
 }
-.k1{--w:clamp(110px,13vw,250px); --r:-8deg;  left:26%;  top:2%;    animation-delay:.30s}
-.k2{--w:clamp(105px,12.5vw,240px);--r:10deg;  right:26%; top:7%;    animation-delay:.65s}
-.k3{--w:clamp(110px,13vw,250px); --r:-12deg; left:20%;  bottom:10%;animation-delay:1.00s}
-.k4{--w:clamp(105px,12.5vw,240px);--r:9deg;   right:20%; bottom:12%;animation-delay:1.35s}
+.k1{--w:clamp(110px,13vw,250px); --r:-8deg;  left:26%;  top:2%;    animation-delay:.50s}
+.k2{--w:clamp(105px,12.5vw,240px);--r:10deg;  right:26%; top:7%;    animation-delay:1.00s}
+.k3{--w:clamp(110px,13vw,250px); --r:-12deg; left:20%;  bottom:10%;animation-delay:1.50s}
+.k4{--w:clamp(105px,12.5vw,240px);--r:9deg;   right:20%; bottom:12%;animation-delay:2.00s}
 @media(max-width:900px){ .k2,.k4{display:none} .claw{--w:clamp(90px,20vw,150px)} }
 @media(prefers-reduced-motion:reduce){
   .claws.in .claw{animation:none;opacity:1;transform:rotate(var(--r))}
@@ -1505,7 +1505,7 @@ function playHero(){
   clawsEl.classList.remove("in"); heroEl.classList.remove("in");
   void clawsEl.offsetWidth;                     /* reinicia la animación */
   requestAnimationFrame(function(){ clawsEl.classList.add("in"); });
-  setTimeout(function(){ heroEl.classList.add("in"); }, 1850);
+  setTimeout(function(){ heroEl.classList.add("in"); }, 2700);
 }
 function openSite(){
   gate.classList.add("gone");
