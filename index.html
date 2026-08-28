@@ -134,21 +134,26 @@ h1,h2,h3{font-family:var(--display);font-weight:900;line-height:1.04;letter-spac
     linear-gradient(#FFF6FA,#FFCEE6 60%,#FFB2D8);
   transition:opacity .95s ease, filter .95s ease}
 #gate.gone{opacity:0;filter:blur(16px) saturate(1.4);pointer-events:none}
-.gate-inner{position:relative;z-index:2;width:100%;max-width:880px;text-align:center;
+.gate-inner{position:relative;z-index:2;width:100%;max-width:min(1380px,94vw);text-align:center;
   transition:opacity .5s ease, transform .5s ease}
 .gate-inner.hide{opacity:0;transform:scale(.93)}
 .gate-inner h1{margin:14px 0 clamp(24px,4vh,40px)}
-.signs{display:grid;grid-template-columns:repeat(6,1fr);gap:11px}
-.sign{background:var(--cream);border:1.5px solid rgba(82,16,47,.18);border-radius:80px 80px 12px 12px;
-  padding:18px 6px 12px;cursor:pointer;color:var(--wine);font-family:var(--body);
-  box-shadow:3px 3px 0 rgba(82,16,47,.14);
+.signs{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(12px,1.4vw,22px);
+  max-width:1300px;margin:0 auto}
+.sign{background:var(--cream);border:1.5px solid rgba(82,16,47,.18);
+  border-radius:999px 999px 16px 16px;
+  padding:clamp(24px,2.6vw,42px) 8px clamp(16px,1.8vw,26px);
+  cursor:pointer;color:var(--wine);font-family:var(--body);
+  box-shadow:4px 5px 0 rgba(82,16,47,.16);
   transition:transform .26s cubic-bezier(.2,.9,.3,1.5),background .26s,border-color .26s,box-shadow .26s}
 .sign:hover,.sign:focus-visible{transform:translate(-3px,-6px);background:#fff;border-color:var(--magenta);box-shadow:7px 9px 0 var(--rasp)}
-.sign svg{width:32px;height:32px;margin:0 auto 9px;display:block;stroke:var(--wine);fill:none;
+.sign svg{width:clamp(38px,3.6vw,58px);height:auto;margin:0 auto clamp(10px,1.2vw,16px);
+  display:block;stroke:var(--wine);fill:none;
   stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .sign:hover svg{stroke:var(--magenta)}
-.sign .n{display:block;font-family:var(--label);font-size:13px;letter-spacing:.14em;text-transform:uppercase}
-.sign .d{display:block;font-size:10px;color:#9B6580;margin-top:2px}
+.sign .n{display:block;font-family:var(--label);font-size:clamp(14px,1.15vw,18px);
+  letter-spacing:.14em;text-transform:uppercase}
+.sign .d{display:block;font-size:clamp(11px,.85vw,13.5px);color:#9B6580;margin-top:4px}
 #boom{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
 
 /* ═══════════════ CURSOR ═══════════════ */
@@ -245,12 +250,15 @@ section{position:relative;padding:var(--gap) var(--pad)}
   55% {opacity:1;transform:rotate(var(--r)) scale(.94)}
   100%{opacity:1;transform:rotate(var(--r)) scale(1)}
 }
-.k1{--w:clamp(120px,15vw,290px); --r:-6deg;  left:9%;  top:12%;  animation-delay:0s}
-.k2{--w:clamp(105px,13vw,250px); --r:12deg;  right:14%;top:9%;   animation-delay:.22s}
-.k3{--w:clamp(115px,14vw,270px); --r:-14deg; left:13%; bottom:11%;animation-delay:.44s}
-.k4{--w:clamp(100px,12vw,230px); --r:8deg;   right:10%;bottom:14%;animation-delay:.66s}
+.k1{--w:clamp(110px,13vw,250px); --r:-8deg;  left:26%;  top:11%;   animation-delay:.30s}
+.k2{--w:clamp(105px,12.5vw,240px);--r:10deg;  right:26%; top:16%;   animation-delay:.65s}
+.k3{--w:clamp(110px,13vw,250px); --r:-12deg; left:20%;  bottom:10%;animation-delay:1.00s}
+.k4{--w:clamp(105px,12.5vw,240px);--r:9deg;   right:20%; bottom:12%;animation-delay:1.35s}
 @media(max-width:900px){ .k2,.k4{display:none} .claw{--w:clamp(90px,20vw,150px)} }
-@media(prefers-reduced-motion:reduce){ .claws.in .claw{animation:none;opacity:1;transform:rotate(var(--r))} }
+@media(prefers-reduced-motion:reduce){
+  .claws.in .claw{animation:none;opacity:1;transform:rotate(var(--r))}
+  .hero{opacity:1;transform:none;transition:none}
+}
 
 /* ═══════════════ HERO: DOS SOLES CON OJO ═══════════════
    El sol gira; el ojo va encima, quieto, tapando el círculo
@@ -296,7 +304,10 @@ section{position:relative;padding:var(--gap) var(--pad)}
 }
 @media(max-width:1249px){ .collage{display:none} }
 @media(prefers-reduced-motion:reduce){ .collage.in .col{opacity:1;animation:none} }
-.hero{max-width:1620px;margin:0 auto;text-align:center;position:relative;z-index:2;width:100%}
+.hero{max-width:1620px;margin:0 auto;text-align:center;position:relative;z-index:2;width:100%;
+  opacity:0;transition:opacity .85s ease, transform .85s cubic-bezier(.2,.7,.3,1);
+  transform:translateY(14px)}
+.hero.in{opacity:1;transform:none}
 .wordmark{margin:0 auto 18px}
 .wordmark img{width:min(860px,100%);height:auto;margin:0 auto;display:block}
 .tagline{font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(21px,2.7vw,40px);
@@ -305,7 +316,11 @@ section{position:relative;padding:var(--gap) var(--pad)}
   text-transform:uppercase;color:var(--rasp);margin-bottom:0}
 .sunspin{animation:spin 90s linear infinite;transform-origin:110px 110px;transform-box:view-box}
 @keyframes spin{to{transform:rotate(360deg)}}
-.btns{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:clamp(22px,3.4vh,44px)}
+.unleash{font-family:var(--display);font-style:italic;font-weight:700;
+  font-size:clamp(18px,2.1vw,31px);color:var(--shock);
+  margin-top:clamp(30px,5vh,66px);
+  font-variation-settings:"SOFT" 70,"WONK" 1}
+.btns{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:clamp(14px,2vh,24px)}
 .btn{font-family:var(--retro);font-size:14.5px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;
   padding:14px 30px;border-radius:999px;border:1.5px solid var(--wine);display:inline-block;
   transition:transform .22s,box-shadow .22s,background .22s,color .22s}
@@ -584,6 +599,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
       </div>
       <div class="eyesun" id="sunR" aria-hidden="true"></div>
     </div>
+    <p class="unleash" data-en="Unleash the Divine Feminine">Despierta lo divino femenino</p>
     <div class="btns">
       <a href="#book" class="btn btn-fill" data-en="Book a session">Reservar sesión</a>
       <a href="#services" class="btn btn-ghost" data-en="See services">Ver servicios</a>
@@ -1509,9 +1525,14 @@ document.querySelectorAll(".reveal").forEach(function(el,i){
   el.style.transitionDelay=((i%4)*65)+"ms"; io.observe(el);
 });
 
-/* los zarpazos entran solos un segundo después de cargar */
-var claws=document.getElementById("claws");
-if (claws) setTimeout(function(){ claws.classList.add("in"); }, 1000);
+/* Secuencia de entrada: primero los cuatro zarpazos, uno por uno.
+   Cuando termina el último, aparece el texto del hero.
+   El último empieza en 1.35s y dura .42s -> el hero entra en 1.85s. */
+var claws=document.getElementById("claws"), heroEl=document.querySelector(".hero");
+if (claws && heroEl){
+  requestAnimationFrame(function(){ claws.classList.add("in"); });
+  setTimeout(function(){ heroEl.classList.add("in"); }, 1850);
+} else if (heroEl){ heroEl.classList.add("in"); }
 
 /* los recortes de "quién te lee" entran escalonados */
 var aboutArt=document.getElementById("aboutArt");
