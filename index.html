@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Moni Brujita — Ayurveda · Astrología · Coaching holístico</title>
-<meta name="description" content="Sabiduría antigua para la mujer moderna. Lecturas de carta natal, ayurveda y acompañamiento holístico con Moni Brujita, desde Mexicali.">
+<title>Moni Brujita — Espiritualidad femenina · Ayurveda · Astrología</title>
+<meta name="description" content="Sabiduría antigua para la mujer moderna. Mentoría privada, carta natal, ayurveda y coaching de amor con Moni Brujita. Sesiones en línea por Zoom, en español e inglés.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -435,8 +435,37 @@ section{position:relative;padding:var(--gap) var(--pad)}
 .natal .v{font-family:var(--display);font-size:17px;font-weight:700;color:var(--cream)}
 .natal .v small{display:block;font-family:var(--body);font-size:12px;color:#FFE2F0;font-weight:400}
 
+/* ═══════════════ GALERÍA EN MOVIMIENTO ═══════════════
+   Tira horizontal de fotos que avanza sola, al estilo de la lámina:
+   mismo alto, anchos distintos, márgenes parejos.
+     --gh     alto de las fotos
+     --speed  cuánto tarda en dar una vuelta (más = más lento)   */
+#gallery{padding:0;background:var(--cream);overflow:hidden}
+.strip{position:relative;overflow:hidden;padding:clamp(18px,2.4vw,34px) 0}
+.track{display:flex;gap:clamp(10px,1.4vw,22px);width:max-content;
+  animation:slide var(--speed) linear infinite;will-change:transform}
+.strip:hover .track{animation-play-state:paused}
+@keyframes slide{from{transform:translateX(0)} to{transform:translateX(calc(-1 * var(--shift,50%)))}}
+.track img{height:var(--gh);width:auto;flex:none;display:block;border-radius:3px;
+  background:var(--rose);box-shadow:0 6px 16px rgba(82,16,47,.14)}
+/* los bordes se desvanecen para que no se vea el corte */
+.strip::before,.strip::after{content:"";position:absolute;top:0;bottom:0;width:clamp(30px,6vw,110px);
+  z-index:2;pointer-events:none}
+.strip::before{left:0;background:linear-gradient(90deg,var(--cream),transparent)}
+.strip::after{right:0;background:linear-gradient(270deg,var(--cream),transparent)}
+@media(prefers-reduced-motion:reduce){
+  .track{animation:none}
+  .strip{overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+
 /* ═══════════════ SERVICIOS ═══════════════ */
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+/* Todas las tarjetas miden exactamente lo mismo: 1/n del ancho menos los
+   huecos. Las filas van centradas, así la última fila queda centrada en
+   vez de estirarse. --n es cuántas caben por fila en cada tamaño. */
+.cards{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;--n:3;--cgap:16px}
+.cards .card{flex:0 0 calc((100% - (var(--n) - 1) * var(--cgap)) / var(--n));min-width:0}
+@media(max-width:1040px){ .cards{--n:2} }
+@media(max-width:680px){  .cards{--n:1} }
 .card{position:relative;background:var(--cream);border:1.5px solid rgba(82,16,47,.22);
   border-radius:118px 118px 16px 16px;padding:30px 22px 22px;display:flex;flex-direction:column;text-align:center;
   box-shadow:5px 6px 0 rgba(82,16,47,.16);transition:transform .3s cubic-bezier(.2,.9,.3,1.3),box-shadow .3s,border-color .3s}
@@ -512,6 +541,9 @@ form.bk button{cursor:pointer;margin-top:4px;align-self:flex-start}
 .contact-list{list-style:none;margin:20px 0 0}
 .contact-list li{border-top:1px solid rgba(82,16,47,.2);padding:13px 0;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
 .contact-list .k{font-family:var(--retro);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+a.inline{color:var(--magenta);text-decoration:none;border-bottom:1.5px solid var(--magenta);
+  padding-bottom:1px;transition:color .25s,border-color .25s}
+a.inline:hover{color:var(--shock);border-color:var(--shock)}
 .contact-list a{text-decoration:none;font-size:15.5px;border-bottom:1px solid transparent}
 .contact-list a:hover{color:var(--magenta);border-color:var(--magenta)}
 
@@ -630,7 +662,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
       <div class="herotext">
         <h1 class="wordmark"><img src="wordmark.png" alt="Moni Brujita" width="1800" height="246"></h1>
         <p class="tagline" data-en="Ancient wisdom for the modern woman.">Sabiduría antigua para la mujer moderna.</p>
-        <p class="disciplines" data-en="Ayurveda · Astrology · Holistic coaching">Ayurveda · Astrología · Coaching holístico</p>
+        <p class="disciplines" data-en="Feminine spirituality · Embodiment · Ayurveda · Astrology">Espiritualidad femenina · Encarnación · Ayurveda · Astrología</p>
       </div>
       <div class="eyesun" id="sunR" aria-hidden="true"></div>
     </div>
@@ -692,7 +724,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
   <div class="wrap">
     <div class="head reveal">
       <span class="eyebrow" data-en="House I · identity">Casa I · identidad</span>
-      <h2 class="h-lg" data-en="Who <span class='print p-cow ital'>reads you</span>">Quién <span class="print p-cow ital">te lee</span></h2>
+      <h2 class="h-lg" data-en="Who <span class='print ital'>I am</span>">Quién <span class="print ital">soy</span></h2>
     </div>
     <div class="about-grid">
       <div class="reveal">
@@ -701,16 +733,30 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
         </div>
       </div>
       <div class="reveal">
-        <p class="lede" style="margin-bottom:18px" data-en="I'm Moni. For years I've been reading birth charts and holding space for women's healing, from Mexicali.">Soy Moni. Llevo años leyendo cartas natales y acompañando procesos de sanación femenina desde Mexicali.</p>
-        <p data-en="I started like most people: a horoscope app and a hunch there was more to it. Today I work with tropical astrology, ayurveda and lineage work. The combination matters: the chart tells you <em>what</em>, the body tells you <em>where you stored it</em>.">Empecé como muchas: con una app de horóscopos y la sospecha de que había algo más. Hoy trabajo con astrología tropical, ayurveda y trabajo de linaje. La combinación importa: la carta te dice <em>qué</em>, el cuerpo te dice <em>dónde lo guardaste</em>.</p>
-        <p data-en="I don't read to scare you, and I won't promise that love arrives in March. I read so you understand why you repeat, what you inherited and what can be put down. Leaving a session with me feels less like a prediction and more like someone finally explained your own manual.">No leo para asustarte ni para prometerte que en marzo llega el amor de tu vida. Leo para que entiendas por qué repites, qué heredaste y qué se puede soltar. Salir de una sesión conmigo se siente menos como una predicción y más como que alguien por fin te explicó tu propio manual.</p>
+        <p class="lede" style="margin-bottom:18px" data-en="I'm Moni — a multidisciplinary healer and artist. For years I've worked with women, guiding them into deep transformational and liberation work.">Soy Moni, sanadora y artista multidisciplinaria. Llevo años trabajando con mujeres, acompañándolas en procesos profundos de transformación y liberación.</p>
+        <p data-en="My holistic education began eight years ago in Boulder, Colorado, where I trained as a certified Ayurvedic Practitioner at Alandi Ashram Gurukula and became a yoga teacher. There I was introduced to Bhakti — devotional yoga — and it became central to my practice (Jai Ma!). I then travelled to Zipolite, Oaxaca, to study under extraordinary <em>curanderas</em> who taught me traditional Mexican massage and healing arts, and opened my spirituality into Earth-rooted ancestral practice.">Mi formación holística empezó hace ocho años en Boulder, Colorado, donde me certifiqué como Practicante Ayurvédica en Alandi Ashram Gurukula y me formé como maestra de yoga. Ahí conocí el Bhakti, el yoga devocional, que se volvió central en mi práctica (¡Jai Ma!). Después viajé a Zipolite, Oaxaca, a estudiar con curanderas extraordinarias que me enseñaron masaje tradicional mexicano y artes de sanación, y que abrieron mi espiritualidad hacia prácticas ancestrales enraizadas en la Tierra.</p>
+        <p data-en="Back in the States, wanting to join Eastern and Western philosophies into something more (w)holistic, I earned my Bachelor's in Psychology from The New School in New York. Along the way I trained as a Body Temple Dance instructor under my teacher Adriana, where I learned the power of somatic release, embodiment, womb work, feminine pleasure and ecstatic dance. But my most powerful initiation was becoming a mother. Motherhood reshaped my beliefs and my practice: the ordinary became mystic, and I trust my inner guidance more than ever. It's time for women to trust themselves again. I know wholly in my body that I am here to serve women, to offer everything to the Divine Mother, and to help build the matriarchy our world so desperately needs.">De regreso en Estados Unidos, buscando unir las filosofías de Oriente y Occidente de una manera más (w)holística, estudié la licenciatura en Psicología en The New School, en Nueva York. En el camino me formé como instructora de Body Temple Dance con mi maestra Adriana, donde aprendí el poder de la liberación somática, la encarnación, el trabajo de útero, el placer femenino y la danza extática. Pero mi iniciación más poderosa fue convertirme en madre. La maternidad transformó mis creencias y mi práctica: lo ordinario se volvió místico y confío en mi guía interna más que nunca. Es tiempo de que las mujeres vuelvan a confiar en sí mismas. Sé en todo mi cuerpo que estoy aquí para servir a las mujeres, para ofrecerle todo a la Madre Divina y ayudar a construir el matriarcado que tanta falta le hace al mundo.</p>
         <div class="natal" id="natal"></div>
-        <p class="soft" style="font-size:14px" data-en="Trained in holistic coaching · tropical and evolutionary astrology · ayurveda and feminine lineage work.">Formación en coaching holístico · astrología tropical y evolutiva · ayurveda y trabajo de linaje femenino.</p>
+        <p class="soft" style="font-size:14px" data-en="Certified Ayurvedic Practitioner (Alandi Ashram Gurukula) · 200h yoga teacher · BA Psychology, The New School · Body Temple Dance instructor · traditional Mexican healing arts.">Practicante Ayurvédica certificada (Alandi Ashram Gurukula) · maestra de yoga · Licenciada en Psicología, The New School · instructora de Body Temple Dance · artes de sanación tradicional mexicana.</p>
       </div>
     </div>
   </div>
   <div class="sunbar inside" data-sunbar data-ink="#C4506E" aria-hidden="true"></div>
 </section>
+
+<!-- ═══════════ GALERÍA EN MOVIMIENTO ═══════════ -->
+<section id="gallery" aria-label="Fotos">
+  <!-- La tira se desliza sola. El set de nueve fotos está dos veces:
+       cuando la primera copia termina de pasar, la animación vuelve a
+       cero y la segunda queda exactamente donde estaba la primera, así
+       no se ve ningún salto. Si cambias el número de fotos, cambia
+       también las dos copias. --gh es el alto; --speed la lentitud. -->
+  <div class="strip" style="--gh:clamp(190px,26vw,380px); --speed:62s">
+    <div class="track" id="galTrack"></div>
+  </div>
+</section>
+
+<div class="sunbar" data-sunbar data-ink="#C4506E" aria-hidden="true"></div>
 
 <!-- ═══════════ SERVICIOS ═══════════ -->
 <section id="services">
@@ -722,68 +768,73 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     </div>
     <div class="cards">
       <article class="card reveal" data-card="0">
-        <svg class="em" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.5 4.5l2 2M17.5 17.5l2 2M19.5 4.5l-2 2M6.5 17.5l-2 2"/></svg>
-        <h3 data-en="Birth chart">Carta natal</h3><p class="dur" data-en="90 min · recorded">90 min · grabada</p>
-        <p data-en="Your whole map, read out loud and in your own language. For anyone who's never had a serious reading.">Tu mapa completo, leído en voz alta y en tus palabras. Para quien nunca ha tenido una lectura seria.</p>
-        <ul>
-          <li data-en="Sun, moon and rising without the jargon">Sol, luna y ascendente sin tecnicismos</li>
-          <li data-en="Your repeating patterns and where they come from">Tus patrones repetidos y de dónde salen</li>
-          <li data-en="Gifts you're currently wasting">Dones que estás desperdiciando</li>
-          <li data-en="Recording + PDF of your chart">Grabación + PDF de tu carta</li>
-        </ul>
-        <div class="foot"><p class="price">$1,800<small>MXN</small></p><a href="#book" class="go" data-en="Book">Reservar</a></div>
-      </article>
-      <article class="card reveal" data-card="1">
         <svg class="em" viewBox="0 0 24 24"><path d="M12 21c0-6 3-9 8-10-5-1-8-4-8-10 0 6-3 9-8 10 5 1 8 4 8 10Z"/></svg>
-        <h3 data-en="Ayurveda">Ayurveda</h3><p class="dur" data-en="75 min · first consultation">75 min · consulta inicial</p>
-        <p data-en="Your dosha, your digestion, your routine. What agrees with your body, with no punishment diets.">Tu dosha, tu digestión y tu rutina. Lo que le cae bien a tu cuerpo, sin dietas de castigo.</p>
+        <h3 data-en="Private mentorship">Mentoría privada</h3><p class="dur" data-en="55 min · online via Zoom">55 min · en línea por Zoom</p>
+        <p data-en="A space to slow down, reconnect with yourself, and explore what sits underneath the patterns in your life. This is where we go deep.">Un espacio para bajarle al ritmo, reconectar contigo y explorar lo que hay debajo de los patrones de tu vida. Aquí es donde vamos profundo.</p>
         <ul>
-          <li data-en="Constitution reading (prakriti)">Lectura de constitución (prakriti)</li>
-          <li data-en="A daily routine that fits your real life">Rutina diaria realista para tu vida</li>
-          <li data-en="Foods and herbs for your type">Alimentos y hierbas según tu tipo</li>
-          <li data-en="Written 30-day plan">Plan escrito de 30 días</li>
+          <li data-en="Emotions, relationships, self-love and childhood">Emociones, relaciones, amor propio e infancia</li>
+          <li data-en="Psychology, astrology, meditation and movement">Psicología, astrología, meditación y movimiento</li>
+          <li data-en="Feminine spirituality rooted in ancient practice">Espiritualidad femenina de raíz ancestral</li>
+          <li data-en="A safe space for your wild nature">Un espacio seguro para tu naturaleza salvaje</li>
+          <li data-en="Includes a birth chart reading">Incluye tu lectura de carta natal</li>
         </ul>
-        <div class="foot"><p class="price">$1,600<small>MXN</small></p><a href="#book" class="go" data-en="Book">Reservar</a></div>
+        <div class="foot"><p class="price">$95–122<small data-en="USD · sliding scale">USD · precio escalonado</small></p><a href="#book" class="go" data-en="Book">Reservar</a></div>
       </article>
+
+      <article class="card reveal" data-card="1">
+        <svg class="em" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.5 4.5l2 2M17.5 17.5l2 2M19.5 4.5l-2 2M6.5 17.5l-2 2"/></svg>
+        <h3 data-en="Birth chart reading">Lectura de carta natal</h3><p class="dur" data-en="60 min · online via Zoom">60 min · en línea por Zoom</p>
+        <p data-en="A deeper look at your unique energetic blueprint, so you can connect more honestly with yourself.">Una mirada profunda a tu plano energético único, para que conectes contigo con más honestidad.</p>
+        <ul>
+          <li data-en="Sun, moon, rising, planets and houses">Sol, luna, ascendente, planetas y casas</li>
+          <li data-en="Your patterns, gifts and challenges">Tus patrones, tus dones y tus retos</li>
+          <li data-en="What it means for your relationships">Qué significa para tus relaciones</li>
+          <li data-en="For a first reading, or a second opinion">Para una primera lectura o una segunda opinión</li>
+        </ul>
+        <div class="foot"><p class="price">$144<small>USD</small></p><a href="#book" class="go" data-en="Book">Reservar</a></div>
+      </article>
+
       <article class="card reveal" data-card="2">
-        <svg class="em" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/><ellipse cx="12" cy="12" rx="11" ry="4" transform="rotate(-22 12 12)"/></svg>
-        <h3 data-en="Solar return">Revolución solar</h3><p class="dur" data-en="60 min · near your birthday">60 min · cerca de tu cumpleaños</p>
-        <p data-en="The weather for your next twelve months: where the door is open and where not to push.">El clima de tus próximos doce meses: dónde hay puerta abierta y dónde conviene no empujar.</p>
+        <svg class="em" viewBox="0 0 24 24"><path d="M12 3c5 4 8 7 8 11a8 8 0 0 1-16 0c0-4 3-7 8-11Z"/><path d="M8.5 14c1.5 2 5.5 2 7 0"/></svg>
+        <h3 data-en="Ayurvedic consultation">Consulta ayurvédica</h3><p class="dur" data-en="60 min · online via Zoom">60 min · en línea por Zoom</p>
+        <p data-en="The ancient medicine of India, built on the elements and the three doshas: vata, pitta and kapha.">La medicina ancestral de la India, basada en los elementos y los tres doshas: vata, pitta y kapha.</p>
         <ul>
-          <li data-en="The central theme of your year">Tema central de tu año</li>
-          <li data-en="Key months, month by month">Meses clave, mes por mes</li>
-          <li data-en="The transits that will move you">Tránsitos que te van a mover</li>
-          <li data-en="Recording + personal calendar">Grabación + calendario personal</li>
+          <li data-en="Your constitution, digestion and energy">Tu constitución, digestión y energía</li>
+          <li data-en="Personalised nutrition and daily routine">Nutrición y rutina diaria personalizadas</li>
+          <li data-en="Hormonal balance and mental health">Equilibrio hormonal y salud mental</li>
+          <li data-en="Fertility, metabolism and digestion">Fertilidad, metabolismo y digestión</li>
+          <li data-en="Follow-ups 30 min · $45 USD">Seguimientos de 30 min · $45 USD</li>
         </ul>
-        <div class="foot"><p class="price">$1,400<small>MXN</small></p><a href="#book" class="go" data-en="Book">Reservar</a></div>
+        <div class="foot"><p class="price">$144<small data-en="USD · first consultation">USD · consulta inicial</small></p><a href="#book" class="go" data-en="Book">Reservar</a></div>
       </article>
+
       <article class="card reveal" data-card="3">
-        <svg class="em" viewBox="0 0 24 24"><circle cx="8.5" cy="9" r="4.5"/><circle cx="15.5" cy="9" r="4.5"/><path d="M8.5 13.5v7M15.5 13.5v7M5.5 17.5h6M12.5 17.5h6"/></svg>
-        <h3 data-en="Synastry">Sinastría</h3><p class="dur" data-en="75 min · two charts">75 min · dos cartas</p>
-        <p data-en="Why that particular person brings out what they bring out. Works for love, family and business partners.">Por qué con esa persona pasa lo que pasa. Funciona para amor, familia y sociedades de trabajo.</p>
+        <svg class="em" viewBox="0 0 24 24"><path d="M16.5 3a9 9 0 1 0 4.5 15.5A9.5 9.5 0 0 1 16.5 3Z"/><path d="M6 5l1 2.6L9.6 8.6 7 9.6 6 12.2 5 9.6 2.4 8.6 5 7.6z"/></svg>
+        <h3 data-en="Sacred scalp massage">Masaje sagrado de cabeza</h3><p class="dur" data-en="In person · by appointment">Presencial · con cita</p>
+        <p data-en="Warm oils, slow hands and the ayurvedic head ritual. Somewhere between bodywork and ceremony — for when the thinking needs to stop.">Aceites tibios, manos lentas y el ritual ayurvédico de cabeza. Entre el trabajo corporal y la ceremonia, para cuando la mente necesita parar.</p>
         <ul>
-          <li data-en="What binds you and what wears you down">Qué las une y qué las desgasta</li>
-          <li data-en="The knot that keeps repeating between you">El nudo que se repite entre ustedes</li>
-          <li data-en="How to speak without wounding">Cómo hablarse sin herirse</li>
-          <li data-en="Recording for both of you">Grabación para las dos</li>
+          <li data-en="Warm herbal oils chosen for your dosha">Aceites herbales tibios según tu dosha</li>
+          <li data-en="Scalp, neck and shoulders">Cuero cabelludo, cuello y hombros</li>
+          <li data-en="Calms the nervous system and the mind">Calma el sistema nervioso y la mente</li>
+          <li data-en="Traditional Mexican and ayurvedic technique">Técnica tradicional mexicana y ayurvédica</li>
         </ul>
-        <div class="foot"><p class="price">$2,200<small>MXN</small></p><a href="#book" class="go" data-en="Book">Reservar</a></div>
+        <div class="foot"><p class="price">Consultar<small>Escríbeme</small></p><a href="#book" class="go" data-en="Ask">Consultar</a></div>
       </article>
+
       <article class="card flag reveal" data-card="4">
-        <span class="ribbon" data-en="Limited spots">Cupo limitado</span>
-        <svg class="em" viewBox="0 0 24 24" style="margin-top:12px"><path d="M16.5 3a9 9 0 1 0 4.5 15.5A9.5 9.5 0 0 1 16.5 3Z"/><path d="M6 5l1 2.6L9.6 8.6 7 9.6 6 12.2 5 9.6 2.4 8.6 5 7.6z"/></svg>
-        <h3 data-en="Back to yourself">Volver a ti misma</h3><p class="dur" data-en="10 weeks · 1:1">10 semanas · 1:1</p>
-        <p data-en="The container. Four phases to take apart what you inherited and move back into yourself.">El contenedor. Cuatro fases para desarmar lo heredado y volver a habitarte.</p>
+        <span class="ribbon" data-en="10-week program">Programa de 10 semanas</span>
+        <svg class="em" viewBox="0 0 24 24" style="margin-top:12px"><path d="M12 20.5c-4-3.2-8-6-8-10A4 4 0 0 1 12 8a4 4 0 0 1 8 2.5c0 4-4 6.8-8 10Z"/></svg>
+        <h3 data-en="Love coaching">Coaching de amor</h3><p class="dur" data-en="10 weeks · 55 min a week">10 semanas · 55 min por semana</p>
+        <p data-en="A container built to prepare you for a conscious relationship — one rooted in self-love, security and awareness.">Un contenedor para prepararte a entrar en una relación consciente, enraizada en el amor propio, la seguridad y la consciencia.</p>
         <ul>
-          <li data-en="Phase 1 — Back to yourself: self-love and body">Fase 1 — Volver a ti misma: amor propio y cuerpo</li>
-          <li data-en="Phase 2 — Healing the original wounds">Fase 2 — Sanar las heridas originales</li>
-          <li data-en="Phase 3 — Body and lineage">Fase 3 — Cuerpo y linaje</li>
-          <li data-en="Phase 4 — Embodying the goddess">Fase 4 — Encarnar a la diosa</li>
-          <li data-en="Audio, journaling and WhatsApp between sessions">Audios, journaling y WhatsApp entre sesiones</li>
+          <li data-en="Your patterns, wounds and relational style">Tus patrones, heridas y estilo relacional</li>
+          <li data-en="Boundaries, needs and desires">Límites, necesidades y deseos</li>
+          <li data-en="Erotic energy, womb and pleasure">Energía erótica, útero y placer</li>
+          <li data-en="Falling in love with yourself first">Enamorarte de ti antes que de nadie</li>
+          <li data-en="A tested, week-by-week program">Un programa probado, semana a semana</li>
         </ul>
-        <div class="foot"><p class="price">Aplicación<small>Por convocatoria</small></p><a href="#book" class="go" data-en="Apply">Aplicar</a></div>
+        <div class="foot"><p class="price">$888<small data-en="USD · full program">USD · programa completo</small></p><a href="#book" class="go" data-en="Apply">Aplicar</a></div>
       </article>
-    </div>
   </div>
 </section>
 
@@ -843,7 +894,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     <div class="head reveal">
       <span class="eyebrow" data-en="House VII · the meetings">Casa VII · los encuentros</span>
       <h2 class="h-lg" data-en="Book <span class='print p-python ital'>your session</span>">Reservar <span class="print p-python ital">tu sesión</span></h2>
-      <p class="lede" style="margin-top:12px" data-en="Write to me and I'll reply within 48 hours with available times.">Escríbeme y te contesto en menos de 48 horas con horarios disponibles.</p>
+      <p class="lede" style="margin-top:12px" data-en="Write to me and I'll reply within 48 hours with available times.&lt;br&gt;Or you can book directly &lt;a class=&quot;inline&quot; href=&quot;https://cal.com/TU-ENLACE&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;here&lt;/a&gt;.">Escríbeme y te contesto en menos de 48 horas con horarios disponibles.<br>O puedes reservar directamente <a class="inline" href="https://cal.com/TU-ENLACE" target="_blank" rel="noopener">aquí</a>.</p>
     </div>
     <div class="book">
       <div class="reveal">
@@ -860,7 +911,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
             <div class="field"><label for="f-date" data-en="Date of birth">Fecha de nacimiento</label><input id="f-date" name="fecha_nacimiento" type="date"></div>
             <div class="field"><label for="f-time" data-en="Exact time (if you know it)">Hora exacta (si la sabes)</label><input id="f-time" name="hora_nacimiento" type="time"></div>
           </div>
-          <div class="field"><label for="f-city" data-en="City of birth">Ciudad de nacimiento</label><input id="f-city" name="ciudad_nacimiento" type="text" placeholder="Mexicali, B.C., México"></div>
+          <div class="field"><label for="f-city" data-en="City of birth">Ciudad de nacimiento</label><input id="f-city" name="ciudad_nacimiento" type="text" placeholder="Ciudad, estado, país"></div>
           <div class="field"><label data-en="Session language">Idioma de la sesión</label>
             <div class="radios">
               <label class="radio"><input type="radio" name="idioma" value="Español" checked><span>Español</span></label>
@@ -874,6 +925,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
       </div>
       <div class="reveal">
         <ul class="contact-list">
+          <li><span class="k" data-en="Book online">Agenda en línea</span><a href="https://cal.com/TU-ENLACE" target="_blank" rel="noopener" data-en="See available times">Ver horarios disponibles</a></li>
           <li><span class="k">Instagram</span><a href="https://www.instagram.com/monibrujita_/" target="_blank" rel="noopener">@monibrujita_</a></li>
           <li><span class="k" data-en="Email">Correo</span><a href="mailto:hola@monibrujita.com">hola@monibrujita.com</a></li>
           <li><span class="k">WhatsApp</span><a href="https://wa.me/52TUNUMERO" target="_blank" rel="noopener" data-en="Message on WhatsApp">Escribir por WhatsApp</a></li>
@@ -908,7 +960,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     </div>
   </div>
   <div class="copy">
-    <p>© <span id="yr"></span> Moni Brujita · Mexicali, B.C. · <span data-en="Ayurveda · Astrology · Holistic coaching">Ayurveda · Astrología · Coaching holístico</span></p>
+    <p>© <span id="yr"></span> Moni Brujita · <span data-en="Feminine spirituality · Embodiment · Ayurveda · Astrology">Espiritualidad femenina · Encarnación · Ayurveda · Astrología</span></p>
     <p class="credit" data-en="Website and Branding by: &lt;a href=&quot;https://www.mommasboys.com&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Momma's Boys&lt;/a&gt;">Sitio web e identidad por: <a href="https://www.mommasboys.com" target="_blank" rel="noopener">Momma's Boys</a></p>
   </div>
   <div class="sunbar" data-sunbar data-ink="#FFD0E4" aria-hidden="true"></div>
@@ -1091,18 +1143,21 @@ var ELEMENT_PINK = {fuego:"#FF2E86", tierra:"#C4506E", aire:"#E667C9", agua:"#E0
 var UI = {
 
   today:{es:"Tu mensaje de hoy",en:"Your message today"},
-  svc:{es:["Carta natal","Ayurveda","Revolución solar","Sinastría","Volver a ti misma (10 semanas)","Todavía no sé"],
-       en:["Birth chart","Ayurveda","Solar return","Synastry","Back to yourself (10 weeks)","Not sure yet"]},
+  svc:{es:["Mentoría privada","Lectura de carta natal","Consulta ayurvédica","Masaje sagrado de cabeza","Coaching de amor (10 semanas)","Todavía no sé"],
+       en:["Private mentorship","Birth chart reading","Ayurvedic consultation","Sacred scalp massage","Love coaching (10 weeks)","Not sure yet"]},
   natalK:{es:["Sol","Luna","Ascendente"],en:["Sun","Moon","Rising"]},
   natalT:{es:["Leo · Casa X","Piscis · Casa IV","Acuario"],en:["Leo · 10th house","Pisces · 4th house","Aquarius"]},
   /* precios: pesos en español, dólares en inglés.
      El orden es el de las tarjetas (data-card 0 a 4).
      Cambia estos textos cuando ajustes tus tarifas.            */
-  price:{es:["$1,800<small>MXN</small>","$1,600<small>MXN</small>","$1,400<small>MXN</small>",
-             "$2,200<small>MXN</small>","Aplicación<small>Por convocatoria</small>"],
-         en:["$95<small>USD</small>","$85<small>USD</small>","$75<small>USD</small>",
-             "$115<small>USD</small>","Apply<small>By invitation</small>"]},
+  /* precios: la misma moneda en los dos idiomas (ella cotiza en USD).
+     El orden es el de las tarjetas (data-card 0 a 4). */
+  price:{es:["$95–122<small>USD</small>","$144<small>USD</small>","$144<small>USD</small>",
+             "Consultar<small>Escríbeme</small>","$888<small>USD</small>"],
+         en:["$95–122<small>USD</small>","$144<small>USD</small>","$144<small>USD</small>",
+             "Ask<small>Message me</small>","$888<small>USD</small>"]},
   mailPH:{es:"tu@correo.com",en:"you@email.com"},
+  cityPH:{es:"Ciudad, estado, país",en:"City, state, country"},
   msgPH:{es:"Cuéntame en dos líneas qué está pasando.",en:"Tell me in two lines what's going on."},
   badMail:{es:"Ese correo no se ve completo. Revísalo y vuelve a intentar.",
            en:"That email doesn't look complete. Check it and try again."},
@@ -1111,11 +1166,11 @@ var UI = {
 };
 var TESTI = [
   {q:{es:"Lloré en la primera media hora. No de tristeza — de alivio.",
-      en:"I cried in the first half hour. Not from sadness — from relief."}, w:"Ana, 34 · Tijuana"},
+      en:"I cried in the first half hour. Not from sadness — from relief."}, w:"Ana, 34"},
   {q:{es:"Llevaba años en terapia. Esto me dio el mapa que me faltaba.",
-      en:"I'd been in therapy for years. This gave me the map I was missing."}, w:"Karla, 41 · CDMX"},
+      en:"I'd been in therapy for years. This gave me the map I was missing."}, w:"Karla, 41"},
   {q:{es:"Pensé que era puro humo. Moni me leyó en cinco minutos.",
-      en:"I thought it was all smoke. Moni read me in five minutes."}, w:"Regina, 28 · Mexicali"}
+      en:"I thought it was all smoke. Moni read me in five minutes."}, w:"Regina, 28"}
 ];
 
 var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1239,6 +1294,7 @@ function setLang(l){
   /* marcadores de formulario */
   document.getElementById("subEmail").placeholder = T(UI.mailPH);
   document.getElementById("f-msg").placeholder = T(UI.msgPH);
+  document.getElementById("f-city").placeholder = T(UI.cityPH);
   /* si ya hay signo elegido, volver a pintarlo */
   if (chosen) applySign(chosen, true);
 }
@@ -1248,26 +1304,26 @@ document.querySelectorAll(".lang button").forEach(function(b){
 
 /* ═════════ SERVICIOS DE LA RUEDA ═════════ */
 var SVCS=[
- {card:0, n:{es:"CARTA NATAL",en:"BIRTH CHART"}, t:{es:"Carta natal",en:"Birth chart"},
-  dur:{es:"90 min · grabada",en:"90 min · recorded"},
-  d:{es:"Tu mapa completo leído en voz alta: sol, luna, ascendente y los patrones que se repiten. Te llevas la grabación y el PDF de tu carta.",
-     en:"Your whole map read out loud: sun, moon, rising and the patterns that keep repeating. You keep the recording and a PDF of your chart."}},
- {card:1, n:{es:"AYURVEDA",en:"AYURVEDA"}, t:{es:"Ayurveda",en:"Ayurveda"},
-  dur:{es:"75 min · consulta inicial",en:"75 min · first consultation"},
-  d:{es:"Tu dosha, tu digestión y tu rutina diaria. Salimos con un plan escrito de 30 días, sin dietas de castigo.",
-     en:"Your dosha, your digestion and your daily routine. You leave with a written 30-day plan and no punishment diets."}},
- {card:2, n:{es:"REVOLUCIÓN SOLAR",en:"SOLAR RETURN"}, t:{es:"Revolución solar",en:"Solar return"},
-  dur:{es:"60 min · cerca de tu cumpleaños",en:"60 min · near your birthday"},
-  d:{es:"El clima de tus próximos doce meses, mes por mes. Dónde hay puerta abierta y dónde conviene no empujar.",
-     en:"The weather for your next twelve months, month by month. Where the door is open and where it's better not to push."}},
- {card:3, n:{es:"SINASTRÍA",en:"SYNASTRY"}, t:{es:"Sinastría",en:"Synastry"},
-  dur:{es:"75 min · dos cartas",en:"75 min · two charts"},
-  d:{es:"Dos cartas, una conversación. Qué las une, qué las desgasta y el nudo que se repite entre ustedes.",
-     en:"Two charts, one conversation. What binds you, what wears you down, and the knot that keeps repeating."}},
- {card:4, n:{es:"VOLVER A TI MISMA",en:"BACK TO YOURSELF"}, t:{es:"Volver a ti misma",en:"Back to yourself"},
-  dur:{es:"10 semanas · 1:1",en:"10 weeks · 1:1"},
-  d:{es:"Diez semanas en cuatro fases, del amor propio al linaje. Con audios, journaling y WhatsApp entre sesiones.",
-     en:"Ten weeks in four phases, from self-love to lineage. With audio, journaling and WhatsApp between sessions."}}
+ {card:0, n:{es:"MENTORÍA PRIVADA",en:"PRIVATE MENTORSHIP"}, t:{es:"Mentoría privada",en:"Private mentorship"},
+  dur:{es:"55 min · en línea por Zoom",en:"55 min · online via Zoom"},
+  d:{es:"Un espacio para bajarle al ritmo y explorar lo que hay debajo de tus patrones: emociones, relaciones, amor propio, infancia y propósito. Trabajamos con psicología, espiritualidad femenina, astrología, meditación y movimiento. Nos vemos cada semana o cada quince días, y tu lectura de carta natal va incluida.",
+     en:"A space to slow down and explore what sits underneath your patterns: emotions, relationships, self-love, childhood and purpose. We work with psychology, feminine spirituality, astrology, meditation and movement. We meet weekly or every two weeks, and your birth chart reading is included."}},
+ {card:1, n:{es:"CARTA NATAL",en:"BIRTH CHART"}, t:{es:"Lectura de carta natal",en:"Birth chart reading"},
+  dur:{es:"60 min · $144 USD",en:"60 min · $144 USD"},
+  d:{es:"Una mirada profunda a tu plano energético único. Recorremos tu sol, luna, ascendente, planetas y casas para entender tus patrones, tus relaciones, tus dones y tus retos. Para quien nunca ha tenido una lectura, o quiere una perspectiva distinta a la que ya escuchó.",
+     en:"A deeper look at your unique energetic blueprint. We explore your sun, moon, rising, planets and houses to understand your patterns, relationships, gifts and challenges. For anyone who has never had a reading, or who wants a different perspective from the one she's been given."}},
+ {card:2, n:{es:"AYURVEDA",en:"AYURVEDA"}, t:{es:"Consulta ayurvédica",en:"Ayurvedic consultation"},
+  dur:{es:"60 min · seguimientos de 30 min",en:"60 min · 30 min follow-ups"},
+  d:{es:"La medicina ancestral de la India, basada en los elementos y los tres doshas: vata, pitta y kapha. Revisamos tu constitución, hábitos, digestión, energía y estilo de vida para encontrar los desequilibrios y armar recomendaciones personalizadas de alimentación, rutina y autocuidado.",
+     en:"The ancient medicine of India, built on the elements and the three doshas: vata, pitta and kapha. We look at your constitution, habits, digestion, energy and lifestyle to find the imbalances and build personalised recommendations for food, routine and self-care."}},
+ {card:3, n:{es:"MASAJE SAGRADO",en:"SACRED MASSAGE"}, t:{es:"Masaje sagrado de cabeza",en:"Sacred scalp massage"},
+  dur:{es:"Presencial · con cita",en:"In person · by appointment"},
+  d:{es:"Aceites tibios elegidos para tu dosha, manos lentas y el ritual ayurvédico de cabeza, cuello y hombros. Está a medio camino entre el trabajo corporal y la ceremonia: para cuando la mente necesita parar y el sistema nervioso necesita descansar.",
+     en:"Warm oils chosen for your dosha, slow hands, and the ayurvedic ritual for head, neck and shoulders. It sits halfway between bodywork and ceremony — for when the thinking needs to stop and the nervous system needs to rest."}},
+ {card:4, n:{es:"COACHING DE AMOR",en:"LOVE COACHING"}, t:{es:"Coaching de amor",en:"Love coaching"},
+  dur:{es:"10 semanas · $888 USD",en:"10 weeks · $888 USD"},
+  d:{es:"Un contenedor diseñado para prepararte a entrar en una relación consciente. Exploramos tus patrones, heridas, límites, necesidades y estilo relacional, y conectamos con tu energía erótica, tu útero, tus deseos y tu placer. Primero te enamoras de ti; lo demás llega después.",
+     en:"A container built to prepare you for a conscious relationship. We explore your patterns, wounds, boundaries, needs and relational style, and connect with your erotic energy, your womb, your desires and your pleasure. You fall in love with yourself first; the rest follows."}}
 ];
 UI.more={es:"Ver el servicio completo",en:"See the full service"};
 
@@ -1321,6 +1377,37 @@ document.getElementById("svcMore").addEventListener("click",function(){
     setTimeout(function(){ card.classList.remove("spotlight"); },3600);
   },500);
 });
+
+/* ═════════ GALERÍA EN MOVIMIENTO ═════════
+   Nueve fotos, montadas dos veces para que el bucle no se note.
+   Para cambiar el orden o añadir fotos, edita esta lista. */
+var GAL=["gallery-1.jpg","gallery-2.jpg","gallery-3.jpg","gallery-4.jpg","gallery-5.jpg",
+         "gallery-6.jpg","gallery-7.jpg","gallery-8.jpg","gallery-9.jpg"];
+(function(){
+  var t=document.getElementById("galTrack");
+  if (!t) return;
+  var one=GAL.map(function(src){
+    return '<img src="'+src+'" alt="" decoding="async">';
+  }).join("");
+  t.innerHTML = one + one;          /* dos copias = vuelta sin salto */
+
+  /* El bucle tiene que avanzar EXACTAMENTE lo que mide una copia más un
+     hueco; si no, al reiniciar se ve el brinco. Como el alto va en vw,
+     se vuelve a medir al cargar las fotos y al cambiar el tamaño. */
+  function sizeTrack(){
+    var kids=Array.prototype.slice.call(t.children,0,GAL.length);
+    if (!kids.length) return;
+    var gap=parseFloat(getComputedStyle(t).gap)||0;
+    var w=kids.reduce(function(s,el){ return s+el.getBoundingClientRect().width; },0)+gap*GAL.length;
+    if (w>0) t.style.setProperty("--shift", w.toFixed(2)+"px");
+  }
+  sizeTrack();
+  Array.prototype.forEach.call(t.querySelectorAll("img"),function(im){
+    if (!im.complete) im.addEventListener("load", sizeTrack, {once:true});
+  });
+  addEventListener("load", sizeTrack);
+  var gt; addEventListener("resize", function(){ clearTimeout(gt); gt=setTimeout(sizeTrack,180); });
+})();
 
 /* ═════════ 5. ESTRELLAS DE FONDO ═════════ */
 var sc=document.getElementById("stars"), sx=sc.getContext("2d");
