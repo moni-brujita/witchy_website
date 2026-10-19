@@ -204,7 +204,7 @@ nav a:hover::after{width:100%}
 .menu-btn{display:none;background:none;border:0;color:var(--wine);font-size:23px;cursor:pointer;line-height:1}
 
 /* ═══════════════ ESTRUCTURA ═══════════════ */
-section{position:relative;padding:var(--gap) var(--pad)}
+section{position:relative;padding:var(--gap) var(--pad) calc(var(--gap) + 16px)}
 .wrap{max-width:var(--maxw);margin:0 auto;width:100%;position:relative;z-index:1}
 .head{margin-bottom:clamp(30px,4vw,52px)}
 .head .eyebrow{margin-bottom:14px}
@@ -234,15 +234,17 @@ section{position:relative;padding:var(--gap) var(--pad)}
 .sunbar{display:block;width:100%;height:38px;overflow:hidden;line-height:0;
   position:relative;z-index:2}
 .sunbar[hidden]{display:none}
-/* franja colocada DENTRO de una sección: fondo transparente, así los soles
-   quedan encima de la foto de piel que subas. */
-/* franja colocada DENTRO de una sección: sólo se anula el COLOR de fondo,
-   nunca la imagen del dibujo (usar el atajo "background" la borraría). */
+/* Todas las franjas van DENTRO de una sección, pegadas a su borde de
+   arriba (.top) o de abajo, y con el fondo transparente: así el dibujo
+   queda encima de la foto de la sección y no corta la imagen con una
+   barra de color. Se anula sólo el COLOR de fondo, nunca la imagen del
+   dibujo (usar el atajo "background" la borraría).                   */
 .sunbar.inside{position:absolute;left:0;right:0;bottom:0;z-index:9;
   background-color:transparent !important}
+.sunbar.inside.top{top:0;bottom:auto}
 
 /* ═══════════════ HERO ═══════════════ */
-#home{min-height:auto;padding:clamp(96px,11vh,124px) var(--pad) 0;overflow:hidden}
+#home{min-height:auto;padding:clamp(96px,11vh,124px) var(--pad) 38px;overflow:hidden}
 
 /* ── SECUENCIA DE APERTURA ──
    Todo se controla con un solo atributo en la sección, #home[data-seq]:
@@ -299,18 +301,6 @@ section{position:relative;padding:var(--gap) var(--pad)}
   transition:transform .22s,box-shadow .22s,background .22s,color .22s}
 .btn-fill{background:var(--magenta);color:var(--cream);border-color:var(--wine);box-shadow:4px 4px 0 var(--wine)}
 .btn-fill:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--wine)}
-
-/* ═══════════════ MENSAJE DEL DÍA ═══════════════ */
-#daily{padding-top:clamp(16px,2.4vh,30px);padding-bottom:clamp(30px,4vh,50px);background:transparent}
-.daycard{max-width:1180px;margin:0 auto;background:var(--cream);border:2px solid var(--wine);
-  border-radius:24px;padding:clamp(22px,3vw,36px);text-align:center;box-shadow:8px 9px 0 var(--wine)}
-.daycard .dsun{width:40px;height:40px;margin:0 auto 10px;fill:var(--rasp)}
-.daycard .when{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--gold);margin-bottom:10px}
-.daycard .who{font-size:clamp(32px,5.4vw,66px);margin-bottom:10px;line-height:.9}
-.daycard .msg{font-family:var(--display);font-style:italic;font-size:clamp(18px,2.1vw,28px);
-  line-height:1.28;max-width:none;margin:0 auto 4px}
-.daycard .foot{font-family:var(--label);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#A5688A}
 
 /* ═══════════════ SOBRE MÍ ═══════════════ */
 .about-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:clamp(26px,4vw,58px);align-items:stretch}
@@ -469,13 +459,13 @@ footer{background-color:var(--wine);color:var(--rose);position:relative;
 footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
   background:rgba(82,16,47,var(--veil-foot))}
 .foot-in,.copy{position:relative;z-index:1}
-.foot-in{padding:30px var(--pad) 34px;max-width:var(--maxw);margin:0 auto;display:flex;justify-content:space-between;
+.foot-in{padding:56px var(--pad) 34px;max-width:var(--maxw);margin:0 auto;display:flex;justify-content:space-between;
   gap:22px;flex-wrap:wrap;align-items:flex-end}
 .foot-in .big{font-family:var(--display);font-weight:800;letter-spacing:-.025em;font-size:clamp(32px,5vw,70px);line-height:.9}
 .foot-links{display:flex;flex-direction:column;gap:8px;text-align:right}
 .foot-links a{font-family:var(--display);font-weight:600;font-size:14.5px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--rose)}
 .foot-links a:hover{color:var(--hot)}
-.copy{border-top:1px solid rgba(255,208,228,.22);padding:16px var(--pad);font-family:var(--retro);
+.copy{border-top:1px solid rgba(255,208,228,.22);padding:16px var(--pad) 50px;font-family:var(--retro);
   font-size:12px;letter-spacing:.1em;color:var(--rose);
   display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
 .copy p{margin:0}
@@ -530,8 +520,6 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 <div id="curHead" aria-hidden="true"></div>
 <div id="transit" aria-hidden="true"><i></i></div>
 
-<div class="sunbar" data-sunbar data-ink="#C4506E" aria-hidden="true"></div>
-
 <!-- ═══════════ HEADER ═══════════ -->
 <header id="hdr">
   <a href="#home" class="brand">Moni <span>Brujita</span></a>
@@ -550,6 +538,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 
 <!-- ═══════════ HOME ═══════════ -->
 <section id="home" data-seq="off" class="bg" style="--img:url(&quot;bg-hero.jpg&quot;); --veil:.66">
+  <div class="sunbar inside top" data-sunbar data-ink="#C4506E" aria-hidden="true"></div>
   <!-- ── ZARPAZOS ──
        Aparecen solos, uno por uno, como si algo hubiera rasgado la
        página. --w tamaño, --r inclinación, --d cuándo cae cada uno. -->
@@ -567,23 +556,14 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
   <!-- ── TIRA DE FOTOS ──
        Se desliza sola. Las nueve fotos van dos veces para que la
        vuelta no se note. --gh es el alto; --speed la lentitud. -->
-  <div class="strip" style="--gh:clamp(170px,22vw,330px); --speed:62s">
+  <div class="strip" style="--gh:clamp(215px,29vw,440px); --speed:68s">
     <div class="track" id="galTrack"></div>
   </div>
+  <div class="sunbar inside" data-sunbar data-ink="#C4506E" aria-hidden="true"></div>
 </section>
 
 <!-- ═══════════ MENSAJE DEL DÍA ═══════════ -->
-<section id="daily" hidden>
-  <div class="daycard">
-    <svg class="dsun" viewBox="0 0 44 44" id="daySun" aria-hidden="true"></svg>
-    <p class="when" id="dayWhen"></p>
-    <h2 class="who print ital" id="dayWho"></h2>
-    <p class="msg" id="dayMsg"></p>
-  </div>
-</section>
 
-
-<div class="sunbar" data-sunbar data-ink="#C4506E" aria-hidden="true"></div>
 
 <!-- ═══════════ SOBRE MÍ ═══════════ -->
 <section id="about" class="band-cream bg" style="--img:url(&quot;bg-tiger.png&quot;); --veil:.80">
@@ -606,10 +586,10 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
       </div>
     </div>
   </div>
+  <div class="sunbar inside" data-sunbar data-ink="#C4506E" aria-hidden="true"></div>
 </section>
 
 
-<div class="sunbar" data-sunbar data-bg="#FFF6E9" data-ink="#C4506E" aria-hidden="true"></div>
 
 <!-- ═══════════ SERVICIOS ═══════════ -->
 <section id="services" class="bg" style="--img:url(&quot;bg-services.jpg&quot;); --veil:.74">
@@ -688,10 +668,11 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
         </ul>
         <div class="foot"><p class="price">$888<small data-en="USD · full program">USD · programa completo</small></p><a href="#book" class="go" data-en="Apply">Aplicar</a></div>
       </article>
+    </div>
   </div>
+  <div class="sunbar inside" data-sunbar data-ink="#C4506E" aria-hidden="true"></div>
 </section>
 
-<div class="sunbar" data-sunbar data-ink="#C4506E" aria-hidden="true"></div>
 
 <!-- ═══════════ TESTIMONIOS ═══════════ -->
 <section id="voces" class="band-paper bg" style="--img:url(&quot;snake.png&quot;); --veil:.62">
@@ -737,12 +718,12 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
       </div>
     </div>
   </div>
+  <div class="sunbar inside" data-sunbar data-ink="#FFD0E4" aria-hidden="true"></div>
 </section>
 
-<div class="sunbar" data-sunbar data-bg="#E0248C" data-ink="#FFD0E4" aria-hidden="true"></div>
 
 <!-- ═══════════ RESERVAR ═══════════ -->
-<section id="book" class="band-cream bg" style="--img:url(&quot;bg-zodiac.jpg&quot;); --veil:.84">
+<section id="book" class="band-cream bg" style="--img:url(&quot;bg-hero.jpg&quot;); --veil:.84">
   <div class="wrap">
     <div class="head reveal">
       <span class="eyebrow" data-en="House VII · the meetings">Casa VII · los encuentros</span>
@@ -790,7 +771,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 
 <!-- ═══════════ PIE ═══════════ -->
 <footer>
-  <div class="sunbar" data-sunbar data-bg="#FFF6E9" data-ink="#E0248C" aria-hidden="true"></div>
+  <div class="sunbar inside top" data-sunbar data-ink="#E0248C" aria-hidden="true"></div>
   <div class="foot-in">
     <p class="big" data-en="See you<br>in the sky.">Nos vemos<br>en el cielo.</p>
     <div class="foot-links">
@@ -803,7 +784,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     <p>© <span id="yr"></span> Moni Brujita · <span data-en="Feminine spirituality · Embodiment · Ayurveda · Astrology">Espiritualidad femenina · Encarnación · Ayurveda · Astrología</span></p>
     <p class="credit" data-en="Website and Branding by: &lt;a href=&quot;https://www.mommasboys.com&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Momma's Boys&lt;/a&gt;">Sitio web e identidad por: <a href="https://www.mommasboys.com" target="_blank" rel="noopener">Momma's Boys</a></p>
   </div>
-  <div class="sunbar" data-sunbar data-ink="#FFD0E4" aria-hidden="true"></div>
+  <div class="sunbar inside" data-sunbar data-ink="#FFD0E4" aria-hidden="true"></div>
 </footer>
 
 <script>
@@ -1067,7 +1048,6 @@ var SUN_SVG =
   '<img class="eye" src="eye.png" alt="" width="560" height="390">';
 document.getElementById("sunL").innerHTML = SUN_SVG;
 document.getElementById("sunR").innerHTML = SUN_SVG;
-document.getElementById("daySun").innerHTML='<path d="'+sunPath(22,22,21,9,12,1.9)+'"/>';
 
 /* ═════════ 3. CONSTRUIR ═════════ */
 var grid=document.getElementById("signGrid");
@@ -1393,23 +1373,8 @@ if (fine && !reduce){
 
 /* ═════════ 8. ELEGIR SIGNO ═════════ */
 var gate=document.getElementById("gate"), gateInner=document.getElementById("gateInner");
-var daily=document.getElementById("daily");
 document.body.classList.add("locked");
 
-function dayIndex(){
-  var d=new Date(), start=new Date(d.getFullYear(),0,0);
-  return Math.floor((d-start)/86400000);
-}
-function showDaily(s){
-  var i=SIGNS.indexOf(s), list=T(s.day);
-  var d=new Date();
-  document.getElementById("dayWhen").textContent = T(UI.today) + " · " +
-    d.toLocaleDateString(LANG==="en"?"en-US":"es-MX",{day:"numeric",month:"long"});
-  var who=document.getElementById("dayWho");
-  who.textContent=T(s.n);
-  document.getElementById("dayMsg").textContent="“"+list[(dayIndex()+i*3)%list.length]+"”";
-  daily.hidden=false;
-}
 function applySign(s,quiet){
   chosen=s;
   document.documentElement.style.setProperty("--accent",ELEMENT_PINK[s.el]);
@@ -1419,7 +1384,6 @@ function applySign(s,quiet){
   head.innerHTML='<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="'+
     ELEMENT_PINK[s.el]+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+
     s.p.map(function(d){return '<path d="'+d+'"/>';}).join("")+'</svg>';
-  showDaily(s);
 }
 /* Al cerrarse la portada entra el hero de una vez.
    Un solo atributo manda: #home[data-seq].                      */
