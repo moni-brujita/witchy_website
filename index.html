@@ -312,7 +312,7 @@ section{position:relative;padding:var(--gap) var(--pad)}
 /* ═══════════════ RECORTES DE "QUIÉN TE LEE" ═══════════════
    Tres piezas sueltas alrededor del texto. Aparecen al entrar
    en pantalla. --w controla el tamaño de cada una.             */
-#about{overflow:hidden;padding-bottom:calc(var(--gap) + 44px)}
+#about{overflow:hidden;padding-bottom:clamp(20px,3vh,40px)}
 .aboutart{position:absolute;inset:0;z-index:8;pointer-events:none;overflow:hidden}
 .aboutart img{position:absolute;width:var(--w);height:auto;opacity:0;
   filter:drop-shadow(0 14px 24px rgba(82,16,47,.24));
@@ -336,8 +336,15 @@ section{position:relative;padding:var(--gap) var(--pad)}
 .wordmark img{width:min(860px,100%);height:auto;margin:0 auto;display:block}
 .tagline{font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(21px,2.7vw,40px);
   line-height:1.14;margin-bottom:8px;font-variation-settings:"SOFT" 60,"WONK" 1}
-.disciplines{font-family:var(--label);font-size:clamp(13px,1.4vw,20px);letter-spacing:.24em;
+/* dos renglones fijos, 2 + 2. El tamaño va atado al ancho para que
+   cada renglón entre completo entre los dos soles; en pantalla chica
+   se deja envolver solo, que ahí no hay espacio para forzarlo. */
+.disciplines{font-family:var(--label);font-size:clamp(10px,1.05vw,16px);letter-spacing:.14em;
+  line-height:1.65;white-space:nowrap;
   text-transform:uppercase;color:var(--rasp);margin-bottom:0}
+@media(max-width:900px){
+  .disciplines{white-space:normal;font-size:clamp(11px,3vw,15px);letter-spacing:.12em}
+}
 .sunspin{animation:spin 90s linear infinite;transform-origin:110px 110px;transform-box:view-box}
 @keyframes spin{to{transform:rotate(360deg)}}
 .unleash{font-family:var(--display);font-style:italic;font-weight:700;
@@ -462,8 +469,19 @@ section{position:relative;padding:var(--gap) var(--pad)}
 /* Todas las tarjetas miden exactamente lo mismo: 1/n del ancho menos los
    huecos. Las filas van centradas, así la última fila queda centrada en
    vez de estirarse. --n es cuántas caben por fila en cada tamaño. */
-.cards{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;--n:3;--cgap:16px}
+.cards{display:flex;flex-wrap:wrap;gap:var(--cgap);justify-content:center;--n:3;--cgap:16px}
 .cards .card{flex:0 0 calc((100% - (var(--n) - 1) * var(--cgap)) / var(--n));min-width:0}
+/* en pantalla grande los cinco servicios van en una sola fila, por eso
+   esta sección usa un ancho mayor que el resto de la página */
+@media(min-width:1400px){
+  #services .wrap{max-width:min(1560px,94vw)}
+  .cards{--n:5;--cgap:14px}
+  .card{padding:30px 18px 22px}
+  .card h3{font-size:clamp(20px,1.5vw,25px)}
+  .card p{font-size:14px}
+  .card ul{font-size:13.2px}
+  .card ul li{padding-left:17px}
+}
 @media(max-width:1040px){ .cards{--n:2} }
 @media(max-width:680px){  .cards{--n:1} }
 .card{position:relative;background:var(--cream);border:1.5px solid rgba(82,16,47,.22);
@@ -662,7 +680,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
       <div class="herotext">
         <h1 class="wordmark"><img src="wordmark.png" alt="Moni Brujita" width="1800" height="246"></h1>
         <p class="tagline" data-en="Ancient wisdom for the modern woman.">Sabiduría antigua para la mujer moderna.</p>
-        <p class="disciplines" data-en="Feminine spirituality · Embodiment · Ayurveda · Astrology">Espiritualidad femenina · Encarnación · Ayurveda · Astrología</p>
+        <p class="disciplines" data-en="Feminine spirituality · Embodiment + Movement&lt;br&gt;Ayurveda + Yoga · Astrology">Espiritualidad femenina · Encarnación + Movimiento<br>Ayurveda + Yoga · Astrología</p>
       </div>
       <div class="eyesun" id="sunR" aria-hidden="true"></div>
     </div>
@@ -741,7 +759,6 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
       </div>
     </div>
   </div>
-  <div class="sunbar inside" data-sunbar data-ink="#C4506E" aria-hidden="true"></div>
 </section>
 
 <!-- ═══════════ GALERÍA EN MOVIMIENTO ═══════════ -->
@@ -756,7 +773,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
   </div>
 </section>
 
-<div class="sunbar" data-sunbar data-ink="#C4506E" aria-hidden="true"></div>
+<div class="sunbar" data-sunbar data-bg="#FFF6E9" data-ink="#C4506E" aria-hidden="true"></div>
 
 <!-- ═══════════ SERVICIOS ═══════════ -->
 <section id="services">
@@ -1448,22 +1465,51 @@ function sizeBoom(){
   bx.setTransform(dpr,0,0,dpr,0,0);
 }
 sizeBoom();
-var PINKS=["#FF2E86","#FF4FA0","#E0248C","#FF80C0","#FFB9D4","#C4506E","#FFF6E9"];
+/* ═══════════════════════════════════════════════════════════
+   LA SEÑAL
+   No es una explosión: es una estampa. El glifo se imprime al
+   centro como un sello sobre papel, detrás se abre un sol
+   tallado, y alrededor suben anillos temblorosos, semillas y
+   ceniza en tintas de tierra. Todo plano, sin brillos ni
+   degradados, porque lo que brilla parece plástico.
+   --- TINTAS ---
+   Para cambiar el ánimo, cambia esta paleta y nada más.
+   ═══════════════════════════════════════════════════════════ */
+var INKS=["#C4506E","#B5603F","#C98A3C","#9A6A14","#DE7FA4","#8C5A4A","#52102F"];
 var STAR4=new Path2D("M12 1.4l2.95 7.65L22.6 12l-7.65 2.95L12 22.6l-2.95-7.65L1.4 12l7.65-2.95z");
-var STAR5=new Path2D(sunPath(12,12,11,4.6,5,1.4));
-function drawStarShape(ctx,path,size,color){
-  ctx.save(); ctx.scale(size/24,size/24); ctx.translate(-12,-12);
-  ctx.fillStyle=color; ctx.fill(path); ctx.restore();
+
+/* círculo dibujado a pulso: nunca redondo del todo */
+function inkRing(ctx,r,color,w,seed,wob){
+  ctx.beginPath();
+  for (var i=0;i<=56;i++){
+    var a=i/56*6.283;
+    var rr=r*(1 + Math.sin(a*3+seed)*wob + Math.sin(a*5.4-seed*1.7)*wob*0.55);
+    var x=Math.cos(a)*rr, y=Math.sin(a)*rr*0.97;
+    i ? ctx.lineTo(x,y) : ctx.moveTo(x,y);
+  }
+  ctx.closePath(); ctx.strokeStyle=color; ctx.lineWidth=w;
+  ctx.lineJoin="round"; ctx.stroke();
 }
-function drawSpot(ctx,r,c){
-  ctx.fillStyle=c; ctx.beginPath(); ctx.ellipse(0,0,r,r*.78,0,0,6.284); ctx.fill();
-  ctx.fillStyle="rgba(255,246,233,.85)";
-  ctx.beginPath(); ctx.ellipse(r*.16,r*.16,r*.42,r*.3,0,0,6.284); ctx.fill();
-}
-function drawStripe(ctx,r,c){
+/* semilla / cascarilla */
+function inkSeed(ctx,r,c){
   ctx.fillStyle=c; ctx.beginPath();
-  ctx.moveTo(-r,0); ctx.quadraticCurveTo(0,-r*.34,r,0); ctx.quadraticCurveTo(0,r*.15,-r,0);
+  ctx.moveTo(0,-r);
+  ctx.quadraticCurveTo(r*0.66,-r*0.2, 0, r);
+  ctx.quadraticCurveTo(-r*0.66,-r*0.2, 0,-r);
+  ctx.fill();
+}
+/* mota de ceniza: cuadrilátero irregular, nunca un círculo */
+function inkFleck(ctx,r,c,k){
+  ctx.fillStyle=c; ctx.beginPath();
+  ctx.moveTo(-r, r*0.12*k);
+  ctx.lineTo(-r*0.15,-r*0.82);
+  ctx.lineTo( r*0.92,-r*0.1*k);
+  ctx.lineTo( r*0.1,  r*0.7);
   ctx.closePath(); ctx.fill();
+}
+function inkStar(ctx,size,color){
+  ctx.save(); ctx.scale(size/24,size/24); ctx.translate(-12,-12);
+  ctx.fillStyle=color; ctx.fill(STAR4); ctx.restore();
 }
 function strokeGlyph(ctx,sign,size,color,w){
   ctx.save(); ctx.scale(size/24,size/24); ctx.translate(-12,-12);
@@ -1472,77 +1518,109 @@ function strokeGlyph(ctx,sign,size,color,w){
   for (var i=0;i<sign.p2d.length;i++) ctx.stroke(sign.p2d[i]);
   ctx.restore();
 }
+
 function explode(sign,done){
   if (reduce){ done(); return; }
   var cx=innerWidth/2, cy=innerHeight/2, t0=performance.now();
   var big=Math.max(innerWidth,innerHeight), P=[], rings=[];
-  function pick(){ return PINKS[(Math.random()*PINKS.length)|0]; }
-  function shoot(kind,extra){
-    var a=Math.random()*6.283, sp=Math.pow(Math.random(),.55)*(big/(extra.slow||110))+2;
-    var o={k:kind,x:cx,y:cy,px:cx,py:cy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp*.84,
-      rot:Math.random()*6.28,vr:(Math.random()-.5)*.09,c:pick(),life:1};
-    for (var q in extra) if (q!=="slow") o[q]=extra[q];
-    P.push(o);
+  function ink(){ return INKS[(Math.random()*INKS.length)|0]; }
+
+  /* los anillos salen despacio y desiguales, como ondas en agua */
+  for (var r=0;r<6;r++)
+    rings.push({d:r*150, seed:Math.random()*6.28, wob:0.012+Math.random()*0.022,
+                w:1.6+Math.random()*2.2, c:INKS[(Math.random()*5)|0]});
+
+  /* todo flota y se posa; nada sale disparado */
+  function sow(kind,n,o){
+    for (var i=0;i<n;i++){
+      var a=Math.random()*6.283;
+      var sp=(0.35+Math.pow(Math.random(),1.8)*0.9)*(big/260);
+      P.push({k:kind, x:cx, y:cy, vx:Math.cos(a)*sp, vy:Math.sin(a)*sp*0.8,
+              r:o.r(), c:ink(), rot:Math.random()*6.28, vr:(Math.random()-0.5)*0.035,
+              grav:o.grav, sway:0.3+Math.random()*0.9, ph:Math.random()*6.28,
+              k2:Math.random()<0.5?1:-1, life:1, fade:o.fade});
+    }
   }
-  for (var i=0;i<300;i++) shoot("dot",{r:Math.random()*2.4+.7,slow:100});
-  for (var i=0;i<70;i++)  shoot("star4",{r:Math.random()*16+8,slow:120});
-  for (var i=0;i<34;i++)  shoot("star5",{r:Math.random()*20+12,slow:135});
-  for (var i=0;i<28;i++)  shoot("spot",{r:Math.random()*13+7,slow:145});
-  for (var i=0;i<26;i++)  shoot("stripe",{r:Math.random()*22+12,slow:130});
-  for (var i=0;i<12;i++)  shoot("planet",{r:Math.random()*14+7,ring:Math.random()>.5,slow:160});
-  for (var i=0;i<24;i++)  shoot("glyph",{g:SIGNS[i%12],r:Math.random()*13+17,slow:135});
-  P.push({k:"glyph",g:sign,x:cx,y:cy,px:cx,py:cy,vx:0,vy:-.45,r:100,c:"#52102F",rot:0,vr:.003,life:1,hero:true});
-  for (var r=0;r<5;r++) rings.push({d:r*90});
+  sow("fleck",  96, {r:function(){return Math.random()*3.6+1.4}, grav:-0.004, fade:0.0050});
+  sow("seed",   62, {r:function(){return Math.random()*9+6},     grav: 0.012, fade:0.0056});
+  sow("star",   26, {r:function(){return Math.random()*12+8},    grav:-0.002, fade:0.0048});
+  sow("glyph",  12, {r:function(){return Math.random()*12+16},   grav: 0.004, fade:0.0046});
+  var gi=0; P.forEach(function(q){ if(q.k==="glyph") q.g=SIGNS[(gi++)%12]; });
+
   function frame(now){
-    var t=now-t0;
+    var t=now-t0, T=t/1000;
     bx.clearRect(0,0,innerWidth,innerHeight);
-    if (t<480){
-      var f=1-t/480, gr=bx.createRadialGradient(cx,cy,0,cx,cy,big*.64);
-      gr.addColorStop(0,"rgba(255,255,255,"+(f*.95)+")");
-      gr.addColorStop(.28,"rgba(255,79,160,"+(f*.6)+")");
-      gr.addColorStop(1,"rgba(224,36,140,0)");
+
+    /* luz cálida de papel, no un flash blanco */
+    if (t<900){
+      var f=1-t/900;
+      var gr=bx.createRadialGradient(cx,cy,0,cx,cy,big*0.5);
+      gr.addColorStop(0,"rgba(255,246,233,"+(f*0.75)+")");
+      gr.addColorStop(0.45,"rgba(240,222,200,"+(f*0.3)+")");
+      gr.addColorStop(1,"rgba(240,222,200,0)");
       bx.fillStyle=gr; bx.fillRect(0,0,innerWidth,innerHeight);
     }
-    rings.forEach(function(rg){
-      var rt=t-rg.d; if(rt<0) return;
-      var al=Math.max(0,1-rt/1600); if(!al) return;
-      bx.strokeStyle="rgba(224,36,140,"+(al*.4)+")";
-      bx.lineWidth=Math.max(.7,9*al);
-      bx.beginPath(); bx.arc(cx,cy,rt*.88,0,6.284); bx.stroke();
-    });
-    for (var i=0;i<P.length;i++){
-      var p=P[i];
-      p.px=p.x; p.py=p.y; p.x+=p.vx; p.y+=p.vy;
-      p.vx*=.977; p.vy*=.977; p.vy+=.026;
-      p.rot+=p.vr;
-      p.life-=p.hero?.0034:.0069;
-      if (p.life<=0) continue;
-      bx.globalAlpha=Math.min(1,p.life);
-      if (p.k==="dot"){
-        bx.strokeStyle=p.c; bx.lineWidth=p.r; bx.lineCap="round";
-        bx.beginPath(); bx.moveTo(p.px,p.py); bx.lineTo(p.x,p.y); bx.stroke();
-        continue;
-      }
-      bx.save(); bx.translate(p.x,p.y); bx.rotate(p.rot);
-      if (p.k==="star4")       drawStarShape(bx,STAR4,p.r,p.c);
-      else if (p.k==="star5")  drawStarShape(bx,STAR5,p.r,p.c);
-      else if (p.k==="spot")   drawSpot(bx,p.r,p.c);
-      else if (p.k==="stripe") drawStripe(bx,p.r,p.c);
-      else if (p.k==="planet"){
-        var pg=bx.createRadialGradient(-p.r*.35,-p.r*.35,0,0,0,p.r);
-        pg.addColorStop(0,"#FFF6E9"); pg.addColorStop(.55,p.c); pg.addColorStop(1,"#52102F");
-        bx.fillStyle=pg; bx.beginPath(); bx.arc(0,0,p.r,0,6.284); bx.fill();
-        if (p.ring){ bx.strokeStyle="rgba(196,80,110,"+Math.min(1,p.life)+")"; bx.lineWidth=1.6;
-          bx.beginPath(); bx.ellipse(0,0,p.r*1.9,p.r*.42,-.3,0,6.284); bx.stroke(); }
-      }
-      else strokeGlyph(bx,p.g,p.r,p.c,p.hero?2.2:1.8);
+
+    /* sol tallado que se abre detrás del glifo */
+    var st=t-120;
+    if (st>0 && st<2600){
+      var k=Math.min(1,st/1100), e=1-Math.pow(1-k,3);
+      var R=e*big*0.30, al=Math.max(0,1-st/2600);
+      bx.save(); bx.translate(cx,cy); bx.rotate(st*0.00012);
+      bx.globalAlpha=al*0.72;
+      bx.fillStyle="#C4506E";
+      bx.fill(new Path2D(sunPath(0,0,R,R*0.42,18,2.1)));
+      bx.globalAlpha=al*0.6;
+      bx.fillStyle="#F0DEC8";
+      bx.fill(new Path2D(sunPath(0,0,R*0.56,R*0.26,12,3.4)));
       bx.restore();
     }
+
+    /* ondas */
     bx.globalAlpha=1;
-    if (t<2800) requestAnimationFrame(frame); else bx.clearRect(0,0,innerWidth,innerHeight);
+    rings.forEach(function(rg){
+      var rt=t-rg.d; if (rt<0) return;
+      var al=Math.max(0,1-rt/2300); if (!al) return;
+      bx.save(); bx.translate(cx,cy); bx.globalAlpha=al*0.8;
+      inkRing(bx, rt*0.21+18, rg.c, rg.w, rg.seed, rg.wob);
+      bx.restore();
+    });
+
+    /* semillas, ceniza, estrellas y glifos a la deriva */
+    for (var i=0;i<P.length;i++){
+      var q=P[i];
+      q.vx*=0.985; q.vy*=0.985; q.vy+=q.grav;
+      q.x+=q.vx + Math.sin(T*q.sway+q.ph)*0.5;
+      q.y+=q.vy;
+      q.rot+=q.vr;
+      q.life-=q.fade;
+      if (q.life<=0) continue;
+      bx.globalAlpha=Math.min(1,q.life)*0.9;
+      bx.save(); bx.translate(q.x,q.y); bx.rotate(q.rot);
+      if      (q.k==="fleck") inkFleck(bx,q.r,q.c,q.k2);
+      else if (q.k==="seed")  inkSeed(bx,q.r,q.c);
+      else if (q.k==="star")  inkStar(bx,q.r,q.c);
+      else                    strokeGlyph(bx,q.g,q.r,q.c,1.7);
+      bx.restore();
+    }
+
+    /* el sello: el glifo se imprime y se queda */
+    var gt=t-180;
+    if (gt>0){
+      var kk=Math.min(1,gt/420), ee=1-Math.pow(1-kk,4);
+      var size=big*0.14*(1.22-0.22*ee);
+      var ga=Math.min(1,gt/260)*Math.max(0,1-Math.max(0,gt-1500)/1100);
+      bx.save(); bx.translate(cx,cy); bx.rotate((1-ee)*0.09);
+      bx.globalAlpha=ga;
+      strokeGlyph(bx,sign,size,"#52102F",4.6);
+      bx.restore();
+    }
+
+    bx.globalAlpha=1;
+    if (t<3000) requestAnimationFrame(frame); else bx.clearRect(0,0,innerWidth,innerHeight);
   }
   requestAnimationFrame(frame);
-  setTimeout(done,780);
+  setTimeout(done,1150);
 }
 
 /* ═════════ 7. CURSOR ═════════ */
