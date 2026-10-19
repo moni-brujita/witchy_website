@@ -8,7 +8,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Karla:ital,wght@0,300..700;1,300..600&family=Italiana&family=Righteous&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Hanken+Grotesk:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 
 <style>
 /* ═══════════════════════════════════════════════════════════
@@ -26,8 +26,7 @@
 /* ═══════════════════════════════════════════════════════════
    2) FONDOS DE PIEL — súbelos junto a index.html.
 
-        bg-tiger.png   → sección de la rueda de servicios
-        snake.png      → sección de testimonios
+        snake.png      → fondo de la sección de testimonios
 
       Si falta alguno, esa sección queda en color tostado liso;
       nunca se rompe. Recomendado: 2400 px de ancho o más.
@@ -49,11 +48,19 @@
 
   --accent: var(--magenta);
 
-  --display: "Praia", "Fraunces", Georgia, serif;
-  --body:    "Karla", system-ui, sans-serif;
-  --label:   "Italiana", Georgia, serif;
-  --retro:   "Righteous", "Trebuchet MS", sans-serif;   /* etiquetas retro */
-  --scrawl:  "Caveat", cursive;
+  /* Una sola familia en toda la página. "TT Norms Pro" va primero:
+     cuando compres la licencia y subas los archivos, entra sola y
+     Hanken Grotesk se queda nada más de respaldo. La jerarquía la
+     hacen el peso y el espaciado, no familias distintas. */
+  /* El logotipo NO usa la fuente del resto del sitio. Se queda como
+     estaba: Praia si algún día la subes, y si no, Fraunces. Esta
+     variable es sólo suya: cambiar --display no la toca.            */
+  --logo:    "Praia","Fraunces",Georgia,serif;
+  --display: "TT Norms Pro","TT Norms","Hanken Grotesk",system-ui,sans-serif;
+  --body:    var(--display);
+  --label:   var(--display);
+  --retro:   var(--display);
+  --scrawl:  var(--display);
 
   --pad: clamp(20px, 4.4vw, 76px);
   --maxw: 1180px;
@@ -77,15 +84,14 @@ body::after{
 }
 
 /* ═══════════════ TIPOGRAFÍA ═══════════════ */
-h1,h2,h3{font-family:var(--display);font-weight:900;line-height:1.04;letter-spacing:-.012em;
-  font-variation-settings:"SOFT" 100,"WONK" 1,"opsz" 144}
+h1,h2,h3{font-family:var(--display);font-weight:800;line-height:1.06;letter-spacing:-.022em}
 .h-xl{font-size:clamp(48px,10vw,134px);line-height:1.02}
 .h-lg{font-size:clamp(37px,6.2vw,82px);line-height:1.04}
 .h-md{font-size:clamp(25px,2.9vw,40px)}
 .ital{font-style:italic}
 .lede{font-size:clamp(16.5px,1.4vw,20px);line-height:1.54;max-width:52ch}
 .soft{color:#8A4364}
-.eyebrow{font-family:var(--retro);font-size:clamp(11.5px,.95vw,13.5px);letter-spacing:.17em;
+.eyebrow{font-family:var(--display);font-weight:700;font-size:clamp(11.5px,.95vw,13.5px);letter-spacing:.14em;
   text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:12px}
 .eyebrow::before,.eyebrow::after{content:"";width:26px;height:1px;background:currentColor;opacity:.6}
 
@@ -116,7 +122,7 @@ h1,h2,h3{font-family:var(--display);font-weight:900;line-height:1.04;letter-spac
 #stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
 
 /* ═══════════════ SELECTOR DE IDIOMA ═══════════════ */
-.lang{display:inline-flex;align-items:center;gap:5px;font-family:var(--label);
+.lang{display:inline-flex;align-items:center;gap:5px;font-family:var(--display);font-weight:600;
   font-size:13px;letter-spacing:.16em;text-transform:uppercase}
 .lang button{background:none;border:0;cursor:pointer;color:inherit;font:inherit;
   opacity:.45;padding:3px 4px;border-bottom:1.5px solid transparent;transition:opacity .25s,border-color .25s}
@@ -127,11 +133,20 @@ h1,h2,h3{font-family:var(--display);font-weight:900;line-height:1.04;letter-spac
 @media(max-width:600px){#langGate{top:14px;right:16px;font-size:11.5px}}
 
 /* ═══════════════ PORTADA ═══════════════ */
+/* La portada lleva su foto debajo del degradado rosa de siempre.
+   Las dos capas rgba() son el velo: súbelas hacia 1 si tu imagen
+   se come los cuadritos de los signos, bájalas para verla mejor. */
 #gate{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:22px;
+  --veil:.74;
   background:
     radial-gradient(56% 42% at 18% 6%,rgba(255,79,160,.32),transparent 62%),
     radial-gradient(52% 38% at 84% 92%,rgba(224,36,140,.24),transparent 62%),
+    linear-gradient(rgba(255,246,250,var(--veil)),rgba(255,206,230,var(--veil)) 60%,rgba(255,178,216,var(--veil))),
+    url("bg-zodiac.jpg"),
     linear-gradient(#FFF6FA,#FFCEE6 60%,#FFB2D8);
+  background-size:auto,auto,auto,cover,auto;
+  background-position:center,center,center,center,center;
+  background-repeat:no-repeat;
   transition:opacity .95s ease, filter .95s ease}
 #gate.gone{opacity:0;filter:blur(16px) saturate(1.4);pointer-events:none}
 .gate-inner{position:relative;z-index:2;width:100%;max-width:min(1380px,94vw);text-align:center;
@@ -151,7 +166,7 @@ h1,h2,h3{font-family:var(--display);font-weight:900;line-height:1.04;letter-spac
   display:block;stroke:var(--wine);fill:none;
   stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .sign:hover svg{stroke:var(--magenta)}
-.sign .n{display:block;font-family:var(--label);font-size:clamp(14px,1.15vw,18px);
+.sign .n{display:block;font-family:var(--display);font-weight:600;font-size:clamp(14px,1.15vw,18px);
   letter-spacing:.14em;text-transform:uppercase}
 .sign .d{display:block;font-size:clamp(11px,.85vw,13.5px);color:#9B6580;margin-top:4px}
 #boom{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
@@ -172,15 +187,15 @@ body.scrolled #transit{top:0}
 header{position:fixed;top:38px;left:0;right:0;z-index:820;display:flex;align-items:center;
   justify-content:space-between;padding:14px var(--pad);transition:background .4s,backdrop-filter .4s,padding .4s,top .4s}
 header.stuck{top:0;background:rgba(255,246,233,.9);backdrop-filter:blur(12px);padding:8px var(--pad);box-shadow:0 1px 0 rgba(82,16,47,.14)}
-.brand{font-family:var(--display);font-weight:900;font-size:19px;text-decoration:none;letter-spacing:.04em;
+.brand{font-family:var(--logo);font-weight:900;font-size:19px;text-decoration:none;letter-spacing:.04em;
   text-transform:uppercase;font-variation-settings:"SOFT" 100,"WONK" 1}
 .brand span{color:var(--magenta)}
 nav{display:flex;gap:22px;align-items:center}
-nav a{font-family:var(--label);font-size:14.5px;letter-spacing:.16em;text-transform:uppercase;
+nav a{font-family:var(--display);font-weight:600;font-size:14.5px;letter-spacing:.16em;text-transform:uppercase;
   text-decoration:none;position:relative;padding:3px 0}
 nav a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1.5px;background:var(--magenta);transition:width .32s}
 nav a:hover::after{width:100%}
-.chip{font-family:var(--label);font-size:13.5px;letter-spacing:.12em;text-transform:uppercase;
+.chip{font-family:var(--display);font-weight:600;font-size:13.5px;letter-spacing:.12em;text-transform:uppercase;
   border:1.5px solid var(--wine);color:var(--wine);background:var(--cream);border-radius:999px;
   padding:6px 15px;cursor:pointer;display:flex;gap:8px;align-items:center}
 .chip svg{width:18px;height:18px;stroke:var(--magenta);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -197,6 +212,7 @@ section{position:relative;padding:var(--gap) var(--pad)}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.7,.3,1),transform .8s cubic-bezier(.2,.7,.3,1)}
 .reveal.in{opacity:1;transform:none}
 .band-cream{background:var(--cream)}
+.band-paper{background:var(--paper)}
 .band-pulp{background:var(--magenta);color:var(--cream)}
 .band-pulp .eyebrow{color:var(--rose)}
 .band-pulp .lede,.band-pulp .soft{color:#FFE0EF}
@@ -212,14 +228,7 @@ section{position:relative;padding:var(--gap) var(--pad)}
    │  Para que el print se vea más fuerte o más suave,       │
    │  cambia el .55 de --veil (0 = sin velo, 1 = sólido).    │
    └─────────────────────────────────────────────────────────┘ */
-.band-print .eyebrow,.band-print .dial-mid .k{color:var(--wine)}
-.band-print{background-color:var(--paper);background-position:center center;
-  background-repeat:no-repeat;background-size:cover;--veil:.55}
-.band-print::before{content:"";position:absolute;inset:0;
-  background:rgba(255,246,233,var(--veil));pointer-events:none;z-index:0}
-
-.bg-tiger{background-image:url("bg-tiger.png")}   /* ← sección de la rueda */
-.bg-snake{background-image:url("snake.png")}      /* ← sección de testimonios */
+   /* ← sección de la rueda */      /* ← sección de testimonios */
 
 /* divisor de soles — franja rosa entre TODAS las secciones */
 .sunbar{display:block;width:100%;height:38px;overflow:hidden;line-height:0;
@@ -231,70 +240,29 @@ section{position:relative;padding:var(--gap) var(--pad)}
    nunca la imagen del dibujo (usar el atajo "background" la borraría). */
 .sunbar.inside{position:absolute;left:0;right:0;bottom:0;z-index:9;
   background-color:transparent !important}
-.band-print{padding-bottom:calc(var(--gap) + 96px)}
 
 /* ═══════════════ HERO ═══════════════ */
-#home{min-height:auto;padding-top:clamp(118px,15vh,150px);padding-bottom:clamp(30px,5vh,52px);overflow:hidden}
+#home{min-height:auto;padding:clamp(96px,11vh,124px) var(--pad) 0;overflow:hidden}
 
 /* ── SECUENCIA DE APERTURA ──
    Todo se controla con un solo atributo en la sección, #home[data-seq]:
-     "off"   nada a la vista (estado inicial)
-     "line"  sólo la frase grande, mientras caen los zarpazos
-     "hero"  la frase se va y entra el hero completo
+     "off"   nada a la vista (estado inicial, detrás del portal)
+     "hero"  entra el hero completo
    Al ir con #home delante, estas reglas pesan más que cualquier
    otra y no las puede pisar nada.                                */
-/* --lift sube la frase; súbelo más si la quieres más arriba */
-.bigline{--lift:7vh;
-  position:absolute;top:calc(50% - var(--lift));left:50%;z-index:6;width:88%;max-width:1500px;
-  transform:translate(-50%,-50%) scale(.94);opacity:0;pointer-events:none;text-align:center;
-  font-family:var(--display);font-style:italic;font-weight:700;line-height:1.05;
-  font-size:clamp(34px,7vw,120px);color:var(--shock);
-  font-variation-settings:"SOFT" 70,"WONK" 1;
-  transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1)}
-
-#home[data-seq="off"]  .bigline{opacity:0;transform:translate(-50%,-50%) scale(.94)}
-#home[data-seq="line"] .bigline{opacity:1;transform:translate(-50%,-50%) scale(1)}
-#home[data-seq="hero"] .bigline{opacity:0;transform:translate(-50%,-50%) scale(1.08)}
-
-#home[data-seq="off"]  .hero,
-#home[data-seq="line"] .hero{opacity:0}
+#home[data-seq="off"] .hero{opacity:0}
 #home[data-seq="hero"] .hero{opacity:1}
 
-/* ═══════════════ ZARPAZOS DEL HERO ═══════════════
-   Se quedan invisibles al cargar. Un segundo después entran de
-   golpe, uno tras otro: primero un destello ampliado y luego se
-   asientan, como un rasguño real. --w tamaño, --r giro.        */
-.claws{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden}
-.claw{--d:0s;position:absolute;width:var(--w);height:auto;opacity:0;
-  transform:rotate(var(--r)) scale(1.5);
-  filter:drop-shadow(0 4px 10px rgba(82,16,47,.28))}
-.claws.in .claw{animation-name:slash;animation-duration:.42s;
-  animation-timing-function:cubic-bezier(.2,.9,.3,1);
-  animation-fill-mode:forwards;animation-delay:var(--d)}
-@keyframes slash{
-  0%  {opacity:0;transform:rotate(var(--r)) scale(1.5)}
-  55% {opacity:1;transform:rotate(var(--r)) scale(.94)}
-  100%{opacity:1;transform:rotate(var(--r)) scale(1)}
-}
-.k1{--d:.5s; --w:clamp(110px,13vw,250px); --r:-8deg;  left:26%;  top:2%;    }
-.k2{--d:1s; --w:clamp(105px,12.5vw,240px);--r:10deg;  right:26%; top:7%;    }
-.k3{--d:1.5s; --w:clamp(110px,13vw,250px); --r:-12deg; left:20%;  bottom:10%}
-.k4{--d:2s; --w:clamp(105px,12.5vw,240px);--r:9deg;   right:20%; bottom:12%}
-@media(max-width:900px){ .k2,.k4{display:none} .claw{--w:clamp(90px,20vw,150px)} }
 @media(prefers-reduced-motion:reduce){
-  .claws.in .claw{animation:none;opacity:1;transform:rotate(var(--r))}
   #home .hero{opacity:1 !important;transition:none}
-  #home .bigline{display:none}
 }
 
 /* ═══════════════ HERO: DOS SOLES CON OJO ═══════════════
    El sol gira; el ojo va encima, quieto, tapando el círculo
    central. --sun controla el tamaño de los dos.                 */
-.heroline{display:flex;align-items:center;justify-content:center;gap:clamp(4px,1.4vw,26px)}
-/* --drop baja el bloque de texto respecto a los dos soles */
-.herotext{--drop:2.5vh; flex:0 1 auto;min-width:0;
-  position:relative;top:var(--drop)}
-.eyesun{position:relative;flex:0 0 auto;width:var(--sun);--sun:clamp(150px,23vw,430px)}
+.heroline{display:flex;align-items:center;justify-content:center;gap:clamp(14px,3vw,56px)}
+.herotext{flex:0 1 auto;min-width:0}
+.eyesun{position:relative;flex:0 0 auto;width:var(--sun);--sun:clamp(84px,11vw,190px)}
 .eyesun svg{width:100%;height:auto;display:block}
 .eyesun .eye{position:absolute;top:50%;left:50%;width:41%;height:auto;
   transform:translate(-50%,-50%);pointer-events:none;
@@ -305,150 +273,62 @@ section{position:relative;padding:var(--gap) var(--pad)}
 @media(max-width:900px){
   .heroline{flex-direction:column;gap:14px}
   #sunR{display:none}
-  .eyesun{--sun:clamp(120px,30vw,190px)}
-  .herotext{--drop:0}
+  .eyesun{--sun:clamp(74px,20vw,130px)}
 }
 
-/* ═══════════════ RECORTES DE "QUIÉN TE LEE" ═══════════════
-   Tres piezas sueltas alrededor del texto. Aparecen al entrar
-   en pantalla. --w controla el tamaño de cada una.             */
-#about{overflow:hidden;padding-bottom:clamp(20px,3vh,40px)}
-.aboutart{position:absolute;inset:0;z-index:8;pointer-events:none;overflow:hidden}
-.aboutart img{position:absolute;width:var(--w);height:auto;opacity:0;
-  filter:drop-shadow(0 14px 24px rgba(82,16,47,.24));
-  transition:opacity .7s ease, transform 1.05s cubic-bezier(.16,1,.3,1)}
-.a-tiger {--w:clamp(300px,38vw,760px); left:-17%; bottom:0%;  transform:translateX(-120%) rotate(-8deg)}
-.a-moon  {--w:clamp(120px,15vw,290px); right:3%;  top:7%;     transform:translateX(130%) rotate(10deg)}
-.a-snake {--w:clamp(180px,22vw,440px); right:-3%; bottom:-4%; transform:translateX(130%) rotate(10deg)}
-.aboutart.in img{opacity:1;transform:none}
-@media(max-width:1100px){ .aboutart{display:none} }
-@media(prefers-reduced-motion:reduce){ .aboutart img{transition:none} }
 
-@media(min-width:1250px){
-  /* al cargar, el hero ocupa la pantalla completa: MONI BRUJITA
-     al centro y la tarjeta del día por debajo del pliegue */
-  #home{min-height:100svh;display:flex;align-items:center;
-        padding-top:clamp(96px,11vh,124px);padding-bottom:clamp(40px,6vh,80px)}
-}
-.hero{max-width:1620px;margin:0 auto;text-align:center;position:relative;z-index:2;width:100%;
+.hero{max-width:1280px;margin:0 auto;text-align:center;position:relative;z-index:2;width:100%;
   transition:opacity .85s ease}
 .wordmark{margin:0 auto 18px}
 .wordmark img{width:min(860px,100%);height:auto;margin:0 auto;display:block}
 .tagline{font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(21px,2.7vw,40px);
-  line-height:1.14;margin-bottom:8px;font-variation-settings:"SOFT" 60,"WONK" 1}
+  line-height:1.14;margin-bottom:8px}
 /* dos renglones fijos, 2 + 2. El tamaño va atado al ancho para que
    cada renglón entre completo entre los dos soles; en pantalla chica
    se deja envolver solo, que ahí no hay espacio para forzarlo. */
-.disciplines{font-family:var(--label);font-size:clamp(10px,1.05vw,16px);letter-spacing:.14em;
+.disciplines{font-family:var(--display);font-weight:600;font-size:clamp(10px,1.05vw,16px);letter-spacing:.14em;
   line-height:1.65;white-space:nowrap;
   text-transform:uppercase;color:var(--rasp);margin-bottom:0}
 @media(max-width:900px){
-  .disciplines{white-space:normal;font-size:clamp(11px,3vw,15px);letter-spacing:.12em}
+  .disciplines{white-space:normal;font-size:clamp(9.5px,2.55vw,14px);letter-spacing:.09em}
 }
 .sunspin{animation:spin 90s linear infinite;transform-origin:110px 110px;transform-box:view-box}
 @keyframes spin{to{transform:rotate(360deg)}}
-.unleash{font-family:var(--display);font-style:italic;font-weight:700;
-  font-size:clamp(18px,2.1vw,31px);color:var(--shock);
-  margin-top:clamp(30px,5vh,66px);
-  font-variation-settings:"SOFT" 70,"WONK" 1}
-.btns{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:clamp(14px,2vh,24px)}
 .btn{font-family:var(--retro);font-size:14.5px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;
   padding:14px 30px;border-radius:999px;border:1.5px solid var(--wine);display:inline-block;
   transition:transform .22s,box-shadow .22s,background .22s,color .22s}
 .btn-fill{background:var(--magenta);color:var(--cream);border-color:var(--wine);box-shadow:4px 4px 0 var(--wine)}
 .btn-fill:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--wine)}
-.btn-ghost{background:var(--cream);box-shadow:4px 4px 0 rgba(82,16,47,.25)}
-.btn-ghost:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 rgba(82,16,47,.3)}
 
 /* ═══════════════ MENSAJE DEL DÍA ═══════════════ */
 #daily{padding-top:clamp(16px,2.4vh,30px);padding-bottom:clamp(30px,4vh,50px);background:transparent}
 .daycard{max-width:1180px;margin:0 auto;background:var(--cream);border:2px solid var(--wine);
   border-radius:24px;padding:clamp(22px,3vw,36px);text-align:center;box-shadow:8px 9px 0 var(--wine)}
 .daycard .dsun{width:40px;height:40px;margin:0 auto 10px;fill:var(--rasp)}
-.daycard .when{font-family:var(--retro);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
+.daycard .when{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--gold);margin-bottom:10px}
 .daycard .who{font-size:clamp(32px,5.4vw,66px);margin-bottom:10px;line-height:.9}
 .daycard .msg{font-family:var(--display);font-style:italic;font-size:clamp(18px,2.1vw,28px);
-  line-height:1.28;max-width:none;margin:0 auto 4px;font-variation-settings:"SOFT" 60,"WONK" 1}
+  line-height:1.28;max-width:none;margin:0 auto 4px}
 .daycard .foot{font-family:var(--label);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#A5688A}
 
-/* ═══════════════ RUEDA ═══════════════ */
-#dial{padding-top:clamp(34px,4.4vh,56px);padding-bottom:calc(var(--gap) + 74px)}
-/* en dos columnas la rueda es lo más alto y ya trae aire propio dentro
-   del círculo, así que abajo hace falta menos relleno */
-@media(min-width:981px){ #dial{padding-bottom:calc(var(--gap) + 30px)} }
-.dial-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(10px,2.4vw,40px);
-  align-items:center;max-width:var(--maxw);margin:0 auto;position:relative;z-index:1}
-.dial-wrap{position:relative;width:min(380px,80vw);aspect-ratio:1;margin:0 auto}
-.dial-wrap svg{width:100%;height:100%;overflow:visible}
-.spinA{animation:spin 70s linear infinite;transform-origin:200px 200px;transform-box:view-box}
-.spinB{animation:spin 98s linear infinite reverse;transform-origin:200px 200px;transform-box:view-box}
-.dial-svc{font-family:var(--retro);font-size:14px;letter-spacing:.1em;fill:var(--wine);
-  stroke:rgba(255,246,233,.92);stroke-width:3.4px;paint-order:stroke fill;
-  cursor:pointer;transition:fill .25s}
-.dial-svc:hover,.dial-svc:focus-visible{fill:var(--magenta)}
-.dial-star{font-size:15px;fill:var(--rasp);pointer-events:none}
-.dial-wrap:hover .spinA,.dial-wrap:hover .spinB,
-.dial-wrap:focus-within .spinA,.dial-wrap:focus-within .spinB{animation-play-state:paused}
-.dial-mid .hint{color:var(--magenta);font-size:11px;margin-top:4px;opacity:.95}
-
-/* ── popup de servicio ── */
-.modal{position:fixed;inset:0;z-index:1100;display:grid;place-items:center;padding:22px}
-.modal[hidden]{display:none}
-.modal-back{position:absolute;inset:0;background:rgba(82,16,47,.55);backdrop-filter:blur(4px);
-  animation:fadein .3s ease}
-.modal-card{position:relative;z-index:1;max-width:440px;width:100%;background:var(--cream);
-  border:2px solid var(--wine);border-radius:26px;padding:clamp(26px,4vw,40px);text-align:center;
-  box-shadow:9px 11px 0 var(--wine);animation:pop .32s cubic-bezier(.2,.9,.3,1.4)}
-.modal-card h3{font-size:clamp(26px,3.4vw,38px);margin-bottom:6px}
-.modal-dur{font-family:var(--retro);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--gold);margin-bottom:14px}
-.modal-card p{font-size:15.5px;margin-bottom:20px}
-.modal-sun{width:40px;height:40px;margin:0 auto 12px;fill:var(--rasp)}
-.modal-x{position:absolute;top:12px;right:16px;background:none;border:0;cursor:pointer;
-  font-size:26px;line-height:1;color:var(--wine);opacity:.55;transition:opacity .2s}
-.modal-x:hover{opacity:1}
-@keyframes fadein{from{opacity:0}to{opacity:1}}
-@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.94)}to{opacity:1;transform:none}}
-
-/* ── tarjeta resaltada al llegar desde la rueda ── */
-.card.spotlight{border-color:var(--magenta);border-width:2px;animation:spot 1.1s ease-out 3}
-@keyframes spot{
-  0%,100%{box-shadow:9px 12px 0 var(--rasp), 0 0 0 0 rgba(224,36,140,.45)}
-  50%    {box-shadow:9px 12px 0 var(--rasp), 0 0 0 14px rgba(224,36,140,0)}
-}
-.dial-ring{fill:none;stroke:var(--wine);stroke-width:1.8;opacity:.8}
-.dial-glyph{stroke:var(--rasp);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.dial-mid{position:absolute;inset:0;display:grid;place-content:center;gap:4px;text-align:center;pointer-events:none}
-.dial-mid .k{font-family:var(--retro);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
-.pull{font-family:var(--display);font-weight:900;font-size:clamp(27px,4vw,54px);line-height:.96;
-  font-variation-settings:"SOFT" 100,"WONK" 1}
-.pull em{font-style:italic;color:var(--magenta)}
-
 /* ═══════════════ SOBRE MÍ ═══════════════ */
-.about-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(26px,4vw,58px);align-items:start}
+.about-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:clamp(26px,4vw,58px);align-items:stretch}
 .arch{position:relative;margin-bottom:26px;padding:14px;background:var(--cream);border:1.5px solid rgba(82,16,47,.2);
   border-radius:220px 220px 12px 12px;transform:rotate(-1.5deg);box-shadow:8px 10px 0 rgba(82,16,47,.18)}
-.arch .frame{aspect-ratio:3/4;border-radius:206px 206px 6px 6px;display:grid;place-items:center;overflow:hidden;
-  background-image:url("moni.JPG"),var(--f-tiger);background-size:cover,150px 150px;
+.arch .frame{aspect-ratio:4/5;border-radius:206px 206px 6px 6px;display:grid;place-items:center;overflow:hidden;
+  background-image:url("moni.JPG");background-size:cover;
   background-position:center 42%;border:1px solid rgba(82,16,47,.14)}
 /* cinta adhesiva: cruza el borde, mitad dentro / mitad fuera */
 .about-grid p{margin-bottom:13px}
-.natal{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin:22px 0}
-.natal div{background:var(--hot);border:1.5px solid var(--wine);border-radius:14px;padding:14px 12px;
-  text-align:center;box-shadow:3px 3px 0 var(--wine)}
-.natal .k{font-family:var(--retro);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);margin-bottom:5px}
-.natal svg{width:27px;height:27px;margin:0 auto 4px;stroke:var(--cream);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.natal .v{font-family:var(--display);font-size:17px;font-weight:700;color:var(--cream)}
-.natal .v small{display:block;font-family:var(--body);font-size:12px;color:#FFE2F0;font-weight:400}
 
 /* ═══════════════ GALERÍA EN MOVIMIENTO ═══════════════
    Tira horizontal de fotos que avanza sola, al estilo de la lámina:
    mismo alto, anchos distintos, márgenes parejos.
      --gh     alto de las fotos
      --speed  cuánto tarda en dar una vuelta (más = más lento)   */
-#gallery{padding:0;background:var(--cream);overflow:hidden}
-.strip{position:relative;overflow:hidden;padding:clamp(18px,2.4vw,34px) 0}
+
+.strip{position:relative;overflow:hidden;padding:clamp(22px,3vw,44px) 0 0}
 .track{display:flex;gap:clamp(10px,1.4vw,22px);width:max-content;
   animation:slide var(--speed) linear infinite;will-change:transform}
 .strip:hover .track{animation-play-state:paused}
@@ -456,10 +336,6 @@ section{position:relative;padding:var(--gap) var(--pad)}
 .track img{height:var(--gh);width:auto;flex:none;display:block;border-radius:3px;
   background:var(--rose);box-shadow:0 6px 16px rgba(82,16,47,.14)}
 /* los bordes se desvanecen para que no se vea el corte */
-.strip::before,.strip::after{content:"";position:absolute;top:0;bottom:0;width:clamp(30px,6vw,110px);
-  z-index:2;pointer-events:none}
-.strip::before{left:0;background:linear-gradient(90deg,var(--cream),transparent)}
-.strip::after{right:0;background:linear-gradient(270deg,var(--cream),transparent)}
 @media(prefers-reduced-motion:reduce){
   .track{animation:none}
   .strip{overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -490,29 +366,45 @@ section{position:relative;padding:var(--gap) var(--pad)}
 .card:hover{transform:translate(-3px,-6px);border-color:var(--magenta);box-shadow:9px 12px 0 var(--rasp)}
 .card .em{width:38px;height:38px;margin:0 auto 10px;stroke:var(--magenta);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .card h3{font-size:clamp(22px,2.1vw,28px);margin-bottom:4px}
-.card .dur{font-family:var(--retro);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:11px}
+.card .dur{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:11px}
 .card p{font-size:14.5px;margin-bottom:13px}
 .card ul{list-style:none;margin-bottom:17px;font-size:13.8px;text-align:left;color:#6B2044}
 .card ul li{padding-left:19px;position:relative;margin-bottom:6px}
 .card ul li::before{content:"";position:absolute;left:1px;top:.58em;width:9px;height:9px;background:var(--magenta);
   clip-path:polygon(50% 0,58% 42%,100% 50%,58% 58%,50% 100%,42% 58%,0 50%,42% 42%)}
 .card .foot{margin-top:auto;border-top:1px solid rgba(82,16,47,.18);padding-top:14px}
-.card .price{font-family:var(--display);font-size:26px;font-weight:900}
-.card .price small{display:block;font-family:var(--retro);font-size:12px;letter-spacing:.14em;color:var(--gold);font-weight:400}
+.card .price{font-family:var(--display);font-size:26px;font-weight:800;letter-spacing:-.02em}
+.card .price small{display:block;font-family:var(--display);font-weight:700;font-size:12px;letter-spacing:.14em;color:var(--gold);font-weight:400}
 .card .go{display:inline-block;margin-top:9px;font-family:var(--label);font-size:14px;letter-spacing:.16em;
   text-transform:uppercase;text-decoration:none;color:var(--magenta);border-bottom:1.5px solid var(--magenta);padding-bottom:2px}
 .card.flag{border-color:var(--magenta);border-width:2px;background:#FFF0F7}
 .card .ribbon{position:absolute;top:17px;left:50%;transform:translateX(-50%);background:var(--magenta);color:var(--cream);
-  font-family:var(--retro);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;padding:4px 16px;border-radius:999px;white-space:nowrap}
+  font-family:var(--display);font-weight:700;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;padding:4px 16px;border-radius:999px;white-space:nowrap}
+
+/* ═══════════════ FONDOS DE SECCIÓN ═══════════════
+   Una sola receta para todas. Cada sección pone su imagen en --img
+   y, si hace falta, ajusta --veil: es el velo de color encima de la
+   foto, lo único que decide si el texto se lee. 0 = foto a tope
+   (texto ilegible), 1 = color sólido (no se ve la foto). Sube --veil
+   si tu imagen es muy contrastada, bájalo si queda lavada.
+   .bg      → velo crema, para secciones de texto oscuro
+   .bg.dark → velo magenta, para la sección de texto claro          */
+.bg{background-image:var(--img);
+  background-size:cover;background-position:center;background-repeat:no-repeat;--veil:.62}
+.bg::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:rgba(255,246,233,var(--veil))}
+.bg.dark::before{background:rgba(224,36,140,var(--veil))}
+.bg .wrap{position:relative;z-index:1}
+/* si la imagen todavía no está en la carpeta no pasa nada: se ve el
+   color de siempre y la sección sigue igual de legible */
 
 /* ═══════════════ TESTIMONIOS ═══════════════ */
 .quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(236px,1fr));gap:16px}
 .quote{background:var(--cream);border:1.5px solid rgba(82,16,47,.2);border-radius:18px;padding:24px 20px;
   box-shadow:5px 6px 0 rgba(82,16,47,.14)}
 .quote .sun{width:25px;height:25px;margin-bottom:10px;fill:var(--rasp)}
-.quote p{font-family:var(--display);font-style:italic;font-size:18.5px;line-height:1.3;margin-bottom:10px;
-  font-variation-settings:"SOFT" 60,"WONK" 1}
-.quote cite{font-family:var(--retro);font-style:normal;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.quote p{font-family:var(--display);font-style:italic;font-size:18.5px;line-height:1.3;margin-bottom:10px}
+.quote cite{font-family:var(--display);font-weight:700;font-style:normal;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
 
 /* ═══════════════ GRATIS ═══════════════ */
 .res{display:grid;grid-template-columns:repeat(auto-fit,minmax(218px,1fr));gap:15px;margin-bottom:30px}
@@ -523,7 +415,7 @@ section{position:relative;padding:var(--gap) var(--pad)}
 .res a:hover .ic{stroke:var(--magenta)}
 .res h3{font-size:21px;margin-bottom:5px}
 .res p{font-size:14px}
-.res .type{display:block;margin-top:11px;font-family:var(--retro);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--rose)}
+.res .type{display:block;margin-top:11px;font-family:var(--display);font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--rose)}
 .res a:hover .type{color:var(--gold)}
 .sub{background:var(--cream);color:var(--wine);border:2px solid var(--wine);border-radius:24px;
   padding:clamp(22px,3vw,36px);display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:center;box-shadow:7px 8px 0 var(--wine)}
@@ -540,7 +432,7 @@ section{position:relative;padding:var(--gap) var(--pad)}
 form.bk{display:flex;flex-direction:column;gap:13px}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:13px}
 .field{display:flex;flex-direction:column;gap:6px}
-.field label{font-family:var(--retro);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.field label{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
 .field input,.field select,.field textarea{background:var(--cream);border:1.5px solid rgba(82,16,47,.24);
   border-radius:12px;padding:12px 15px;color:var(--wine);font-family:var(--body);font-size:15px;width:100%}
 .field textarea{resize:vertical;min-height:104px}
@@ -558,7 +450,7 @@ form.bk button{cursor:pointer;margin-top:4px;align-self:flex-start}
 .formnote{font-size:13px;color:#8A4364;line-height:1.6}
 .contact-list{list-style:none;margin:20px 0 0}
 .contact-list li{border-top:1px solid rgba(82,16,47,.2);padding:13px 0;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
-.contact-list .k{font-family:var(--retro);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.contact-list .k{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
 a.inline{color:var(--magenta);text-decoration:none;border-bottom:1.5px solid var(--magenta);
   padding-bottom:1px;transition:color .25s,border-color .25s}
 a.inline:hover{color:var(--shock);border-color:var(--shock)}
@@ -579,9 +471,9 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 .foot-in,.copy{position:relative;z-index:1}
 .foot-in{padding:30px var(--pad) 34px;max-width:var(--maxw);margin:0 auto;display:flex;justify-content:space-between;
   gap:22px;flex-wrap:wrap;align-items:flex-end}
-.foot-in .big{font-family:var(--display);font-weight:900;font-size:clamp(32px,5vw,70px);line-height:.9}
+.foot-in .big{font-family:var(--display);font-weight:800;letter-spacing:-.025em;font-size:clamp(32px,5vw,70px);line-height:.9}
 .foot-links{display:flex;flex-direction:column;gap:8px;text-align:right}
-.foot-links a{font-family:var(--label);font-size:14.5px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--rose)}
+.foot-links a{font-family:var(--display);font-weight:600;font-size:14.5px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--rose)}
 .foot-links a:hover{color:var(--hot)}
 .copy{border-top:1px solid rgba(255,208,228,.22);padding:16px var(--pad);font-family:var(--retro);
   font-size:12px;letter-spacing:.1em;color:var(--rose);
@@ -598,11 +490,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 
 /* ═══════════════ RESPONSIVE ═══════════════ */
 @media(max-width:980px){
-  .about-grid,.book,.sub,.dial-row{grid-template-columns:1fr}
-  .dial-row{text-align:center}
-  .dial-row{gap:0}
-  .dial-wrap{margin-bottom:-14px}
-  .pull{max-width:20ch;margin:0 auto}
+  .about-grid,.book,.sub{grid-template-columns:1fr}
 }
 @media(max-width:720px){
   nav{position:fixed;top:0;right:0;bottom:0;width:min(78vw,310px);background:var(--cream);flex-direction:column;
@@ -613,9 +501,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
   .menu-btn{display:block;z-index:5}
   .signs{grid-template-columns:repeat(3,1fr)}
   .row{grid-template-columns:1fr}
-  .natal{grid-template-columns:1fr}
   .foot-links{text-align:left}
-  .dial-svc{font-size:13px}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
@@ -636,7 +522,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
   </div>
   <div class="gate-inner" id="gateInner">
     <span class="eyebrow">Moni Brujita</span>
-    <h1 class="h-lg" data-en="Before you come in,<br><span class='print p-leopard ital'>what is your sign?</span>">Antes de entrar,<br><span class="print p-leopard ital">¿cuál es tu signo?</span></h1>
+    <h1 class="h-lg" data-en="<span class='print ital'>What is your sign?</span>"><span class="print ital">¿Cuál es tu signo?</span></h1>
     <div class="signs" id="signGrid"></div>
   </div>
 </div>
@@ -663,32 +549,26 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 </header>
 
 <!-- ═══════════ HOME ═══════════ -->
-<section id="home" data-seq="off">
+<section id="home" data-seq="off" class="bg" style="--img:url(&quot;bg-hero.jpg&quot;); --veil:.66">
   <!-- ── ZARPAZOS ──
-       Aparecen solos ~1s después de cargar, uno por uno, como si
-       algo hubiera rasgado la página. --w tamaño, --r inclinación. -->
-  <p class="bigline" id="bigline" data-en="Unleash the Divine Feminine">Despierta lo divino femenino</p>
-  <div class="claws" id="claws" aria-hidden="true">
-    <img class="claw k1" src="claws1.png" alt="" width="620" height="612">
-    <img class="claw k2" src="claws2.png" alt="" width="620" height="638">
-    <img class="claw k3" src="claws2.png" alt="" width="620" height="638">
-    <img class="claw k4" src="claws1.png" alt="" width="620" height="612">
-  </div>
+       Aparecen solos, uno por uno, como si algo hubiera rasgado la
+       página. --w tamaño, --r inclinación, --d cuándo cae cada uno. -->
   <div class="hero">
     <div class="heroline">
       <div class="eyesun" id="sunL" aria-hidden="true"></div>
       <div class="herotext">
         <h1 class="wordmark"><img src="wordmark.png" alt="Moni Brujita" width="1800" height="246"></h1>
-        <p class="tagline" data-en="Ancient wisdom for the modern woman.">Sabiduría antigua para la mujer moderna.</p>
         <p class="disciplines" data-en="Feminine spirituality · Embodiment + Movement&lt;br&gt;Ayurveda + Yoga · Astrology">Espiritualidad femenina · Encarnación + Movimiento<br>Ayurveda + Yoga · Astrología</p>
       </div>
       <div class="eyesun" id="sunR" aria-hidden="true"></div>
     </div>
-    <p class="unleash" data-en="Unleash the Divine Feminine">Despierta lo divino femenino</p>
-    <div class="btns">
-      <a href="#book" class="btn btn-fill" data-en="Book a session">Reservar sesión</a>
-      <a href="#services" class="btn btn-ghost" data-en="See services">Ver servicios</a>
-    </div>
+  </div>
+
+  <!-- ── TIRA DE FOTOS ──
+       Se desliza sola. Las nueve fotos van dos veces para que la
+       vuelta no se note. --gh es el alto; --speed la lentitud. -->
+  <div class="strip" style="--gh:clamp(170px,22vw,330px); --speed:62s">
+    <div class="track" id="galTrack"></div>
   </div>
 </section>
 
@@ -697,7 +577,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
   <div class="daycard">
     <svg class="dsun" viewBox="0 0 44 44" id="daySun" aria-hidden="true"></svg>
     <p class="when" id="dayWhen"></p>
-    <h2 class="who print p-leopard ital" id="dayWho"></h2>
+    <h2 class="who print ital" id="dayWho"></h2>
     <p class="msg" id="dayMsg"></p>
   </div>
 </section>
@@ -705,40 +585,8 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 
 <div class="sunbar" data-sunbar data-ink="#C4506E" aria-hidden="true"></div>
 
-<!-- ═══════════ RUEDA ═══════════ -->
-<section id="dial" class="band-print bg-tiger">
-  <div class="dial-row">
-    <div class="dial-wrap">
-      <svg viewBox="0 0 400 400" role="group" aria-label="Servicios">
-        <defs><path id="ringPath" d="M200,200 m-158,0 a158,158 0 1,1 316,0 a158,158 0 1,1 -316,0"/></defs>
-        <circle class="dial-ring" cx="200" cy="200" r="176"/>
-        <circle class="dial-ring" cx="200" cy="200" r="140" stroke-dasharray="1 7"/>
-        <circle class="dial-ring" cx="200" cy="200" r="94"/>
-        <g class="spinA" id="dialRing"></g>
-        <g class="spinB" id="dialGlyphs"></g>
-      </svg>
-      <div class="dial-mid">
-        <span class="k" data-en="The wheel of">La rueda de</span>
-        <h2 class="h-md ital" data-en="Services">Servicios</h2>
-        <span class="k hint" data-en="Tap a service">Toca un servicio</span>
-      </div>
-    </div>
-    <div>
-      <span class="eyebrow" style="margin-bottom:12px" data-en="What I believe">Lo que creo</span>
-      <p class="pull" data-en="Your chart is not your <em>fate</em>. It is your map.">Tu carta no es tu <em>destino</em>. Es tu mapa.</p>
-    </div>
-  </div>
-  <div class="sunbar inside" data-sunbar data-ink="#E0248C" aria-hidden="true"></div>
-</section>
-
 <!-- ═══════════ SOBRE MÍ ═══════════ -->
-<section id="about" class="band-cream">
-  <!-- recortes sueltos alrededor del texto -->
-  <div class="aboutart" id="aboutArt" aria-hidden="true">
-    <img class="a-tiger"  src="tiger_collage.png" alt="" width="760" height="659">
-    <img class="a-moon"   src="pink_moon.png"     alt="" width="560" height="556">
-    <img class="a-snake"  src="pink_snake.png"    alt="" width="700" height="780">
-  </div>
+<section id="about" class="band-cream bg" style="--img:url(&quot;bg-tiger.png&quot;); --veil:.80">
   <div class="wrap">
     <div class="head reveal">
       <span class="eyebrow" data-en="House I · identity">Casa I · identidad</span>
@@ -754,29 +602,17 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
         <p class="lede" style="margin-bottom:18px" data-en="I'm Moni — a multidisciplinary healer and artist. For years I've worked with women, guiding them into deep transformational and liberation work.">Soy Moni, sanadora y artista multidisciplinaria. Llevo años trabajando con mujeres, acompañándolas en procesos profundos de transformación y liberación.</p>
         <p data-en="My holistic education began eight years ago in Boulder, Colorado, where I trained as a certified Ayurvedic Practitioner at Alandi Ashram Gurukula and became a yoga teacher. There I was introduced to Bhakti — devotional yoga — and it became central to my practice (Jai Ma!). I then travelled to Zipolite, Oaxaca, to study under extraordinary <em>curanderas</em> who taught me traditional Mexican massage and healing arts, and opened my spirituality into Earth-rooted ancestral practice.">Mi formación holística empezó hace ocho años en Boulder, Colorado, donde me certifiqué como Practicante Ayurvédica en Alandi Ashram Gurukula y me formé como maestra de yoga. Ahí conocí el Bhakti, el yoga devocional, que se volvió central en mi práctica (¡Jai Ma!). Después viajé a Zipolite, Oaxaca, a estudiar con curanderas extraordinarias que me enseñaron masaje tradicional mexicano y artes de sanación, y que abrieron mi espiritualidad hacia prácticas ancestrales enraizadas en la Tierra.</p>
         <p data-en="Back in the States, wanting to join Eastern and Western philosophies into something more (w)holistic, I earned my Bachelor's in Psychology from The New School in New York. Along the way I trained as a Body Temple Dance instructor under my teacher Adriana, where I learned the power of somatic release, embodiment, womb work, feminine pleasure and ecstatic dance. But my most powerful initiation was becoming a mother. Motherhood reshaped my beliefs and my practice: the ordinary became mystic, and I trust my inner guidance more than ever. It's time for women to trust themselves again. I know wholly in my body that I am here to serve women, to offer everything to the Divine Mother, and to help build the matriarchy our world so desperately needs.">De regreso en Estados Unidos, buscando unir las filosofías de Oriente y Occidente de una manera más (w)holística, estudié la licenciatura en Psicología en The New School, en Nueva York. En el camino me formé como instructora de Body Temple Dance con mi maestra Adriana, donde aprendí el poder de la liberación somática, la encarnación, el trabajo de útero, el placer femenino y la danza extática. Pero mi iniciación más poderosa fue convertirme en madre. La maternidad transformó mis creencias y mi práctica: lo ordinario se volvió místico y confío en mi guía interna más que nunca. Es tiempo de que las mujeres vuelvan a confiar en sí mismas. Sé en todo mi cuerpo que estoy aquí para servir a las mujeres, para ofrecerle todo a la Madre Divina y ayudar a construir el matriarcado que tanta falta le hace al mundo.</p>
-        <div class="natal" id="natal"></div>
         <p class="soft" style="font-size:14px" data-en="Certified Ayurvedic Practitioner (Alandi Ashram Gurukula) · 200h yoga teacher · BA Psychology, The New School · Body Temple Dance instructor · traditional Mexican healing arts.">Practicante Ayurvédica certificada (Alandi Ashram Gurukula) · maestra de yoga · Licenciada en Psicología, The New School · instructora de Body Temple Dance · artes de sanación tradicional mexicana.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ GALERÍA EN MOVIMIENTO ═══════════ -->
-<section id="gallery" aria-label="Fotos">
-  <!-- La tira se desliza sola. El set de nueve fotos está dos veces:
-       cuando la primera copia termina de pasar, la animación vuelve a
-       cero y la segunda queda exactamente donde estaba la primera, así
-       no se ve ningún salto. Si cambias el número de fotos, cambia
-       también las dos copias. --gh es el alto; --speed la lentitud. -->
-  <div class="strip" style="--gh:clamp(190px,26vw,380px); --speed:62s">
-    <div class="track" id="galTrack"></div>
-  </div>
-</section>
 
 <div class="sunbar" data-sunbar data-bg="#FFF6E9" data-ink="#C4506E" aria-hidden="true"></div>
 
 <!-- ═══════════ SERVICIOS ═══════════ -->
-<section id="services">
+<section id="services" class="bg" style="--img:url(&quot;bg-services.jpg&quot;); --veil:.74">
   <div class="wrap">
     <div class="head reveal">
       <span class="eyebrow" data-en="House II · what it's worth">Casa II · lo que vale</span>
@@ -858,11 +694,11 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 <div class="sunbar" data-sunbar data-ink="#C4506E" aria-hidden="true"></div>
 
 <!-- ═══════════ TESTIMONIOS ═══════════ -->
-<section id="voces" class="band-print bg-snake">
+<section id="voces" class="band-paper bg" style="--img:url(&quot;snake.png&quot;); --veil:.62">
   <div class="wrap">
     <div class="head reveal">
       <span class="eyebrow" data-en="House XI · the ones who came before">Casa XI · las que ya pasaron por aquí</span>
-      <h2 class="h-lg" data-en="What they <span class='print p-leopard ital'>say</span>">Lo que <span class="print p-leopard ital">dicen</span></h2>
+      <h2 class="h-lg" data-en="What they <span class='print ital'>say</span>">Lo que <span class="print ital">dicen</span></h2>
     </div>
     <div class="quotes" id="quotes"></div>
   </div>
@@ -870,7 +706,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 </section>
 
 <!-- ═══════════ GRATIS ═══════════ -->
-<section id="free" class="band-pulp on-dark">
+<section id="free" class="band-pulp on-dark bg dark" style="--img:url(&quot;bg-free.jpg&quot;); --veil:.72">
   <div class="wrap">
     <div class="head reveal">
       <span class="eyebrow" data-en="House IX · what gets shared">Casa IX · lo que se comparte</span>
@@ -906,7 +742,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 <div class="sunbar" data-sunbar data-bg="#E0248C" data-ink="#FFD0E4" aria-hidden="true"></div>
 
 <!-- ═══════════ RESERVAR ═══════════ -->
-<section id="book" class="band-cream">
+<section id="book" class="band-cream bg" style="--img:url(&quot;bg-zodiac.jpg&quot;); --veil:.84">
   <div class="wrap">
     <div class="head reveal">
       <span class="eyebrow" data-en="House VII · the meetings">Casa VII · los encuentros</span>
@@ -951,19 +787,6 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     </div>
   </div>
 </section>
-
-<!-- ═══════════ POPUP DE SERVICIO ═══════════ -->
-<div id="svcModal" class="modal" hidden>
-  <div class="modal-back" data-close></div>
-  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="svcTitle">
-    <button class="modal-x" data-close aria-label="Cerrar">×</button>
-    <svg class="modal-sun" viewBox="0 0 44 44" id="svcSun" aria-hidden="true"></svg>
-    <h3 id="svcTitle"></h3>
-    <p class="modal-dur" id="svcDur"></p>
-    <p id="svcDesc"></p>
-    <button class="btn btn-fill" id="svcMore" type="button"></button>
-  </div>
-</div>
 
 <!-- ═══════════ PIE ═══════════ -->
 <footer>
@@ -1162,8 +985,6 @@ var UI = {
   today:{es:"Tu mensaje de hoy",en:"Your message today"},
   svc:{es:["Mentoría privada","Lectura de carta natal","Consulta ayurvédica","Masaje sagrado de cabeza","Coaching de amor (10 semanas)","Todavía no sé"],
        en:["Private mentorship","Birth chart reading","Ayurvedic consultation","Sacred scalp massage","Love coaching (10 weeks)","Not sure yet"]},
-  natalK:{es:["Sol","Luna","Ascendente"],en:["Sun","Moon","Rising"]},
-  natalT:{es:["Leo · Casa X","Piscis · Casa IV","Acuario"],en:["Leo · 10th house","Pisces · 4th house","Aquarius"]},
   /* precios: pesos en español, dólares en inglés.
      El orden es el de las tarjetas (data-card 0 a 4).
      Cambia estos textos cuando ajustes tus tarifas.            */
@@ -1258,15 +1079,6 @@ SIGNS.forEach(function(s){
   grid.appendChild(b);
 });
 var sel=document.getElementById("f-sign"), svcSel=document.getElementById("f-svc");
-var dg=document.getElementById("dialGlyphs");
-SIGNS.forEach(function(s,i){
-  var a=(i/12)*Math.PI*2-Math.PI/2;
-  var g=document.createElementNS(SVGNS,"g");
-  g.setAttribute("transform","translate("+(200+Math.cos(a)*117).toFixed(1)+","+(200+Math.sin(a)*117).toFixed(1)+") scale(1.05) translate(-12,-12)");
-  g.setAttribute("data-sign",s.id); g.setAttribute("class","dial-glyph");
-  dg.appendChild(g);
-  s.p.forEach(function(d){ var pa=document.createElementNS(SVGNS,"path"); pa.setAttribute("d",d); g.appendChild(pa); });
-});
 
 /* ═════════ 4. IDIOMA ═════════ */
 var chosen = null;
@@ -1288,16 +1100,10 @@ function setLang(l){
     b.setAttribute("aria-label", T(s.n) + ", " + T(s.d));
   });
   /* rueda */
-  buildRing();
   /* selects */
   sel.innerHTML = '<option value="">—</option>' + SIGNS.map(function(s){
     return '<option value="'+T(s.n)+'">'+T(s.n)+'</option>'; }).join("");
   svcSel.innerHTML = T(UI.svc).map(function(v){ return '<option>'+v+'</option>'; }).join("");
-  /* carta natal */
-  document.getElementById("natal").innerHTML = [4,11,10].map(function(idx,k){
-    return '<div><p class="k">'+T(UI.natalK)[k]+'</p>'+glyphSVG(SIGNS[idx])+
-      '<p class="v">'+T(SIGNS[idx].n)+'<small>'+T(UI.natalT)[k]+'</small></p></div>';
-  }).join("");
   /* testimonios */
   document.getElementById("quotes").innerHTML = TESTI.map(function(o,i){
     return '<blockquote class="quote reveal in"><svg class="sun" viewBox="0 0 44 44"><path d="'+
@@ -1317,82 +1123,6 @@ function setLang(l){
 }
 document.querySelectorAll(".lang button").forEach(function(b){
   b.addEventListener("click", function(){ setLang(b.getAttribute("data-lang")); });
-});
-
-/* ═════════ SERVICIOS DE LA RUEDA ═════════ */
-var SVCS=[
- {card:0, n:{es:"MENTORÍA PRIVADA",en:"PRIVATE MENTORSHIP"}, t:{es:"Mentoría privada",en:"Private mentorship"},
-  dur:{es:"55 min · en línea por Zoom",en:"55 min · online via Zoom"},
-  d:{es:"Un espacio para bajarle al ritmo y explorar lo que hay debajo de tus patrones: emociones, relaciones, amor propio, infancia y propósito. Trabajamos con psicología, espiritualidad femenina, astrología, meditación y movimiento. Nos vemos cada semana o cada quince días, y tu lectura de carta natal va incluida.",
-     en:"A space to slow down and explore what sits underneath your patterns: emotions, relationships, self-love, childhood and purpose. We work with psychology, feminine spirituality, astrology, meditation and movement. We meet weekly or every two weeks, and your birth chart reading is included."}},
- {card:1, n:{es:"CARTA NATAL",en:"BIRTH CHART"}, t:{es:"Lectura de carta natal",en:"Birth chart reading"},
-  dur:{es:"60 min · $144 USD",en:"60 min · $144 USD"},
-  d:{es:"Una mirada profunda a tu plano energético único. Recorremos tu sol, luna, ascendente, planetas y casas para entender tus patrones, tus relaciones, tus dones y tus retos. Para quien nunca ha tenido una lectura, o quiere una perspectiva distinta a la que ya escuchó.",
-     en:"A deeper look at your unique energetic blueprint. We explore your sun, moon, rising, planets and houses to understand your patterns, relationships, gifts and challenges. For anyone who has never had a reading, or who wants a different perspective from the one she's been given."}},
- {card:2, n:{es:"AYURVEDA",en:"AYURVEDA"}, t:{es:"Consulta ayurvédica",en:"Ayurvedic consultation"},
-  dur:{es:"60 min · seguimientos de 30 min",en:"60 min · 30 min follow-ups"},
-  d:{es:"La medicina ancestral de la India, basada en los elementos y los tres doshas: vata, pitta y kapha. Revisamos tu constitución, hábitos, digestión, energía y estilo de vida para encontrar los desequilibrios y armar recomendaciones personalizadas de alimentación, rutina y autocuidado.",
-     en:"The ancient medicine of India, built on the elements and the three doshas: vata, pitta and kapha. We look at your constitution, habits, digestion, energy and lifestyle to find the imbalances and build personalised recommendations for food, routine and self-care."}},
- {card:3, n:{es:"MASAJE SAGRADO",en:"SACRED MASSAGE"}, t:{es:"Masaje sagrado de cabeza",en:"Sacred scalp massage"},
-  dur:{es:"Presencial · con cita",en:"In person · by appointment"},
-  d:{es:"Aceites tibios elegidos para tu dosha, manos lentas y el ritual ayurvédico de cabeza, cuello y hombros. Está a medio camino entre el trabajo corporal y la ceremonia: para cuando la mente necesita parar y el sistema nervioso necesita descansar.",
-     en:"Warm oils chosen for your dosha, slow hands, and the ayurvedic ritual for head, neck and shoulders. It sits halfway between bodywork and ceremony — for when the thinking needs to stop and the nervous system needs to rest."}},
- {card:4, n:{es:"COACHING DE AMOR",en:"LOVE COACHING"}, t:{es:"Coaching de amor",en:"Love coaching"},
-  dur:{es:"10 semanas · $888 USD",en:"10 weeks · $888 USD"},
-  d:{es:"Un contenedor diseñado para prepararte a entrar en una relación consciente. Exploramos tus patrones, heridas, límites, necesidades y estilo relacional, y conectamos con tu energía erótica, tu útero, tus deseos y tu placer. Primero te enamoras de ti; lo demás llega después.",
-     en:"A container built to prepare you for a conscious relationship. We explore your patterns, wounds, boundaries, needs and relational style, and connect with your erotic energy, your womb, your desires and your pleasure. You fall in love with yourself first; the rest follows."}}
-];
-UI.more={es:"Ver el servicio completo",en:"See the full service"};
-
-function buildRing(){
-  var ring=document.getElementById("dialRing");
-  ring.innerHTML = SVCS.map(function(s,i){
-    return '<text class="dial-svc" data-svc="'+i+'" tabindex="0" role="button">'+
-      '<textPath href="#ringPath" startOffset="'+(i*20+2.4).toFixed(1)+'%" '+
-      'textLength="150" lengthAdjust="spacing">'+T(s.n)+'</textPath></text>';
-  }).join("") + SVCS.map(function(s,i){
-    return '<text class="dial-star"><textPath href="#ringPath" startOffset="'+
-      (i*20+18.4).toFixed(1)+'%">✦</textPath></text>';
-  }).join("");
-}
-
-/* ── popup ── */
-var modal=document.getElementById("svcModal"), openSvc=null;
-document.getElementById("svcSun").innerHTML='<path d="'+sunPath(22,22,21,9,12,2.3)+'"/>';
-
-function showSvc(i){
-  var s=SVCS[i]; openSvc=i;
-  document.getElementById("svcTitle").textContent=T(s.t);
-  document.getElementById("svcDur").textContent=T(s.dur);
-  document.getElementById("svcDesc").textContent=T(s.d);
-  document.getElementById("svcMore").textContent=T(UI.more);
-  modal.hidden=false;
-  document.getElementById("svcMore").focus();
-}
-function hideSvc(){ modal.hidden=true; openSvc=null; }
-
-document.querySelector(".dial-wrap").addEventListener("click",function(e){
-  var t=e.target.closest("[data-svc]");
-  if (t) showSvc(+t.getAttribute("data-svc"));
-});
-document.querySelector(".dial-wrap").addEventListener("keydown",function(e){
-  if (e.key!=="Enter" && e.key!==" ") return;
-  var t=e.target.closest("[data-svc]");
-  if (t){ e.preventDefault(); showSvc(+t.getAttribute("data-svc")); }
-});
-modal.addEventListener("click",function(e){ if (e.target.hasAttribute("data-close")) hideSvc(); });
-addEventListener("keydown",function(e){ if (e.key==="Escape" && !modal.hidden) hideSvc(); });
-
-document.getElementById("svcMore").addEventListener("click",function(){
-  var i=openSvc; hideSvc();
-  var card=document.querySelector('.card[data-card="'+SVCS[i].card+'"]');
-  if (!card) return;
-  card.scrollIntoView({behavior:"smooth",block:"center"});
-  document.querySelectorAll(".card.spotlight").forEach(function(c){ c.classList.remove("spotlight"); });
-  setTimeout(function(){
-    card.classList.add("spotlight");
-    setTimeout(function(){ card.classList.remove("spotlight"); },3600);
-  },500);
 });
 
 /* ═════════ GALERÍA EN MOVIMIENTO ═════════
@@ -1689,41 +1419,20 @@ function applySign(s,quiet){
   head.innerHTML='<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="'+
     ELEMENT_PINK[s.el]+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+
     s.p.map(function(d){return '<path d="'+d+'"/>';}).join("")+'</svg>';
-  Array.prototype.forEach.call(dg.children,function(g){
-    var mine=g.getAttribute("data-sign")===s.id;
-    g.style.strokeWidth=mine?"3.6":"2.4";
-    g.style.stroke=mine?"#52102F":"";
-  });
   showDaily(s);
 }
-/* Secuencia de apertura, al abrirse la portada:
-     1. página rosa vacía + "Despierta lo divino femenino" en grande
-     2. cae el zarpazo 1  (la frase sigue ahí)
-     3. cae el zarpazo 2  (la frase sigue ahí)
-     4. cae el zarpazo 3  (la frase sigue ahí)
-     5. cae el zarpazo 4  (la frase sigue ahí)
-     6. la frase se va y aparece el hero completo
+/* Al cerrarse la portada entra el hero de una vez.
    Un solo atributo manda: #home[data-seq].                      */
 var homeEl=document.getElementById("home");
-var clawsEl=document.getElementById("claws");
-var SLASH_LAST=2000, SLASH_DUR=420, PAUSE=420;   /* ms */
 
 function playHero(){
   if (!homeEl) return;
-  if (!clawsEl){ homeEl.setAttribute("data-seq","hero"); return; }
-
   /* reinicio, por si vuelven a elegir signo */
   homeEl.setAttribute("data-seq","off");
-  clawsEl.classList.remove("in");
   void homeEl.offsetWidth;
 
-  /* 1 — sólo la frase */
-  requestAnimationFrame(function(){ homeEl.setAttribute("data-seq","line"); });
-  /* 2-5 — los zarpazos, con la frase todavía en pantalla */
-  setTimeout(function(){ clawsEl.classList.add("in"); }, 300);
-  /* 6 — cambio: se va la frase, entra el hero */
-  setTimeout(function(){ homeEl.setAttribute("data-seq","hero"); },
-             300 + SLASH_LAST + SLASH_DUR + PAUSE);
+  /* el hero entra entero, sin espera */
+  requestAnimationFrame(function(){ homeEl.setAttribute("data-seq","hero"); });
 }
 function openSite(){
   gate.classList.add("gone");
@@ -1758,16 +1467,6 @@ document.querySelectorAll(".reveal").forEach(function(el,i){
 });
 
 
-/* los recortes de "quién te lee" entran escalonados */
-var aboutArt=document.getElementById("aboutArt");
-if (aboutArt){
-  aboutArt.querySelectorAll("img").forEach(function(im,i){
-    im.style.transitionDelay=(i*140)+"ms";
-  });
-  new IntersectionObserver(function(es,ob){
-    es.forEach(function(e){ if(e.isIntersecting){ aboutArt.classList.add("in"); ob.disconnect(); } });
-  },{threshold:.15}).observe(document.getElementById("about"));
-}
 
 /* ═════════ 10. MENÚ + NEWSLETTER ═════════ */
 var nav=document.getElementById("nav"), mb=document.getElementById("menuBtn");
