@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Moni Brujita — Espiritualidad femenina · Ayurveda · Astrología</title>
+<title translate="no">Moni Brujita — Espiritualidad femenina · Ayurveda · Astrología</title>
 <meta name="description" content="Sabiduría antigua para la mujer moderna. Mentoría privada, carta natal, ayurveda y coaching de amor con Moni Brujita. Sesiones en línea por Zoom, en español e inglés.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -207,6 +207,9 @@ nav a:hover::after{width:100%}
 section{position:relative;padding:var(--gap) var(--pad) calc(var(--gap) + 16px)}
 .wrap{max-width:var(--maxw);margin:0 auto;width:100%;position:relative;z-index:1}
 .head{margin-bottom:clamp(30px,4vw,52px)}
+/* esta sección va más ancha que el resto: la foto se corre a la
+   izquierda y el texto gana renglón, que era lo que la hacía larga */
+#about .wrap{max-width:min(1460px,94vw)}
 .head .eyebrow{margin-bottom:14px}
 .head h2{margin-bottom:6px}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.7,.3,1),transform .8s cubic-bezier(.2,.7,.3,1)}
@@ -288,11 +291,11 @@ section{position:relative;padding:var(--gap) var(--pad) calc(var(--gap) + 16px)}
 /* dos renglones fijos, 2 + 2. El tamaño va atado al ancho para que
    cada renglón entre completo entre los dos soles; en pantalla chica
    se deja envolver solo, que ahí no hay espacio para forzarlo. */
-.disciplines{font-family:var(--display);font-weight:600;font-size:clamp(10px,1.05vw,16px);letter-spacing:.14em;
+.disciplines{font-family:var(--display);font-weight:600;font-size:clamp(13px,1.45vw,23px);letter-spacing:.13em;
   line-height:1.65;white-space:nowrap;
   text-transform:uppercase;color:var(--rasp);margin-bottom:0}
 @media(max-width:900px){
-  .disciplines{white-space:normal;font-size:clamp(9.5px,2.55vw,14px);letter-spacing:.09em}
+  .disciplines{white-space:normal;font-size:clamp(12px,3.3vw,18px);letter-spacing:.08em}
 }
 .sunspin{animation:spin 90s linear infinite;transform-origin:110px 110px;transform-box:view-box}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -303,7 +306,15 @@ section{position:relative;padding:var(--gap) var(--pad) calc(var(--gap) + 16px)}
 .btn-fill:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--wine)}
 
 /* ═══════════════ SOBRE MÍ ═══════════════ */
-.about-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:clamp(26px,4vw,58px);align-items:stretch}
+/* La foto ocupa la columna estrecha y el texto la ancha, así la
+   sección se extiende a lo largo y no a lo alto. --photo manda:
+   súbelo para una foto más grande, bájalo para más texto por línea. */
+.about-grid{display:grid;--photo:.8fr;
+  grid-template-columns:minmax(0,var(--photo)) minmax(0,1.3fr);
+  gap:clamp(24px,3.4vw,52px);align-items:start}
+/* renglón un poco más grande: la columna es ancha y así se lee mejor */
+.about-grid p{font-size:16.5px;line-height:1.64}
+.about-grid p.lede{font-size:clamp(19px,1.5vw,25px)}
 .arch{position:relative;margin-bottom:26px;padding:14px;background:var(--cream);border:1.5px solid rgba(82,16,47,.2);
   border-radius:220px 220px 12px 12px;transform:rotate(-1.5deg);box-shadow:8px 10px 0 rgba(82,16,47,.18)}
 .arch .frame{aspect-ratio:4/5;border-radius:206px 206px 6px 6px;display:grid;place-items:center;overflow:hidden;
@@ -511,7 +522,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     <button type="button" data-lang="es" class="on">Español</button><i>/</i><button type="button" data-lang="en">English</button>
   </div>
   <div class="gate-inner" id="gateInner">
-    <span class="eyebrow">Moni Brujita</span>
+    <span class="eyebrow" translate="no">Moni Brujita</span>
     <h1 class="h-lg" data-en="<span class='print ital'>What is your sign?</span>"><span class="print ital">¿Cuál es tu signo?</span></h1>
     <div class="signs" id="signGrid"></div>
   </div>
@@ -522,7 +533,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 
 <!-- ═══════════ HEADER ═══════════ -->
 <header id="hdr">
-  <a href="#home" class="brand">Moni <span>Brujita</span></a>
+  <a href="#home" class="brand" translate="no">Moni <span>Brujita</span></a>
   <nav id="nav">
     <a href="#about" data-en="About">Sobre mí</a>
     <a href="#services" data-en="Services">Servicios</a>
@@ -546,7 +557,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     <div class="heroline">
       <div class="eyesun" id="sunL" aria-hidden="true"></div>
       <div class="herotext">
-        <h1 class="wordmark"><img src="wordmark.png" alt="Moni Brujita" width="1800" height="246"></h1>
+        <h1 class="wordmark" translate="no"><img src="wordmark.png" alt="Moni Brujita" width="1800" height="246"></h1>
         <p class="disciplines" data-en="Feminine spirituality · Embodiment + Movement&lt;br&gt;Ayurveda + Yoga · Astrology">Espiritualidad femenina · Encarnación + Movimiento<br>Ayurveda + Yoga · Astrología</p>
       </div>
       <div class="eyesun" id="sunR" aria-hidden="true"></div>
@@ -611,7 +622,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
           <li data-en="A safe space for your wild nature">Un espacio seguro para tu naturaleza salvaje</li>
           <li data-en="Includes a birth chart reading">Incluye tu lectura de carta natal</li>
         </ul>
-        <div class="foot"><p class="price">$95–122<small data-en="USD · sliding scale">USD · precio escalonado</small></p><a href="#book" class="go" data-en="Book">Reservar</a></div>
+        <div class="foot"><p class="price">$95–122<small data-en="USD · sliding scale">USD · precio escalonado</small></p><a href="https://cal.com/moni-brujita/coaching-holistico" class="go" target="_blank" rel="noopener" data-en="Book">Reservar</a></div>
       </article>
 
       <article class="card reveal" data-card="1">
@@ -624,7 +635,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
           <li data-en="What it means for your relationships">Qué significa para tus relaciones</li>
           <li data-en="For a first reading, or a second opinion">Para una primera lectura o una segunda opinión</li>
         </ul>
-        <div class="foot"><p class="price">$144<small>USD</small></p><a href="#book" class="go" data-en="Book">Reservar</a></div>
+        <div class="foot"><p class="price">$144<small>USD</small></p><a href="https://cal.com/moni-brujita/carta-astral" class="go" target="_blank" rel="noopener" data-en="Book">Reservar</a></div>
       </article>
 
       <article class="card reveal" data-card="2">
@@ -638,7 +649,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
           <li data-en="Fertility, metabolism and digestion">Fertilidad, metabolismo y digestión</li>
           <li data-en="Follow-ups 30 min · $45 USD">Seguimientos de 30 min · $45 USD</li>
         </ul>
-        <div class="foot"><p class="price">$144<small data-en="USD · first consultation">USD · consulta inicial</small></p><a href="#book" class="go" data-en="Book">Reservar</a></div>
+        <div class="foot"><p class="price">$144<small data-en="USD · first consultation">USD · consulta inicial</small></p><a href="https://cal.com/moni-brujita/ayurveda-follow-up" class="go" target="_blank" rel="noopener" data-en="Book">Reservar</a></div>
       </article>
 
       <article class="card reveal" data-card="3">
@@ -666,7 +677,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
           <li data-en="Falling in love with yourself first">Enamorarte de ti antes que de nadie</li>
           <li data-en="A tested, week-by-week program">Un programa probado, semana a semana</li>
         </ul>
-        <div class="foot"><p class="price">$888<small data-en="USD · full program">USD · programa completo</small></p><a href="#book" class="go" data-en="Apply">Aplicar</a></div>
+        <div class="foot"><p class="price">$888<small data-en="USD · full program">USD · programa completo</small></p><a href="https://cal.com/moni-brujita/love-coaching" class="go" target="_blank" rel="noopener" data-en="Apply">Aplicar</a></div>
       </article>
     </div>
   </div>
@@ -728,7 +739,8 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     <div class="head reveal">
       <span class="eyebrow" data-en="House VII · the meetings">Casa VII · los encuentros</span>
       <h2 class="h-lg" data-en="Book <span class='print p-python ital'>your session</span>">Reservar <span class="print p-python ital">tu sesión</span></h2>
-      <p class="lede" style="margin-top:12px" data-en="Write to me and I'll reply within 48 hours with available times.&lt;br&gt;Or you can book directly &lt;a class=&quot;inline&quot; href=&quot;https://cal.com/TU-ENLACE&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;here&lt;/a&gt;.">Escríbeme y te contesto en menos de 48 horas con horarios disponibles.<br>O puedes reservar directamente <a class="inline" href="https://cal.com/TU-ENLACE" target="_blank" rel="noopener">aquí</a>.</p>
+      <p class="lede" style="margin-top:12px" data-en="Write to me and I'll reply within 48 hours with available times.&lt;br&gt;Or you can book a 30 min intro call &lt;a class=&quot;inline&quot; href=&quot;https://cal.com/moni-brujita/30min&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;here&lt;/a&gt;.">Escríbeme y te contesto en menos de 48 horas con horarios disponibles.<br>O puedes reservar una llamada de 30 min <a class="inline" href="https://cal.com/moni-brujita/30min" target="_blank" rel="noopener">aquí</a>.</p>
+      <p class="soft" style="font-size:13.5px;margin-top:6px" data-en="You can book the services directly above.">Los servicios se reservan directamente arriba.</p>
     </div>
     <div class="book">
       <div class="reveal">
@@ -759,10 +771,10 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
       </div>
       <div class="reveal">
         <ul class="contact-list">
-          <li><span class="k" data-en="Book online">Agenda en línea</span><a href="https://cal.com/TU-ENLACE" target="_blank" rel="noopener" data-en="See available times">Ver horarios disponibles</a></li>
+          <li><span class="k" data-en="Book online">Agenda en línea</span><a href="https://cal.com/moni-brujita/30min" target="_blank" rel="noopener" data-en="See available times">Ver horarios disponibles</a></li>
           <li><span class="k">Instagram</span><a href="https://www.instagram.com/monibrujita_/" target="_blank" rel="noopener">@monibrujita_</a></li>
-          <li><span class="k" data-en="Email">Correo</span><a href="mailto:hola@monibrujita.com">hola@monibrujita.com</a></li>
-          <li><span class="k">WhatsApp</span><a href="https://wa.me/52TUNUMERO" target="_blank" rel="noopener" data-en="Message on WhatsApp">Escribir por WhatsApp</a></li>
+          <li><span class="k" data-en="Email">Correo</span><a href="mailto:monicamenacollabs@gmail.com">monicamenacollabs@gmail.com</a></li>
+          <li><span class="k">WhatsApp</span><a id="waLink" href="https://wa.me/16197073734" target="_blank" rel="noopener" data-en="Message on WhatsApp">Escribir por WhatsApp</a></li>
         </ul>
       </div>
     </div>
@@ -773,7 +785,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 <footer>
   <div class="sunbar inside top" data-sunbar data-ink="#E0248C" aria-hidden="true"></div>
   <div class="foot-in">
-    <p class="big" data-en="See you<br>in the sky.">Nos vemos<br>en el cielo.</p>
+    <p class="big" data-en="Remember<br>you are the goddess.">Recuerda<br>que eres la diosa.</p>
     <div class="foot-links">
       <a href="#about" data-en="About">Sobre mí</a><a href="#services" data-en="Services">Servicios</a>
       <a href="#free" data-en="Free resources">Recursos gratis</a><a href="#book" data-en="Book">Reservar</a>
@@ -781,7 +793,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     </div>
   </div>
   <div class="copy">
-    <p>© <span id="yr"></span> Moni Brujita · <span data-en="Feminine spirituality · Embodiment · Ayurveda · Astrology">Espiritualidad femenina · Encarnación · Ayurveda · Astrología</span></p>
+    <p>© <span id="yr"></span> <span translate="no">Moni Brujita</span> · <span data-en="Feminine spirituality · Embodiment · Ayurveda · Astrology">Espiritualidad femenina · Encarnación · Ayurveda · Astrología</span></p>
     <p class="credit" data-en="Website and Branding by: &lt;a href=&quot;https://www.mommasboys.com&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Momma's Boys&lt;/a&gt;">Sitio web e identidad por: <a href="https://www.mommasboys.com" target="_blank" rel="noopener">Momma's Boys</a></p>
   </div>
   <div class="sunbar inside" data-sunbar data-ink="#FFD0E4" aria-hidden="true"></div>
@@ -1089,6 +1101,12 @@ function setLang(l){
     return '<blockquote class="quote reveal in"><svg class="sun" viewBox="0 0 44 44"><path d="'+
       sunPath(22,22,21,9,12,1.3+i)+'"/></svg><p>“'+T(o.q)+'”</p><cite>'+o.w+'</cite></blockquote>';
   }).join("");
+  /* WhatsApp: abre la conversación con el mensaje ya escrito.
+     Para cambiarlo, edita las dos frases de aquí abajo.          */
+  var wa=document.getElementById("waLink");
+  if (wa) wa.href = "https://wa.me/16197073734?text=" + encodeURIComponent(
+    l === "en" ? "Hi Moni! I found you through your website and I'd love to know more about your sessions."
+               : "¡Hola Moni! Te encontré por tu página y me encantaría saber más sobre tus sesiones.");
   /* precios por moneda */
   document.querySelectorAll(".card[data-card]").forEach(function(c){
     var el=c.querySelector(".price");
