@@ -209,7 +209,7 @@ section{position:relative;padding:var(--gap) var(--pad) calc(var(--gap) + 16px)}
 .head{margin-bottom:clamp(30px,4vw,52px)}
 /* esta sección va más ancha que el resto: la foto se corre a la
    izquierda y el texto gana renglón, que era lo que la hacía larga */
-#about .wrap{max-width:min(1460px,94vw)}
+#about .wrap{max-width:min(1480px,95vw)}
 .head .eyebrow{margin-bottom:14px}
 .head h2{margin-bottom:6px}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.7,.3,1),transform .8s cubic-bezier(.2,.7,.3,1)}
@@ -306,21 +306,31 @@ section{position:relative;padding:var(--gap) var(--pad) calc(var(--gap) + 16px)}
 .btn-fill:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--wine)}
 
 /* ═══════════════ SOBRE MÍ ═══════════════ */
-/* La foto ocupa la columna estrecha y el texto la ancha, así la
-   sección se extiende a lo largo y no a lo alto. --photo manda:
-   súbelo para una foto más grande, bájalo para más texto por línea. */
-.about-grid{display:grid;--photo:.8fr;
-  grid-template-columns:minmax(0,var(--photo)) minmax(0,1.3fr);
-  gap:clamp(24px,3.4vw,52px);align-items:stretch}
-/* La columna de la foto se estira hasta el alto del texto y ahí se
-   para: el marco nunca sobresale por abajo, escriba Moni lo que
-   escriba. En móvil, que van uno debajo del otro, vuelve a mandar
-   la proporción 4/5 de siempre.                                   */
+/* QUIÉN SOY — cómo se reparte el espacio
+   El marco tiene la MISMA forma que la foto (--ratio, que el script
+   saca de la imagen al cargarla). Crece hasta donde se lo permita lo
+   que quede libre: hasta el alto del texto, o hasta el ancho de su
+   columna, lo que se acabe primero. Por eso nunca sobresale, nunca
+   recorta y nunca deja orillas crema.
+     --col  el ancho que se reserva para la foto.                  */
+.about-grid{display:grid;--col:clamp(300px,36vw,560px);--linea:920px;
+  grid-template-columns:var(--col) minmax(0,1fr);
+  gap:clamp(20px,2vw,34px);align-items:stretch}
 .about-grid > div:first-child{position:relative;min-height:0}
-.about-grid > div:first-child > .arch{position:absolute;inset:0;display:flex;margin-bottom:0}
-.about-grid > div:first-child > .arch > .frame{flex:1;min-height:0}
+.about-grid > div:first-child > .arch{position:absolute;top:0;left:0;
+  width:fit-content;height:var(--ah,100%);max-width:100%;max-height:100%;
+  display:flex;margin-bottom:0}
+.about-grid > div:first-child > .arch > .frame{flex:1;min-width:0;min-height:0;width:fit-content}
+@media(max-width:1150px){
+  .about-grid{display:block}
+  .about-grid > div:first-child{position:static}
+  .about-grid > div:first-child > .arch{position:static;margin-bottom:26px;
+    width:auto;height:auto;max-width:100%}
+  .about-grid > div:first-child > .arch > .frame{width:auto}
+  .arch .frame img{width:100%;height:auto}
+}
 /* renglón un poco más grande: la columna es ancha y así se lee mejor */
-.about-grid p{font-size:16.5px;line-height:1.64}
+.about-grid p{font-size:18px;line-height:1.6}
 .about-grid p.lede{font-size:clamp(19px,1.5vw,25px)}
 .arch{position:relative;margin-bottom:26px;padding:14px;background:var(--cream);border:1.5px solid rgba(82,16,47,.2);
   border-radius:220px 220px 12px 12px;transform:rotate(-1.5deg);box-shadow:8px 10px 0 rgba(82,16,47,.18)}
@@ -335,7 +345,7 @@ section{position:relative;padding:var(--gap) var(--pad) calc(var(--gap) + 16px)}
 .arch .frame{--crop:contain; --focus:42%;
   border-radius:206px 206px 6px 6px;overflow:hidden;
   background-color:var(--cream);border:1px solid rgba(82,16,47,.14)}
-.arch .frame img{display:block;width:100%;height:100%;
+.arch .frame img{display:block;width:auto;height:100%;max-width:100%;
   object-fit:var(--crop);object-position:center var(--focus)}
 /* cinta adhesiva: cruza el borde, mitad dentro / mitad fuera */
 .about-grid p{margin-bottom:13px}
@@ -518,9 +528,8 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 
 /* ═══════════════ RESPONSIVE ═══════════════ */
 @media(max-width:980px){
-  .about-grid,.book,.sub{grid-template-columns:1fr}
-  .about-grid > div:first-child{position:static}
-  .about-grid > div:first-child > .arch{position:static;margin-bottom:26px}
+  .book,.sub{grid-template-columns:1fr}
+  .arch .frame img{width:100%;height:auto}
   .arch .frame img{height:auto}
 }
 @media(max-width:720px){
@@ -774,7 +783,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     </div>
     <div class="book">
       <div class="reveal">
-        <form class="bk" id="bkForm" action="https://formspree.io/f/TU_ID_AQUI" method="POST">
+        <form class="bk" id="bkForm">
           <div class="row">
             <div class="field"><label for="f-name" data-en="Your name">Tu nombre</label><input id="f-name" name="nombre" type="text" required></div>
             <div class="field"><label for="f-mail" data-en="Email">Correo</label><input id="f-mail" name="correo" type="email" required></div>
@@ -836,6 +845,40 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 "use strict";
 
 var LANG = "es";
+/* ══════════════════════════════════════════════════════════════
+   SUPABASE · aquí van tus dos datos y nada más.
+   Panel de Supabase → Project Settings → API:
+     SB_URL  es "Project URL"
+     SB_KEY  es la llave "anon public" (NO la "service_role",
+             esa nunca se pone en una página web)
+   Mientras estén vacíos la página sigue funcionando: los
+   formularios avisan que todavía no hay a dónde mandar.
+   ══════════════════════════════════════════════════════════════ */
+var SB_URL = "";
+var SB_KEY = "";
+
+/* Manda un renglón a una tabla. Devuelve una promesa. */
+function sbInsert(tabla, fila){
+  if (!SB_URL || !SB_KEY) return Promise.reject({sinConfigurar:true});
+  return fetch(SB_URL.replace(/\/+$/,"") + "/rest/v1/" + tabla, {
+    method:"POST",
+    headers:{
+      "apikey": SB_KEY,
+      "Authorization": "Bearer " + SB_KEY,
+      "Content-Type": "application/json",
+      "Prefer": "return=minimal"
+    },
+    body: JSON.stringify(fila)
+  }).then(function(r){
+    if (r.ok) return {ok:true};
+    return r.text().then(function(t){
+      /* 23505 = ese correo ya estaba en la lista */
+      if (r.status === 409 || t.indexOf("23505") > -1) throw {duplicado:true};
+      throw {http:r.status, detalle:t};
+    });
+  });
+}
+
 var T = function(o){ return o[LANG]; };
 
 /* ═════════ 1. SIGNOS ═════════ */
@@ -1019,6 +1062,17 @@ var UI = {
          en:["$95–122<small>USD</small>","$144<small>USD</small>","$144<small>USD</small>",
              "Ask<small>Message me</small>","$888<small>USD</small>"]},
   mailPH:{es:"tu@correo.com",en:"you@email.com"},
+  mailYa:{es:"Ese correo ya está en la lista. Nos vemos en la próxima luna.",
+          en:"That email is already on the list. See you at the next moon."},
+  enviando:{es:"Enviando…",en:"Sending…"},
+  mailOk:{es:"Listo. Te escribo en cada luna nueva y cada luna llena.",
+          en:"Done. I'll write to you every new moon and every full moon."},
+  formOk:{es:"Recibí tu solicitud. Te contesto en menos de 48 horas.",
+          en:"I got your request. I'll reply within 48 hours."},
+  formErr:{es:"No se pudo enviar. Revisa tu conexión y vuelve a intentar, o escríbeme directo por correo.",
+           en:"It didn't go through. Check your connection and try again, or email me directly."},
+  sinConf:{es:"El formulario todavía no está conectado. Escríbeme por correo o WhatsApp mientras tanto.",
+           en:"The form isn't connected yet. Email or WhatsApp me in the meantime."},
   cityPH:{es:"Ciudad, estado, país",en:"City, state, country"},
   msgPH:{es:"Cuéntame en dos líneas qué está pasando.",en:"Tell me in two lines what's going on."},
   badMail:{es:"Ese correo no se ve completo. Revísalo y vuelve a intentar.",
@@ -1081,6 +1135,92 @@ function buildSunbar(el){
   el.innerHTML = "";
 }
 document.querySelectorAll("[data-sunbar]").forEach(buildSunbar);
+
+/* ═════════ EL TAMAÑO DEL MARCO ═════════
+   El marco crece hasta donde lo dejen las dos paredes: el alto del
+   texto de al lado y el ancho de su columna. Gana la que se acabe
+   primero, y la foto conserva su forma. Eso es lo que hace que el
+   marco llegue justo hasta donde termina el texto, sin recortar la
+   foto y sin dejar orillas crema.
+   Si quitas este bloque el marco sigue funcionando, nada más deja
+   algo de crema cuando la ventana se hace angosta.               */
+(function(){
+  var grid = document.querySelector(".about-grid");
+  if (!grid) return;
+  var im   = grid.querySelector(".arch .frame img"),
+      arch = grid.querySelector(".arch"),
+      col  = grid.children[0],
+      txt  = grid.children[1];
+  if (!im || !arch || !col || !txt) return;
+
+  /* El renglón de texto tiene un largo cómodo para leer (--linea).
+     Todo lo que sobra de ancho se lo queda la foto, así no hay huecos
+     ni a la izquierda del marco ni a la derecha del texto. El marco
+     crece hasta el alto del texto o hasta ese ancho, lo que se acabe
+     primero, y siempre conserva la forma de la foto.
+     ¿La quieres más grande? Baja --linea (en el CSS de .about-grid).
+     ¿Más chica? Súbelo.                                           */
+  function ajustar(){
+    if (getComputedStyle(grid).display !== "grid"){
+      grid.style.removeProperty("--ah");
+      grid.style.removeProperty("--col");
+      return;
+    }
+    if (!im.naturalWidth || !im.naturalHeight) return;
+
+    var estilo = getComputedStyle(grid),
+        hueco  = parseFloat(estilo.columnGap) || 0,
+        total  = grid.getBoundingClientRect().width,
+        linea  = parseFloat(estilo.getPropertyValue("--linea")) || 860,
+        texto  = Math.min(linea, total * 0.62),
+        ancho  = Math.max(260, total - hueco - texto);
+
+    grid.style.setProperty("--col", Math.round(ancho) + "px");
+
+    /* ahora sí, el alto: lo que mida el texto o lo que dé el ancho */
+    var cajaIm = im.getBoundingClientRect(),
+        marcoX = arch.offsetWidth  - cajaIm.width,
+        marcoY = arch.offsetHeight - cajaIm.height,
+        forma  = im.naturalWidth / im.naturalHeight,
+        alto   = txt.getBoundingClientRect().height,
+        porAncho = (ancho - marcoX) / forma + marcoY;
+    grid.style.setProperty("--ah", Math.round(Math.max(160, Math.min(alto, porAncho))) + "px");
+  }
+
+  /* La columna se encoge al ancho que acabó teniendo el marco, para
+     que no quede hueco entre la foto y el texto, y el alto se vuelve
+     a medir contra el texto ya ensanchado.                        */
+  function cerrarHueco(){
+    var w = arch.getBoundingClientRect().width;
+    if (w < 60) return;
+    grid.style.setProperty("--col", Math.round(w) + "px");
+    var cajaIm = im.getBoundingClientRect(),
+        marcoX = arch.offsetWidth  - cajaIm.width,
+        marcoY = arch.offsetHeight - cajaIm.height,
+        forma  = im.naturalWidth / im.naturalHeight,
+        porAncho = (w - marcoX) / forma + marcoY,
+        alto   = txt.getBoundingClientRect().height;
+    grid.style.setProperty("--ah", Math.round(Math.max(160, Math.min(alto, porAncho))) + "px");
+  }
+
+  function recalcular(){
+    grid.style.removeProperty("--ah");
+    grid.style.removeProperty("--col");
+    ajustar();
+    ajustar();          /* segunda pasada: el texto ya tiene su ancho */
+    cerrarHueco();
+    cerrarHueco();
+  }
+
+  if (im.complete) recalcular(); else im.addEventListener("load", recalcular, {once:true});
+  addEventListener("load", recalcular);
+  var t; addEventListener("resize", function(){ clearTimeout(t); t=setTimeout(recalcular,160); });
+  /* el texto cambia de alto al cambiar de idioma */
+  document.querySelectorAll(".lang button").forEach(function(b){
+    b.addEventListener("click", function(){ setTimeout(recalcular, 60); });
+  });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(recalcular);
+})();
 
 /* ═════════ COPIAR EL CORREO ═════════
    Un clic copia la dirección y sale el aviso. Si el navegador no
@@ -1531,12 +1671,81 @@ nav.addEventListener("click",function(e){
   if (e.target.tagName==="A"){ nav.classList.remove("open"); mb.textContent="☰"; }
 });
 document.getElementById("subBtn").addEventListener("click",function(){
-  var v=document.getElementById("subEmail").value.trim(), note=document.getElementById("subNote");
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){
-    note.textContent=T(UI.badMail); note.style.color="#E0248C"; return;
-  }
-  note.textContent=T(UI.okMail); note.style.color="#52102F";
+  var btn=this,
+      campo=document.getElementById("subEmail"),
+      v=campo.value.trim(),
+      note=document.getElementById("subNote");
+  function di(txt,color){ note.textContent=txt; note.style.color=color; }
+
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ di(T(UI.badMail),"#E0248C"); return; }
+
+  btn.disabled=true; di(T(UI.enviando),"#52102F");
+  sbInsert("suscriptores", {correo:v, idioma:LANG, origen:"web"})
+    .then(function(){ di(T(UI.mailOk),"#52102F"); campo.value=""; })
+    .catch(function(e){
+      if (e && e.duplicado)      { di(T(UI.mailYa),"#52102F"); campo.value=""; }
+      else if (e && e.sinConfigurar) di(T(UI.sinConf),"#E0248C");
+      else                        di(T(UI.formErr),"#E0248C");
+    })
+    .then(function(){ btn.disabled=false; });
 });
+
+/* ═════════ EL FORMULARIO DE RESERVAR ═════════
+   Se queda en la página: guarda en Supabase y avisa ahí mismo,
+   sin recargar ni mandar a ningún lado.                        */
+(function(){
+  var form=document.getElementById("bkForm");
+  if (!form) return;
+  var nota=document.createElement("p");
+  nota.className="formnote"; nota.id="bkNote";
+  nota.style.cssText="margin-top:10px;font-weight:600";
+  form.querySelector("button[type=submit]").insertAdjacentElement("afterend",nota);
+
+  function di(txt,color){ nota.textContent=txt; nota.style.color=color; }
+  function val(id){ var e=document.getElementById(id); return e ? e.value.trim() : ""; }
+  function signoEs(){
+    var s=document.getElementById("f-sign");
+    if (!s || s.selectedIndex < 1) return null;      /* el renglón "—" */
+    var sg=SIGNS[s.selectedIndex - 1];
+    return sg ? sg.n.es : (s.value || null);
+  }
+  function servicioEs(){
+    var s=document.getElementById("f-svc");
+    if (!s) return null;
+    var lista=UI.svc.es;
+    return lista[s.selectedIndex] || s.value || null;
+  }
+
+  form.addEventListener("submit",function(ev){
+    ev.preventDefault();
+    var btn=form.querySelector("button[type=submit]");
+    var idiomaSesion=form.querySelector("input[name=idioma]:checked");
+
+    var fila={
+      nombre:            val("f-name"),
+      correo:            val("f-mail"),
+      signo:             signoEs(),
+      servicio:          servicioEs(),
+      fecha_nacimiento:  val("f-date") || null,
+      hora_nacimiento:   val("f-time") || null,
+      ciudad_nacimiento: val("f-city") || null,
+      idioma:            (idiomaSesion && idiomaSesion.value === "English") ? "en" : "es",
+      mensaje:           val("f-msg")  || null
+    };
+
+    btn.disabled=true; di(T(UI.enviando),"#52102F");
+    sbInsert("solicitudes", fila)
+      .then(function(){
+        di(T(UI.formOk),"#52102F");
+        form.reset();
+        setLang(LANG);            /* repone los menús que reset() vacía */
+      })
+      .catch(function(e){
+        di(e && e.sinConfigurar ? T(UI.sinConf) : T(UI.formErr),"#E0248C");
+      })
+      .then(function(){ btn.disabled=false; });
+  });
+})();
 
 /* ═════════ 11. RESIZE ═════════ */
 var rt;
