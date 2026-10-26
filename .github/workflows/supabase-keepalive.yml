@@ -1,0 +1,72 @@
+name: Supabase keepalive
+
+# Gemelo del workflow de Momma's Boys, mismo nombre de archivo y
+# mismos secretos, para que el chequeo mensual de Monday sirva igual
+# para los dos clientes.
+#
+# Supabase pausa los proyectos gratis tras ~7 días sin actividad, y
+# pausado quiere decir que el formulario de reservas y la suscripción
+# al boletín dejan de guardar, en silencio. Esto llama a public.ping(),
+# una función que sólo devuelve la hora: no lee ni escribe ni un dato,
+# pero cuenta como actividad y reinicia ese reloj.
+#
+# Secretos que necesita (Settings → Secrets and variables → Actions):
+#   SUPABASE_URL        https://ucvqczxpzxoklscwuejc.supabase.co
+#   SUPABASE_ANON_KEY   la llave "publishable" del proyecto
+# Ninguno de los dos es delicado: la llave ya viaja dentro de
+# index.html y sólo puede escribir en los formularios. Van como
+# secretos para que este archivo sea igualito al de Momma's Boys.
+
+on:
+  schedule:
+    # Todos los días a las 14:17 UTC (7:17 am en California).
+    # Diario, no tres veces al día: con 7 días de margen alcanza de
+    # sobra, y aun así quedan seis intentos antes de que se duerma.
+    # El minuto no es en punto a propósito: a las :00 GitHub encola
+    # tantos trabajos que los retrasa.
+    - cron: "17 14 * * *"
+  # Botón "Run workflow" en la pestaña Actions, para probarlo a mano.
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Latido a la base de datos
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_ANON_KEY:-}" ]; then
+            echo "Faltan los secretos SUPABASE_URL o SUPABASE_ANON_KEY."
+            echo "Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+
+          # Tres intentos, por si GitHub o la red tienen un mal momento.
+          for intento in 1 2 3; do
+            echo "Intento $intento..."
+            if respuesta=$(curl -fsS --max-time 30 \
+                  -X POST "$SUPABASE_URL/rest/v1/rpc/ping" \
+                  -H "apikey: $SUPABASE_ANON_KEY" \
+                  -H "Content-Type: application/json" \
+                  -d '{}'); then
+              echo "Listo. La base respondió: $respuesta"
+              exit 0
+            fi
+            echo "Falló el intento $intento."
+            [ "$intento" -lt 3 ] && sleep 20
+          done
+
+          echo ""
+          echo "No se pudo despertar la base de datos."
+          echo "Lo más probable es que el proyecto ya esté pausado."
+          echo "Entra a https://supabase.com/dashboard, organización"
+          echo "Moni Brujita, proyecto 'Moni Brujita - Website"
+          echo "Submissions', y dale a Restore."
+          echo "Mientras siga pausado, el formulario de monibrujita.com"
+          echo "no está guardando nada."
+          exit 1
