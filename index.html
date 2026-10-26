@@ -857,20 +857,23 @@ var LANG = "es";
    Mientras estén vacíos la página sigue funcionando: los
    formularios avisan que todavía no hay a dónde mandar.
    ══════════════════════════════════════════════════════════════ */
-var SB_URL = "";
-var SB_KEY = "";
+var SB_URL = "https://ucvqczxpzxoklscwuejc.supabase.co";
+var SB_KEY = "sb_publishable_kuQJIBuP3Ua5MPqFVjgrvA_11ktQkQi";
 
 /* Manda un renglón a una tabla. Devuelve una promesa. */
 function sbInsert(tabla, fila){
   if (!SB_URL || !SB_KEY) return Promise.reject({sinConfigurar:true});
   return fetch(SB_URL.replace(/\/+$/,"") + "/rest/v1/" + tabla, {
     method:"POST",
-    headers:{
-      "apikey": SB_KEY,
-      "Authorization": "Bearer " + SB_KEY,
-      "Content-Type": "application/json",
-      "Prefer": "return=minimal"
-    },
+    headers: (function(){
+      var cab = {
+        "apikey": SB_KEY,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+      };
+      if (SB_KEY.indexOf("eyJ") === 0) cab["Authorization"] = "Bearer " + SB_KEY;
+      return cab;
+    })(),
     body: JSON.stringify(fila)
   }).then(function(r){
     if (r.ok) return {ok:true};
