@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title translate="no">Moni Brujita — Espiritualidad femenina · Ayurveda · Astrología</title>
+<title translate="no">Moni Brujita · Espiritualidad femenina · Ayurveda · Astrología</title>
 <meta name="description" content="Sabiduría antigua para la mujer moderna. Mentoría privada, carta natal, ayurveda y coaching de amor con Moni Brujita. Sesiones en línea por Zoom, en español e inglés.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +12,7 @@
 
 <style>
 /* ═══════════════════════════════════════════════════════════
-   1) PRAIA — sube los archivos a /fonts y descomenta.
+   1) PRAIA: sube los archivos a /fonts y descomenta.
    ═══════════════════════════════════════════════════════════ */
 /*
 @font-face{
@@ -24,7 +24,7 @@
 */
 
 /* ═══════════════════════════════════════════════════════════
-   2) FONDOS DE PIEL — súbelos junto a index.html.
+   2) FONDOS DE PIEL: súbelos junto a index.html.
 
         snake.png      → fondo de la sección de testimonios
 
@@ -70,7 +70,7 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden}
 body{background:var(--blush);color:var(--wine);font-family:var(--body);
   font-size:clamp(15.5px,1.05vw,17px);line-height:1.62;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 body.locked{overflow:hidden;height:100vh}
@@ -149,11 +149,14 @@ h1,h2,h3{font-family:var(--display);font-weight:800;line-height:1.06;letter-spac
   background-repeat:no-repeat;
   transition:opacity .95s ease, filter .95s ease}
 #gate.gone{opacity:0;filter:blur(16px) saturate(1.4);pointer-events:none}
-.gate-inner{position:relative;z-index:2;width:100%;max-width:min(1380px,94vw);text-align:center;
+/* El ancho NO va en vw: #gate ya tiene 22px de padding, así que 94vw
+   se pasa de lo que cabe y el contenido se recorre a la derecha en
+   pantallas de teléfono. width:100% ya respeta ese padding solo. */
+.gate-inner{position:relative;z-index:2;width:100%;max-width:1380px;text-align:center;
   transition:opacity .5s ease, transform .5s ease}
 .gate-inner.hide{opacity:0;transform:scale(.93)}
 .gate-inner h1{margin:14px 0 clamp(24px,4vh,40px)}
-.signs{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(12px,1.4vw,22px);
+.signs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(12px,1.4vw,22px);
   max-width:1300px;margin:0 auto}
 .sign{background:var(--cream);border:1.5px solid rgba(82,16,47,.18);
   border-radius:999px 999px 16px 16px;
@@ -226,14 +229,14 @@ section{position:relative;padding:var(--gap) var(--pad) calc(var(--gap) + 16px)}
    │  AQUÍ VAN TUS FONDOS DE PIEL                            │
    │  Sube tus imágenes junto a index.html y pon el nombre abajo.  │
    │  Mientras no existan, la sección queda en color tostado │
-   │  liso — nunca se rompe.                                 │
+   │  liso, nunca se rompe.                                 │
    │  Recomendado: 2400 px de ancho o más.                   │
    │  Para que el print se vea más fuerte o más suave,       │
    │  cambia el .55 de --veil (0 = sin velo, 1 = sólido).    │
    └─────────────────────────────────────────────────────────┘ */
    /* ← sección de la rueda */      /* ← sección de testimonios */
 
-/* divisor de soles — franja rosa entre TODAS las secciones */
+/* divisor de soles: franja rosa entre TODAS las secciones */
 .sunbar{display:block;width:100%;height:38px;overflow:hidden;line-height:0;
   position:relative;z-index:2}
 .sunbar[hidden]{display:none}
@@ -295,7 +298,10 @@ section{position:relative;padding:var(--gap) var(--pad) calc(var(--gap) + 16px)}
   line-height:1.65;white-space:nowrap;
   text-transform:uppercase;color:var(--rasp);margin-bottom:0}
 @media(max-width:900px){
-  .disciplines{white-space:normal;font-size:clamp(12px,3.3vw,18px);letter-spacing:.08em}
+  /* Dos renglones fijos, en español y en inglés. El <br> del medio
+     manda; lo demás se achica hasta que cada mitad entre completa. */
+  .disciplines{white-space:normal;font-size:clamp(8.6px,2.65vw,15px);
+    letter-spacing:.04em;line-height:1.5;max-width:100%}
 }
 .sunspin{animation:spin 90s linear infinite;transform-origin:110px 110px;transform-box:view-box}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -306,7 +312,7 @@ section{position:relative;padding:var(--gap) var(--pad) calc(var(--gap) + 16px)}
 .btn-fill:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--wine)}
 
 /* ═══════════════ SOBRE MÍ ═══════════════ */
-/* QUIÉN SOY — cómo se reparte el espacio
+/* QUIÉN SOY: cómo se reparte el espacio
    El marco tiene la MISMA forma que la foto (--ratio, que el script
    saca de la imagen al cargarla). Crece hasta donde se lo permita lo
    que quede libre: hasta el alto del texto, o hasta el ancho de su
@@ -538,11 +544,31 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 @media(max-width:720px){
   nav{position:fixed;top:0;right:0;bottom:0;width:min(78vw,310px);background:var(--cream);flex-direction:column;
     justify-content:center;gap:26px;padding:38px;transform:translateX(100%);
-    transition:transform .42s cubic-bezier(.4,0,.2,1);border-left:1.5px solid rgba(82,16,47,.2)}
-  nav.open{transform:none}
+    transition:transform .42s cubic-bezier(.4,0,.2,1), visibility .42s;
+    border-left:1.5px solid rgba(82,16,47,.2);
+    visibility:hidden;pointer-events:none;overscroll-behavior:contain}
+  nav.open{transform:none;visibility:visible;pointer-events:auto}
   nav a{font-size:18px}
   .menu-btn{display:block;z-index:5}
-  .signs{grid-template-columns:repeat(3,1fr)}
+  /* Los rótulos de sección caben en un renglón: las rayitas de los
+     costados se acortan, el tipo se aprieta y se prohíbe el salto.
+     "HOUSE XI · THE ONES WHO CAME BEFORE" era el que se partía. */
+  .eyebrow{font-size:10.5px;letter-spacing:.07em;gap:8px;white-space:nowrap}
+  .eyebrow::before,.eyebrow::after{width:14px}
+  /* En el portal los dos idiomas se van a esquinas opuestas */
+  #langGate{position:absolute;top:14px;left:0;right:0;padding:0 18px;
+    display:flex;justify-content:space-between;align-items:center}
+  #langGate i{display:none}
+  #langGate button{padding:4px 2px}
+  /* Tres columnas en teléfono. minmax(0,...) es lo que les permite
+     encogerse; con 1fr a secas la rejilla se queda del ancho de
+     "Sagittarius" y empuja todo el portal hacia la derecha.
+     El tipo se aprieta un poco para que los nombres sigan cabiendo
+     en una sola línea.                                           */
+  .signs{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .sign{padding:clamp(20px,5vw,30px) 5px clamp(14px,3.2vw,20px)}
+  .sign .n{font-size:12.5px;letter-spacing:.03em}
+  .sign .d{font-size:10px;margin-top:3px}
   .row{grid-template-columns:1fr}
   .foot-links{text-align:left}
 }
@@ -560,7 +586,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 <!-- ═══════════ PORTADA ═══════════ -->
 <div id="gate" role="dialog" aria-modal="true" aria-label="Elige tu signo para entrar">
   <canvas id="boom" aria-hidden="true"></canvas>
-  <div class="lang" id="langGate">
+  <div class="lang" id="langGate" translate="no">
     <button type="button" data-lang="es" class="on">Español</button><i>/</i><button type="button" data-lang="en">English</button>
   </div>
   <div class="gate-inner" id="gateInner">
@@ -581,8 +607,8 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     <a href="#services" data-en="Services">Servicios</a>
     <a href="#free" data-en="Free">Gratis</a>
     <a href="#book" data-en="Book">Reservar</a>
-    <button class="chip" id="changeSign"><span id="chipGlyph"></span><span id="chipName" data-en="Your sign">Tu signo</span></button>
-    <span class="lang" id="langNav">
+    <button class="chip" id="changeSign"><span id="chipGlyph"></span><span id="chipName" translate="no" data-en="Your sign">Tu signo</span></button>
+    <span class="lang" id="langNav" translate="no">
       <button type="button" data-lang="es" class="on">ES</button><i>/</i><button type="button" data-lang="en">EN</button>
     </span>
   </nav>
@@ -632,8 +658,8 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
         </div>
       </div>
       <div class="reveal">
-        <p class="lede" style="margin-bottom:18px" data-en="I'm Moni — a multidisciplinary healer and artist. For years I've worked with women, guiding them into deep transformational and liberation work.">Soy Moni, sanadora y artista multidisciplinaria. Llevo años trabajando con mujeres, acompañándolas en procesos profundos de transformación y liberación.</p>
-        <p data-en="My holistic education began eight years ago in Boulder, Colorado, where I trained as a certified Ayurvedic Practitioner at Alandi Ashram Gurukula and became a yoga teacher. There I was introduced to Bhakti — devotional yoga — and it became central to my practice (Jai Ma!). I then travelled to Zipolite, Oaxaca, to study under extraordinary <em>curanderas</em> who taught me traditional Mexican massage and healing arts, and opened my spirituality into Earth-rooted ancestral practice.">Mi formación holística empezó hace ocho años en Boulder, Colorado, donde me certifiqué como Practicante Ayurvédica en Alandi Ashram Gurukula y me formé como maestra de yoga. Ahí conocí el Bhakti, el yoga devocional, que se volvió central en mi práctica (¡Jai Ma!). Después viajé a Zipolite, Oaxaca, a estudiar con curanderas extraordinarias que me enseñaron masaje tradicional mexicano y artes de sanación, y que abrieron mi espiritualidad hacia prácticas ancestrales enraizadas en la Tierra.</p>
+        <p class="lede" style="margin-bottom:18px" data-en="I'm Moni, a multidisciplinary healer and artist. For years I've worked with women, guiding them into deep transformational and liberation work.">Soy Moni, sanadora y artista multidisciplinaria. Llevo años trabajando con mujeres, acompañándolas en procesos profundos de transformación y liberación.</p>
+        <p data-en="My holistic education began eight years ago in Boulder, Colorado, where I trained as a certified Ayurvedic Practitioner at Alandi Ashram Gurukula and became a yoga teacher. There I was introduced to Bhakti, devotional yoga, and it became central to my practice (Jai Ma!). I then travelled to Zipolite, Oaxaca, to study under extraordinary <em>curanderas</em> who taught me traditional Mexican massage and healing arts, and opened my spirituality into Earth-rooted ancestral practice.">Mi formación holística empezó hace ocho años en Boulder, Colorado, donde me certifiqué como Practicante Ayurvédica en Alandi Ashram Gurukula y me formé como maestra de yoga. Ahí conocí el Bhakti, el yoga devocional, que se volvió central en mi práctica (¡Jai Ma!). Después viajé a Zipolite, Oaxaca, a estudiar con curanderas extraordinarias que me enseñaron masaje tradicional mexicano y artes de sanación, y que abrieron mi espiritualidad hacia prácticas ancestrales enraizadas en la Tierra.</p>
         <p data-en="Back in the States, wanting to join Eastern and Western philosophies into something more (w)holistic, I earned my Bachelor's in Psychology from The New School in New York. Along the way I trained as a Body Temple Dance instructor under my teacher Adriana, where I learned the power of somatic release, embodiment, womb work, feminine pleasure and ecstatic dance. But my most powerful initiation was becoming a mother. Motherhood reshaped my beliefs and my practice: the ordinary became mystic, and I trust my inner guidance more than ever. It's time for women to trust themselves again. I know wholly in my body that I am here to serve women, to offer everything to the Divine Mother, and to help build the matriarchy our world so desperately needs.">De regreso en Estados Unidos, buscando unir las filosofías de Oriente y Occidente de una manera más (w)holística, estudié la licenciatura en Psicología en The New School, en Nueva York. En el camino me formé como instructora de Body Temple Dance con mi maestra Adriana, donde aprendí el poder de la liberación somática, la encarnación, el trabajo de útero, el placer femenino y la danza extática. Pero mi iniciación más poderosa fue convertirme en madre. La maternidad transformó mis creencias y mi práctica: lo ordinario se volvió místico y confío en mi guía interna más que nunca. Es tiempo de que las mujeres vuelvan a confiar en sí mismas. Sé en todo mi cuerpo que estoy aquí para servir a las mujeres, para ofrecerle todo a la Madre Divina y ayudar a construir el matriarcado que tanta falta le hace al mundo.</p>
         <p class="soft" style="font-size:14px" data-en="Certified Ayurvedic Practitioner (Alandi Ashram Gurukula) · 200h yoga teacher · BA&nbsp;Psychology, The New School · Body Temple Dance instructor · traditional Mexican healing">Practicante Ayurvédica certificada (Alandi Ashram Gurukula) · maestra de yoga · Licenciada en Psicología, The New School · instructora de Body Temple Dance · sanación tradicional mexicana</p>
       </div>
@@ -664,7 +690,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
           <li data-en="A safe space for your wild nature">Un espacio seguro para tu naturaleza salvaje</li>
           <li data-en="Includes a birth chart reading">Incluye tu lectura de carta natal</li>
         </ul>
-        <div class="foot"><p class="price">$95–122<small data-en="USD · sliding scale">USD · precio escalonado</small></p><a href="https://cal.com/moni-brujita/coaching-holistico" class="go" target="_blank" rel="noopener" data-en="Book">Reservar</a></div>
+        <div class="foot"><p class="price">$122<small>USD</small></p><a href="https://cal.com/moni-brujita/coaching-holistico" class="go" target="_blank" rel="noopener" data-en="Book">Reservar</a></div>
       </article>
 
       <article class="card reveal" data-card="1">
@@ -697,7 +723,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
       <article class="card reveal" data-card="3">
         <svg class="em" viewBox="0 0 24 24"><path d="M16.5 3a9 9 0 1 0 4.5 15.5A9.5 9.5 0 0 1 16.5 3Z"/><path d="M6 5l1 2.6L9.6 8.6 7 9.6 6 12.2 5 9.6 2.4 8.6 5 7.6z"/></svg>
         <h3 data-en="Sacred scalp massage">Masaje sagrado de cabeza</h3><p class="dur" data-en="In person · by appointment">Presencial · con cita</p>
-        <p data-en="Warm oils, slow hands and the ayurvedic head ritual. Somewhere between bodywork and ceremony — for when the thinking needs to stop.">Aceites tibios, manos lentas y el ritual ayurvédico de cabeza. Entre el trabajo corporal y la ceremonia, para cuando la mente necesita parar.</p>
+        <p data-en="Warm oils, slow hands and the ayurvedic head ritual. Somewhere between bodywork and ceremony, for when the thinking needs to stop.">Aceites tibios, manos lentas y el ritual ayurvédico de cabeza. Entre el trabajo corporal y la ceremonia, para cuando la mente necesita parar.</p>
         <ul>
           <li data-en="Warm herbal oils chosen for your dosha">Aceites herbales tibios según tu dosha</li>
           <li data-en="Scalp, neck and shoulders">Cuero cabelludo, cuello y hombros</li>
@@ -711,7 +737,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
         <span class="ribbon" data-en="10-week program">Programa de 10 semanas</span>
         <svg class="em" viewBox="0 0 24 24" style="margin-top:12px"><path d="M12 20.5c-4-3.2-8-6-8-10A4 4 0 0 1 12 8a4 4 0 0 1 8 2.5c0 4-4 6.8-8 10Z"/></svg>
         <h3 data-en="Love coaching">Coaching de amor</h3><p class="dur" data-en="10 weeks · 55 min a week">10 semanas · 55 min por semana</p>
-        <p data-en="A container built to prepare you for a conscious relationship — one rooted in self-love, security and awareness.">Un contenedor para prepararte a entrar en una relación consciente, enraizada en el amor propio, la seguridad y la consciencia.</p>
+        <p data-en="A container built to prepare you for a conscious relationship, one rooted in self-love, security and awareness.">Un contenedor para prepararte a entrar en una relación consciente, enraizada en el amor propio, la seguridad y la consciencia.</p>
         <ul>
           <li data-en="Your patterns, wounds and relational style">Tus patrones, heridas y estilo relacional</li>
           <li data-en="Boundaries, needs and desires">Límites, necesidades y deseos</li>
@@ -753,7 +779,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
       <a href="#" class="reveal"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10.5" ry="4" transform="rotate(-25 12 12)"/><circle cx="21" cy="7.5" r="1.2"/></svg>
         <h3 data-en="This month's transits">Tránsitos del mes</h3><p data-en="What's moving in the sky this month and how it lands for your sign.">Qué se mueve en el cielo este mes y cómo te toca según tu signo.</p><span class="type" data-en="Updated monthly">Se actualiza cada mes</span></a>
       <a href="#" class="reveal"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3c5 4 8 7 8 11a8 8 0 0 1-16 0c0-4 3-7 8-11Z"/><path d="M8.5 14c1.5 2 5.5 2 7 0"/></svg>
-        <h3 data-en="Dosha quiz">Test de dosha</h3><p data-en="Ten questions to find out if you're vata, pitta or kapha — plus what to do about it.">Diez preguntas para saber si eres vata, pitta o kapha. Con guía de qué hacer.</p><span class="type" data-en="PDF · download">PDF · descarga</span></a>
+        <h3 data-en="Dosha quiz">Test de dosha</h3><p data-en="Ten questions to find out if you're vata, pitta or kapha, plus what to do about it.">Diez preguntas para saber si eres vata, pitta o kapha. Con guía de qué hacer.</p><span class="type" data-en="PDF · download">PDF · descarga</span></a>
       <a href="https://www.instagram.com/monibrujita_/" target="_blank" rel="noopener" class="reveal"><svg class="ic" viewBox="0 0 24 24"><path d="M2 12s4-6.5 10-6.5S22 12 22 12s-4 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
         <h3 data-en="Live readings">Lecturas en vivo</h3><p data-en="Every week I read charts on stories. Free, first come first served.">Cada semana leo cartas en historias. Sin costo, por orden de llegada.</p><span class="type">Instagram</span></a>
     </div>
@@ -781,7 +807,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     <div class="head reveal">
       <span class="eyebrow" data-en="House VII · the meetings">Casa VII · los encuentros</span>
       <h2 class="h-lg" data-en="Book <span class='print p-python ital'>your session</span>">Reservar <span class="print p-python ital">tu sesión</span></h2>
-      <p class="lede" style="margin-top:12px" data-en="Write to me and I'll reply within 48 hours with available times.&lt;br&gt;Or you can book a 30 min intro call &lt;a class=&quot;inline&quot; href=&quot;https://cal.com/moni-brujita/30min&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;here&lt;/a&gt;.">Escríbeme y te contesto en menos de 48 horas con horarios disponibles.<br>O puedes reservar una llamada de 30 min <a class="inline" href="https://cal.com/moni-brujita/30min" target="_blank" rel="noopener">aquí</a>.</p>
+      <p class="lede" style="margin-top:12px" data-en="Write to me and I'll reply within 48 hours with available times.&lt;br&gt;Or you can book a 15 min intro call &lt;a class=&quot;inline&quot; href=&quot;https://cal.com/moni-brujita/15min&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;here&lt;/a&gt;.">Escríbeme y te contesto en menos de 48 horas con horarios disponibles.<br>O puedes agendar una llamada de 15 min <a class="inline" href="https://cal.com/moni-brujita/15min" target="_blank" rel="noopener">aquí</a>.</p>
       <p class="soft" style="font-size:13.5px;margin-top:6px" data-en="You can book the services directly above.">Los servicios se reservan directamente arriba.</p>
     </div>
     <div class="book">
@@ -813,7 +839,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
       </div>
       <div class="reveal">
         <ul class="contact-list">
-          <li><span class="k" data-en="Book online">Agenda en línea</span><a href="https://cal.com/moni-brujita/30min" target="_blank" rel="noopener" data-en="See available times">Ver horarios disponibles</a></li>
+          <li><span class="k" data-en="Book online">Agenda en línea</span><a href="https://cal.com/moni-brujita/15min" target="_blank" rel="noopener" data-en="See available times">Ver horarios disponibles</a></li>
           <li><span class="k">Instagram</span><a href="https://www.instagram.com/monibrujita_/" target="_blank" rel="noopener">@monibrujita_</a></li>
           <li><span class="k" data-en="Email">Correo</span><a id="mailLink" href="mailto:monicamenacollabs@gmail.com" data-copy="monicamenacollabs@gmail.com">monicamenacollabs@gmail.com</a></li>
           <li><span class="k">WhatsApp</span><a id="waLink" href="https://wa.me/16197073734" target="_blank" rel="noopener" data-en="Message on WhatsApp">Escribir por WhatsApp</a></li>
@@ -898,7 +924,7 @@ var SIGNS = [
            "Aries, ganar sola también cuenta como ganar.",
            "Aries, lo que pospones no es flojera. Es miedo con buena excusa."],
        en:["Aries, you don't need more motivation today. You need to start badly.",
-           "Aries, that impatience isn't a flaw — it's instinct. Trust it.",
+           "Aries, that impatience isn't a flaw, it's instinct. Trust it.",
            "Aries, someone will ask you to lower your volume. Don't.",
            "Aries, winning alone still counts as winning.",
            "Aries, what you're putting off isn't laziness. It's fear with a good excuse."]}},
@@ -1063,9 +1089,9 @@ var UI = {
      Cambia estos textos cuando ajustes tus tarifas.            */
   /* precios: la misma moneda en los dos idiomas (ella cotiza en USD).
      El orden es el de las tarjetas (data-card 0 a 4). */
-  price:{es:["$95–122<small>USD</small>","$144<small>USD</small>","$144<small>USD</small>",
+  price:{es:["$122<small>USD</small>","$144<small>USD</small>","$144<small>USD</small>",
              "Consultar<small>Escríbeme</small>","$888<small>USD</small>"],
-         en:["$95–122<small>USD</small>","$144<small>USD</small>","$144<small>USD</small>",
+         en:["$122<small>USD</small>","$144<small>USD</small>","$144<small>USD</small>",
              "Ask<small>Message me</small>","$888<small>USD</small>"]},
   mailPH:{es:"tu@correo.com",en:"you@email.com"},
   mailYa:{es:"Ese correo ya está en la lista. Nos vemos en la próxima luna.",
@@ -1075,20 +1101,20 @@ var UI = {
           en:"Done. I'll write to you every new moon and every full moon."},
   formOk:{es:"Recibí tu solicitud. Te contesto en menos de 48 horas.",
           en:"I got your request. I'll reply within 48 hours."},
-  formErr:{es:"No se pudo enviar. Revisa tu conexión y vuelve a intentar, o escríbeme directo por correo.",
+  formErr:{es:"No se pudo enviar. Revisa tu conexión e inténtalo otra vez, o escríbeme directo por correo.",
            en:"It didn't go through. Check your connection and try again, or email me directly."},
   sinConf:{es:"El formulario todavía no está conectado. Escríbeme por correo o WhatsApp mientras tanto.",
            en:"The form isn't connected yet. Email or WhatsApp me in the meantime."},
   cityPH:{es:"Ciudad, estado, país",en:"City, state, country"},
   msgPH:{es:"Cuéntame en dos líneas qué está pasando.",en:"Tell me in two lines what's going on."},
-  badMail:{es:"Ese correo no se ve completo. Revísalo y vuelve a intentar.",
+  badMail:{es:"Ese correo no se ve completo. Revísalo e inténtalo otra vez.",
            en:"That email doesn't look complete. Check it and try again."},
   okMail:{es:"Listo. Conecta este campo a tu servicio de correo para que llegue de verdad.",
           en:"Done. Connect this field to your email service so it actually sends."}
 };
 var TESTI = [
-  {q:{es:"Lloré en la primera media hora. No de tristeza — de alivio.",
-      en:"I cried in the first half hour. Not from sadness — from relief."}, w:"Ana, 34"},
+  {q:{es:"Lloré en la primera media hora. No de tristeza, de alivio.",
+      en:"I cried in the first half hour. Not from sadness, from relief."}, w:"Ana, 34"},
   {q:{es:"Llevaba años en terapia. Esto me dio el mapa que me faltaba.",
       en:"I'd been in therapy for years. This gave me the map I was missing."}, w:"Karla, 41"},
   {q:{es:"Pensé que era puro humo. Moni me leyó en cinco minutos.",
@@ -1299,6 +1325,18 @@ function setLang(l){
   document.querySelectorAll(".lang button").forEach(function(b){
     b.classList.toggle("on", b.getAttribute("data-lang") === l);
   });
+  /* Sólo en el menú: el idioma activo va primero, ES / EN en español
+     y EN / ES en inglés. En el portal NO se reordena, porque ahí
+     Español vive en la esquina izquierda y English en la derecha,
+     y moverlos sería confuso.                                      */
+  var cajaNav = document.getElementById("langNav");
+  if (cajaNav){
+    cajaNav.querySelectorAll("button").forEach(function(b){
+      b.style.order = (b.getAttribute("data-lang") === l) ? "0" : "2";
+    });
+    var barra = cajaNav.querySelector("i");
+    if (barra) barra.style.order = "1";
+  }
   /* portada */
   Array.prototype.forEach.call(grid.children, function(b){
     var s = SIGNS.filter(function(x){ return x.id === b.getAttribute("data-sid"); })[0];
@@ -1642,6 +1680,7 @@ function openSite(){
 function choose(s){ applySign(s); gateInner.classList.add("hide"); explode(s,openSite); }
 
 document.getElementById("changeSign").addEventListener("click",function(){
+  cerrarMenu();                       /* si no, el portal abre detrás del menú */
   gate.style.display="grid"; void gate.offsetHeight;
   gate.classList.remove("gone"); gateInner.classList.remove("hide");
   document.body.classList.add("locked"); scrollTo({top:0,behavior:"auto"});
@@ -1669,12 +1708,19 @@ document.querySelectorAll(".reveal").forEach(function(el,i){
 
 /* ═════════ 10. MENÚ + NEWSLETTER ═════════ */
 var nav=document.getElementById("nav"), mb=document.getElementById("menuBtn");
+/* Cerrar el menú desde donde sea. Se usa al tocar un enlace, al
+   cambiar de signo y al cambiar de idioma.                      */
+function cerrarMenu(){
+  if (!nav) return;
+  nav.classList.remove("open");
+  if (mb) mb.textContent="☰";
+}
 mb.addEventListener("click",function(){
   var open=nav.classList.toggle("open");
   mb.textContent=open?"✕":"☰";
 });
 nav.addEventListener("click",function(e){
-  if (e.target.tagName==="A"){ nav.classList.remove("open"); mb.textContent="☰"; }
+  if (e.target.closest("a, button")){ cerrarMenu(); }
 });
 document.getElementById("subBtn").addEventListener("click",function(){
   var btn=this,
@@ -1686,7 +1732,7 @@ document.getElementById("subBtn").addEventListener("click",function(){
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ di(T(UI.badMail),"#E0248C"); return; }
 
   btn.disabled=true; di(T(UI.enviando),"#52102F");
-  sbInsert("suscriptores", {correo:v, idioma:LANG, origen:"web"})
+  sbInsert("subscribers", {email:v, language:LANG, source:"web"})
     .then(function(){ di(T(UI.mailOk),"#52102F"); campo.value=""; })
     .catch(function(e){
       if (e && e.duplicado)      { di(T(UI.mailYa),"#52102F"); campo.value=""; }
@@ -1709,38 +1755,36 @@ document.getElementById("subBtn").addEventListener("click",function(){
 
   function di(txt,color){ nota.textContent=txt; nota.style.color=color; }
   function val(id){ var e=document.getElementById(id); return e ? e.value.trim() : ""; }
-  function signoEs(){
-    var s=document.getElementById("f-sign");
-    if (!s || s.selectedIndex < 1) return null;      /* el renglón "—" */
-    var sg=SIGNS[s.selectedIndex - 1];
-    return sg ? sg.n.es : (s.value || null);
-  }
-  function servicioEs(){
-    var s=document.getElementById("f-svc");
-    if (!s) return null;
-    var lista=UI.svc.es;
-    return lista[s.selectedIndex] || s.value || null;
-  }
 
   form.addEventListener("submit",function(ev){
     ev.preventDefault();
     var btn=form.querySelector("button[type=submit]");
     var idiomaSesion=form.querySelector("input[name=idioma]:checked");
 
+    /* Los nombres de las columnas van en inglés; los VALORES se
+       guardan en el idioma que estaba usando quien llenó el
+       formulario, y "language" dice en cuál.                     */
+    /* Dos idiomas distintos, y conviene no confundirlos:
+         session_language  en qué idioma quiere su sesión (el radio)
+         form_language     en qué idioma estaba la página cuando
+                           llenó el formulario, que es lo que dice si
+                           sun_sign y service vienen en español o en
+                           inglés.                                 */
     var fila={
-      nombre:            val("f-name"),
-      correo:            val("f-mail"),
-      signo:             signoEs(),
-      servicio:          servicioEs(),
-      fecha_nacimiento:  val("f-date") || null,
-      hora_nacimiento:   val("f-time") || null,
-      ciudad_nacimiento: val("f-city") || null,
-      idioma:            (idiomaSesion && idiomaSesion.value === "English") ? "en" : "es",
-      mensaje:           val("f-msg")  || null
+      name:             val("f-name"),
+      email:            val("f-mail"),
+      sun_sign:         val("f-sign") || null,
+      service:          val("f-svc")  || null,
+      birth_date:       val("f-date") || null,
+      birth_time:       val("f-time") || null,
+      birth_city:       val("f-city") || null,
+      session_language: (idiomaSesion && idiomaSesion.value === "English") ? "en" : "es",
+      form_language:    LANG,
+      message:          val("f-msg")  || null
     };
 
     btn.disabled=true; di(T(UI.enviando),"#52102F");
-    sbInsert("solicitudes", fila)
+    sbInsert("booking_requests", fila)
       .then(function(){
         di(T(UI.formOk),"#52102F");
         form.reset();
