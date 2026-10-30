@@ -318,6 +318,34 @@ section{position:relative;padding:var(--gap) var(--pad) calc(var(--gap) + 16px)}
   .disciplines{white-space:normal;font-size:clamp(8.6px,2.65vw,15px);
     letter-spacing:.04em;line-height:1.5;max-width:100%}
 }
+
+/* ═══════════════ HERO EN PANTALLA GRANDE ═══════════════
+   Sólo de 901px para arriba. En teléfono el hero se apila y esto
+   no aplica.
+
+   El problema que arregla: los dos soles iban en la misma fila que
+   el texto y se comían el ancho. En una pantalla de 1728 el hero
+   mide 1280, los soles 268 cada uno más el hueco, y al texto le
+   quedaban 640. El logo se topaba en ese 640 (muy por debajo de los
+   860 que podía medir) y el subtítulo, que va en un solo renglón sin
+   cortarse, necesitaba unos 700: se desbordaba de su caja. De ahí
+   que el título se viera más angosto que el renglón de abajo y
+   descuadrado.
+
+   La solución es una sola: el hero toma todo el ancho, los soles se
+   van a las orillas con space-between y el texto queda en medio.
+   Como los dos soles miden exactamente lo mismo, el bloque de texto
+   cae centrado en la página por construcción, no por casualidad.  */
+@media(min-width:901px){
+  .hero{max-width:none}
+  /* el tope es para pantallas enormes: sin él, a 2560 los soles se
+     irían a los extremos y dejarían un hueco rarísimo en medio */
+  .heroline{justify-content:space-between;gap:clamp(20px,2vw,40px);
+    max-width:1900px;margin:0 auto}
+  .herotext{flex:0 1 auto;min-width:0;max-width:980px;margin:0 auto}
+  .eyesun{--sun:clamp(150px,16vw,300px)}
+  .wordmark img{width:min(980px,100%)}
+}
 .sunspin{animation:spin 90s linear infinite;transform-origin:110px 110px;transform-box:view-box}
 @keyframes spin{to{transform:rotate(360deg)}}
 .btn{font-family:var(--retro);font-size:14.5px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;
@@ -450,13 +478,55 @@ section{position:relative;padding:var(--gap) var(--pad) calc(var(--gap) + 16px)}
 /* si la imagen todavía no está en la carpeta no pasa nada: se ve el
    color de siempre y la sección sigue igual de legible */
 
-/* ═══════════════ TESTIMONIOS ═══════════════ */
-.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(236px,1fr));gap:16px}
-.quote{background:var(--cream);border:1.5px solid rgba(82,16,47,.2);border-radius:18px;padding:24px 20px;
-  box-shadow:5px 6px 0 rgba(82,16,47,.14)}
-.quote .sun{width:25px;height:25px;margin-bottom:10px;fill:var(--rasp)}
-.quote p{font-family:var(--display);font-style:italic;font-size:18.5px;line-height:1.3;margin-bottom:10px}
+/* ═══════════════ TESTIMONIOS ═══════════════
+   Van de uno en uno, entrando por la derecha. Antes eran tres
+   tarjetas en fila y la sección se alargaba de más; así ocupa lo
+   que mide un solo testimonio.
+
+   El truco del alto: todas las tarjetas van absolutas (apiladas en
+   el mismo lugar) y el JS le pone a la ventana el alto de la que
+   está activa. Por eso el alto puede animarse en vez de brincar
+   cuando se pasa de un testimonio corto a uno largo.            */
+.quotes{position:relative;max-width:900px;margin:0 auto}
+.carr-win{position:relative;overflow:hidden;
+  transition:height .5s cubic-bezier(.4,0,.2,1)}
+@media(prefers-reduced-motion:reduce){ .carr-win{transition:none} }
+.quote{position:absolute;top:0;left:0;width:100%;
+  background:var(--cream);border:1.5px solid rgba(82,16,47,.2);border-radius:18px;
+  padding:28px 26px;box-shadow:5px 6px 0 rgba(82,16,47,.14);
+  opacity:0;transform:translateX(44px);pointer-events:none;
+  transition:opacity .5s ease, transform .55s cubic-bezier(.4,0,.2,1)}
+.quote.activa{opacity:1;transform:none;pointer-events:auto}
+.quote.sale{opacity:0;transform:translateX(-44px)}
+@media(prefers-reduced-motion:reduce){
+  .quote{transition:opacity .25s ease;transform:none}
+  .quote.sale{transform:none}
+}
+.quote .sun{width:25px;height:25px;margin-bottom:12px;fill:var(--rasp)}
+.quote p{font-family:var(--display);font-style:italic;
+  font-size:clamp(16px,1.35vw,20px);line-height:1.45;margin-bottom:12px}
 .quote cite{font-family:var(--display);font-weight:700;font-style:normal;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+/* el curso del que viene el testimonio, debajo del nombre */
+.quote cite small{display:block;font-size:10.5px;letter-spacing:.1em;
+  font-weight:600;color:var(--rasp);opacity:.75;margin-top:4px}
+
+/* ── los controles ── */
+.carr-pie{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:20px}
+.carr-pt{display:flex;gap:8px}
+.carr-pt button{width:9px;height:9px;padding:0;border-radius:50%;cursor:pointer;
+  border:1.5px solid var(--rasp);background:transparent;
+  transition:background .25s ease, transform .25s ease}
+.carr-pt button[aria-current="true"]{background:var(--rasp);transform:scale(1.25)}
+.carr-fl{width:34px;height:34px;border-radius:50%;cursor:pointer;line-height:1;
+  border:1.5px solid var(--wine);background:var(--cream);color:var(--wine);
+  font-size:15px;display:grid;place-items:center;
+  transition:background .25s ease, color .25s ease}
+.carr-fl:hover{background:var(--wine);color:var(--cream)}
+.carr-fl:focus-visible,.carr-pt button:focus-visible{outline:2px solid var(--hot);outline-offset:3px}
+@media(max-width:600px){
+  .quote{padding:24px 20px}
+  .carr-fl{width:40px;height:40px}
+}
 
 /* ═══════════════ GRATIS ═══════════════ */
 .res{display:grid;grid-template-columns:repeat(auto-fit,minmax(218px,1fr));gap:15px;margin-bottom:30px}
@@ -775,7 +845,14 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
       <span class="eyebrow" data-en="House XI · the ones who came before">Casa XI · las que ya pasaron por aquí</span>
       <h2 class="h-lg" data-en="What they <span class='print ital'>say</span>">Lo que <span class="print ital">dicen</span></h2>
     </div>
-    <div class="quotes" id="quotes"></div>
+    <div class="quotes reveal" id="quotes">
+      <div class="carr-win" id="qWin"></div>
+      <div class="carr-pie">
+        <button class="carr-fl" id="qPrev" type="button" aria-label="Anterior">&#10094;</button>
+        <div class="carr-pt" id="qPts"></div>
+        <button class="carr-fl" id="qNext" type="button" aria-label="Siguiente">&#10095;</button>
+      </div>
+    </div>
   </div>
   <div class="sunbar inside" data-sunbar data-ink="#E0248C" aria-hidden="true"></div>
 </section>
@@ -789,14 +866,14 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
       <p class="lede" style="margin-top:12px" data-en="Take these even if you never book anything. Seriously.">Llévate esto aunque nunca reserves nada. En serio.</p>
     </div>
     <div class="res">
-      <a href="#" class="reveal"><svg class="ic" viewBox="0 0 24 24"><path d="M16.5 3a9 9 0 1 0 4.5 15.5A9.5 9.5 0 0 1 16.5 3Z"/></svg>
+      <a href="#" class="reveal" data-soon><svg class="ic" viewBox="0 0 24 24"><path d="M16.5 3a9 9 0 1 0 4.5 15.5A9.5 9.5 0 0 1 16.5 3Z"/></svg>
         <h3 data-en="New moon ritual">Ritual de luna nueva</h3><p data-en="A 6-page guide to closing cycles and asking well. Printable.">Guía de 6 páginas para cerrar ciclos y pedir bien. Imprimible.</p><span class="type" data-en="PDF · download">PDF · descarga</span></a>
-      <a href="#" class="reveal"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10.5" ry="4" transform="rotate(-25 12 12)"/><circle cx="21" cy="7.5" r="1.2"/></svg>
+      <a href="#" class="reveal" data-soon><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10.5" ry="4" transform="rotate(-25 12 12)"/><circle cx="21" cy="7.5" r="1.2"/></svg>
         <h3 data-en="This month's transits">Tránsitos del mes</h3><p data-en="What's moving in the sky this month and how it lands for your sign.">Qué se mueve en el cielo este mes y cómo te toca según tu signo.</p><span class="type" data-en="Updated monthly">Se actualiza cada mes</span></a>
-      <a href="#" class="reveal"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3c5 4 8 7 8 11a8 8 0 0 1-16 0c0-4 3-7 8-11Z"/><path d="M8.5 14c1.5 2 5.5 2 7 0"/></svg>
+      <a href="#" class="reveal" data-soon><svg class="ic" viewBox="0 0 24 24"><path d="M12 3c5 4 8 7 8 11a8 8 0 0 1-16 0c0-4 3-7 8-11Z"/><path d="M8.5 14c1.5 2 5.5 2 7 0"/></svg>
         <h3 data-en="Dosha quiz">Test de dosha</h3><p data-en="Ten questions to find out if you're vata, pitta or kapha, plus what to do about it.">Diez preguntas para saber si eres vata, pitta o kapha. Con guía de qué hacer.</p><span class="type" data-en="PDF · download">PDF · descarga</span></a>
-      <a href="https://www.instagram.com/monibrujita_/" target="_blank" rel="noopener" class="reveal"><svg class="ic" viewBox="0 0 24 24"><path d="M2 12s4-6.5 10-6.5S22 12 22 12s-4 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
-        <h3 data-en="Live readings">Lecturas en vivo</h3><p data-en="Every week I read charts on stories. Free, first come first served.">Cada semana leo cartas en historias. Sin costo, por orden de llegada.</p><span class="type">Instagram</span></a>
+      <a href="https://www.instagram.com/monibrujita_/" target="_blank" rel="noopener" class="reveal" data-soon><svg class="ic" viewBox="0 0 24 24"><path d="M2 12s4-6.5 10-6.5S22 12 22 12s-4 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+        <h3 data-en="Weekly oracle reading">Lectura de oráculo semanal</h3><p data-en="Every week I read charts on stories. Free, first come first served.">Cada semana leo cartas en historias. Sin costo, por orden de llegada.</p><span class="type">Instagram</span></a>
     </div>
     <div class="sub reveal">
       <div>
@@ -927,6 +1004,23 @@ function sbInsert(tabla, fila){
 }
 
 var T = function(o){ return o[LANG]; };
+
+/* ═════════ EL AVISO DE ABAJO ═════════
+   Una sola función para los dos usos: "Texto copiado" cuando se
+   copia el correo y "Muy pronto" en las tarjetas de regalos que
+   todavía no existen. Sale abajo al centro y se va solo.
+   Vive aquí arriba, suelta, porque la llaman dos bloques distintos. */
+var avisar = (function(){
+  var reloj;
+  return function(texto){
+    var caja = document.getElementById("toast");
+    if (!caja) return;
+    caja.textContent = texto;
+    caja.classList.add("on");
+    clearTimeout(reloj);
+    reloj = setTimeout(function(){ caja.classList.remove("on"); }, 1900);
+  };
+})();
 
 /* ═════════ 1. SIGNOS ═════════ */
 var SIGNS = [
@@ -1097,6 +1191,7 @@ var ELEMENT_PINK = {fuego:"#FF2E86", tierra:"#C4506E", aire:"#E667C9", agua:"#E0
 
 var UI = {
   copied:{es:"Texto copiado.",en:"Text copied."},
+  soon:{es:"Muy pronto.",en:"Coming soon."},
   svc:{es:["Mentoría privada","Lectura de carta natal","Consulta ayurvédica","Masaje sagrado de cabeza","Coaching de amor (10 semanas)","Todavía no sé"],
        en:["Private mentorship","Birth chart reading","Ayurvedic consultation","Sacred scalp massage","Love coaching (10 weeks)","Not sure yet"]},
   /* precios: pesos en español, dólares en inglés.
@@ -1127,13 +1222,34 @@ var UI = {
   okMail:{es:"Listo. Conecta este campo a tu servicio de correo para que llegue de verdad.",
           en:"Done. Connect this field to your email service so it actually sends."}
 };
+/* ═════════ TESTIMONIOS DE VERDAD ═════════
+   Palabras de clientas reales. El español es lo que ellas
+   escribieron, tal cual; el inglés es la traducción.
+
+   La de "Sagrado Femenino" va al revés: llegó ya traducida al
+   inglés y no tenemos el original, así que el español de aquí es
+   una vuelta atrás desde el inglés. Si Moni encuentra el mensaje
+   original en sus mensajes directos, hay que pegarlo en su lugar.
+
+   La última no trae nombre, así que va firmada con el curso.
+   Para agregar otra, se copia un bloque y ya: el carrusel y los
+   puntitos se arman solos con las que haya.                     */
 var TESTI = [
-  {q:{es:"Lloré en la primera media hora. No de tristeza, de alivio.",
-      en:"I cried in the first half hour. Not from sadness, from relief."}, w:"Ana, 34"},
-  {q:{es:"Llevaba años en terapia. Esto me dio el mapa que me faltaba.",
-      en:"I'd been in therapy for years. This gave me the map I was missing."}, w:"Karla, 41"},
-  {q:{es:"Pensé que era puro humo. Moni me leyó en cinco minutos.",
-      en:"I thought it was all smoke. Moni read me in five minutes."}, w:"Regina, 28"}
+  {q:{es:"Sumamente agradecida por todo lo que nos enseñaste en este proyecto Moni, pude conectar con mi diosa interna y ser testigo de una transformación maravillosa!",
+      en:"Deeply grateful for everything you taught us in this project, Moni. I was able to connect with my inner goddess and witness a wonderful transformation!"},
+   w:"Kayla"},
+
+  {q:{es:"Trabajar con Moni ha sido una experiencia muy transformadora. Me sentí acompañada y sostenida en todo momento. Su enfoque holístico me ayudó a reconectar conmigo misma. La recomiendo muchísimo si estás buscando sanar y conectar con tu espiritualidad.",
+      en:"Working with Moni has been a deeply transformative experience. I felt accompanied and held the whole way through. Her holistic approach helped me reconnect with myself. I recommend her wholeheartedly if you are looking to heal and connect with your spirituality."},
+   w:"Maria"},
+
+  {q:{es:"Monica llegó a mi vida en un momento que me sentía muy perdida y confundida. Desconocía de qué trataba Ayurveda, pero decidí probar algunas sesiones. Puedo decir que fue el principio de muchos cambios positivos que vinieron después. Comencé a conocer y escuchar mi cuerpo y a ser más intencional con todo lo que consumo. Moni tiene una forma bien clara y transparente de explicar y conectar todo, siempre está al pendiente de dudas y con la mejor actitud. Gracias por el empujón.",
+      en:"Monica came into my life at a moment when I felt very lost and confused. I had no idea what Ayurveda was about, but I decided to try a few sessions. I can say it was the beginning of many positive changes that came afterward. I started to get to know and listen to my body, and to be more intentional about everything I consume. Moni has a really clear, transparent way of explaining things and connecting it all, she is always on top of any questions and with the best attitude. Thank you for the push."},
+   w:"Bárbara"},
+
+  {q:{es:"Gracias Moni, quiero decirte que este curso es lo que estaba buscando: ver cómo regular mis hormonas de la manera más natural. Y qué mejor que saber que las mujeres somos cíclicas y que las hormonas no son las mismas en cada estación de nuestro ciclo femenino. Saberlo, y saber que podemos ayudar a nuestro cuerpo a estar mejor, que podemos aportarle al cuerpo que nos permite estar aquí y percibir y tocar toda esta vida. ¿Por qué no devolvérselo ahora en la práctica, hacia una vida más llena de gozo, de gloria y por qué no, de más facilidad? Gracias, gracias.",
+      en:"Thank you Moni, I want to tell you that this course is what I was looking for: to see how to regulate my hormones in the most natural way. And what better than to know that we women are cyclical, and that hormones are not the same in each season of our feminine cycle. Knowing it, and knowing that we can help our body be better, that we can give back to the body that allows us to be here and to perceive and touch all of this life. Why not give it back now in practice, toward a life fuller of joy, of glory and why not, of more ease. Thank you, thank you."},
+   w:{es:"Curso Sagrado Femenino", en:"Sacred Feminine course"}, curso:true}
 ];
 
 var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1274,14 +1390,9 @@ document.querySelectorAll("[data-sunbar]").forEach(buildSunbar);
    deja copiar (pasa en páginas sin https), se abre el correo como
    antes, así nunca se queda sin hacer nada.                        */
 (function(){
-  var link=document.getElementById("mailLink"), toast=document.getElementById("toast"), timer;
-  if (!link || !toast) return;
-  function show(){
-    toast.textContent = T(UI.copied);
-    toast.classList.add("on");
-    clearTimeout(timer);
-    timer=setTimeout(function(){ toast.classList.remove("on"); }, 1900);
-  }
+  var link=document.getElementById("mailLink");
+  if (!link) return;
+  function show(){ avisar(T(UI.copied)); }
   function fallback(text){
     var ta=document.createElement("textarea");
     ta.value=text; ta.setAttribute("readonly","");
@@ -1304,6 +1415,25 @@ document.querySelectorAll("[data-sunbar]").forEach(buildSunbar);
     } else {
       window.location.href="mailto:"+text;
     }
+  });
+})();
+
+/* ═════════ REGALOS QUE TODAVÍA NO EXISTEN ═════════
+   Las cuatro tarjetas de "Gratis, sin letras chiquitas" llevan
+   data-soon. Un clic no lleva a ningún lado: sale el aviso de
+   "Muy pronto". Cuando un regalo ya exista, se le quita el
+   data-soon a esa tarjeta y se le pone su enlace real; el resto
+   sigue igual sin tocar nada más.                               */
+(function(){
+  document.querySelectorAll(".res a[data-soon]").forEach(function(a){
+    /* para el teclado y los lectores de pantalla: es un botón que
+       avisa, no un enlace que lleva a otra parte */
+    a.setAttribute("role","button");
+    a.removeAttribute("target");
+    a.addEventListener("click",function(ev){
+      ev.preventDefault();
+      avisar(T(UI.soon));
+    });
   });
 })();
 
@@ -1330,6 +1460,158 @@ var sel=document.getElementById("f-sign"), svcSel=document.getElementById("f-svc
 
 /* ═════════ 4. IDIOMA ═════════ */
 var chosen = null;
+/* ═════════ CARRUSEL DE TESTIMONIOS ═════════
+   Uno a la vez, entrando por la derecha. Se adelanta solo, pero el
+   tiempo que se queda cada uno va según lo que mide: el de Bárbara
+   es largo y necesita más que el de Kayla, y si todos duraran lo
+   mismo o se alcanza a leer el largo o el corto se eterniza.
+
+   Se detiene solo cuando el ratón está encima, cuando algo adentro
+   tiene el foco del teclado, cuando la pestaña no se ve y cuando la
+   sección no está en pantalla. En teléfono se puede arrastrar.
+
+   Con "reduzca el movimiento" prendido no se adelanta solo: ahí la
+   persona pasa los testimonios con las flechas o los puntitos.   */
+var qIdx = 0, qReloj = null, qQuieto = false, qVisible = true;
+
+function escapar(t){
+  return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function pintarTesti(){
+  var win = document.getElementById("qWin"), pts = document.getElementById("qPts");
+  if (!win || !pts) return;
+  if (qIdx >= TESTI.length) qIdx = 0;
+
+  win.innerHTML = TESTI.map(function(o,i){
+    var firma = typeof o.w === "string" ? o.w : T(o.w);
+    /* el que no trae nombre va firmado con el curso, en chiquito */
+    var cita = o.curso
+      ? '<cite><small>'+escapar(firma)+'</small></cite>'
+      : '<cite>'+escapar(firma)+'</cite>';
+    return '<blockquote class="quote'+(i===qIdx?' activa':'')+'" '+
+      (i===qIdx?'':'aria-hidden="true" ')+
+      'id="q-'+i+'"><svg class="sun" viewBox="0 0 44 44" aria-hidden="true"><path d="'+
+      sunPath(22,22,21,9,12,1.3+i)+'"/></svg><p>“'+escapar(T(o.q))+'”</p>'+cita+'</blockquote>';
+  }).join("");
+
+  pts.innerHTML = TESTI.map(function(o,i){
+    var n = i+1;
+    return '<button type="button" aria-controls="q-'+i+'" '+
+      'aria-current="'+(i===qIdx)+'" '+
+      'aria-label="'+(LANG==="en"?"Testimonial ":"Testimonio ")+n+'"></button>';
+  }).join("");
+
+  var ant = document.getElementById("qPrev"), sig = document.getElementById("qNext");
+  if (ant) ant.setAttribute("aria-label", LANG === "en" ? "Previous testimonial" : "Testimonio anterior");
+  if (sig) sig.setAttribute("aria-label", LANG === "en" ? "Next testimonial" : "Testimonio siguiente");
+
+  medirCarr();
+  arrancarCarr();
+}
+
+/* el alto de la ventana es el de la tarjeta activa: las demás van
+   absolutas y no miden nada, por eso hay que ponérselo a mano */
+function medirCarr(){
+  var win = document.getElementById("qWin");
+  if (!win) return;
+  var act = win.querySelector(".quote.activa");
+  if (act) win.style.height = act.offsetHeight + "px";
+}
+
+function irA(n){
+  var win = document.getElementById("qWin"), pts = document.getElementById("qPts");
+  if (!win) return;
+  var cartas = win.querySelectorAll(".quote");
+  if (!cartas.length) return;
+  n = (n + cartas.length) % cartas.length;
+  if (n === qIdx) return;
+
+  cartas[qIdx].classList.remove("activa");
+  cartas[qIdx].classList.add("sale");
+  cartas[qIdx].setAttribute("aria-hidden","true");
+  /* la que sale se queda con la clase hasta que termina de irse,
+     si no, brinca de regreso a la derecha a media transición */
+  (function(vieja){
+    setTimeout(function(){ vieja.classList.remove("sale"); }, 560);
+  })(cartas[qIdx]);
+
+  qIdx = n;
+  cartas[qIdx].classList.remove("sale");
+  cartas[qIdx].classList.add("activa");
+  cartas[qIdx].removeAttribute("aria-hidden");
+
+  if (pts) pts.querySelectorAll("button").forEach(function(b,i){
+    b.setAttribute("aria-current", String(i === qIdx));
+  });
+  medirCarr();
+  arrancarCarr();
+}
+
+function arrancarCarr(){
+  clearTimeout(qReloj);
+  if (reduce || qQuieto || !qVisible || TESTI.length < 2) return;
+  var largo = T(TESTI[qIdx].q).length;
+  /* base para alcanzar a entrarle, más un poco por cada letra. El
+     tope es porque los dos largos pedirían más de veinte segundos
+     cada uno y eso ya no es un carrusel; quien quiera terminarlos
+     pone el ratón encima y se detiene. */
+  var espera = Math.min(13500, 4200 + largo * 32);
+  qReloj = setTimeout(function(){ irA(qIdx + 1); }, espera);
+}
+
+(function(){
+  var caja = document.getElementById("quotes");
+  if (!caja) return;
+  var win = document.getElementById("qWin");
+
+  document.getElementById("qPrev").addEventListener("click", function(){ irA(qIdx - 1); });
+  document.getElementById("qNext").addEventListener("click", function(){ irA(qIdx + 1); });
+  document.getElementById("qPts").addEventListener("click", function(ev){
+    var b = ev.target.closest("button");
+    if (!b) return;
+    irA([].indexOf.call(this.querySelectorAll("button"), b));
+  });
+
+  function parar(){ qQuieto = true;  clearTimeout(qReloj); }
+  function seguir(){ qQuieto = false; arrancarCarr(); }
+  caja.addEventListener("mouseenter", parar);
+  caja.addEventListener("mouseleave", seguir);
+  caja.addEventListener("focusin",  parar);
+  caja.addEventListener("focusout", seguir);
+
+  /* con la pestaña escondida no tiene caso seguir contando */
+  document.addEventListener("visibilitychange", function(){
+    if (document.hidden) clearTimeout(qReloj); else arrancarCarr();
+  });
+
+  /* ni cuando la sección no se ve */
+  if (window.IntersectionObserver){
+    new IntersectionObserver(function(e){
+      qVisible = e[0].isIntersecting;
+      if (qVisible) arrancarCarr(); else clearTimeout(qReloj);
+    }, {threshold:.15}).observe(caja);
+  }
+
+  /* arrastrar con el dedo */
+  var x0 = null;
+  win.addEventListener("touchstart", function(ev){ x0 = ev.touches[0].clientX; parar(); }, {passive:true});
+  win.addEventListener("touchend", function(ev){
+    if (x0 === null) return;
+    var d = ev.changedTouches[0].clientX - x0;
+    x0 = null;
+    if (Math.abs(d) > 45) irA(qIdx + (d < 0 ? 1 : -1));
+    seguir();
+  }, {passive:true});
+
+  /* el alto cambia con el ancho, con la tipografía y al cambiar de
+     idioma; por eso se vuelve a medir en los tres casos */
+  var t;
+  addEventListener("resize", function(){ clearTimeout(t); t = setTimeout(medirCarr, 160); });
+  addEventListener("load", medirCarr);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(medirCarr);
+})();
+
 function setLang(l){
   LANG = l;
   document.documentElement.lang = l;
@@ -1364,11 +1646,9 @@ function setLang(l){
   sel.innerHTML = '<option value="">—</option>' + SIGNS.map(function(s){
     return '<option value="'+T(s.n)+'">'+T(s.n)+'</option>'; }).join("");
   svcSel.innerHTML = T(UI.svc).map(function(v){ return '<option>'+v+'</option>'; }).join("");
-  /* testimonios */
-  document.getElementById("quotes").innerHTML = TESTI.map(function(o,i){
-    return '<blockquote class="quote reveal in"><svg class="sun" viewBox="0 0 44 44"><path d="'+
-      sunPath(22,22,21,9,12,1.3+i)+'"/></svg><p>“'+T(o.q)+'”</p><cite>'+o.w+'</cite></blockquote>';
-  }).join("");
+  /* testimonios: se vuelven a escribir en el idioma nuevo y el
+     carrusel se queda en el mismo que se estaba leyendo */
+  pintarTesti();
   /* WhatsApp: abre la conversación con el mensaje ya escrito.
      Para cambiarlo, edita las dos frases de aquí abajo.          */
   var ml=document.getElementById("mailLink");
