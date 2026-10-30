@@ -380,7 +380,12 @@ section{position:relative;padding:var(--gap) var(--pad) calc(var(--gap) + 16px)}
 }
 /* renglón un poco más grande: la columna es ancha y así se lee mejor */
 .about-grid p{font-size:18px;line-height:1.6}
-.about-grid p.lede{font-size:clamp(19px,1.5vw,25px)}
+/* .lede trae de fábrica max-width:52ch, que es lo que hace que un
+   párrafo de entrada no se estire de más cuando va suelto en la
+   página. Aquí no aplica: ya está metido en una columna angosta, y
+   ese tope lo cortaba como a la mitad del ancho de los párrafos de
+   abajo. Se quita para que todos midan lo mismo. */
+.about-grid p.lede{font-size:clamp(19px,1.5vw,25px);max-width:none}
 /* La línea de credenciales se reparte en renglones parejos, así nunca
    queda una palabra sola colgando al final. */
 .about-grid p.soft{text-wrap:balance}
