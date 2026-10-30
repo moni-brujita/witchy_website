@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title translate="no">Moni Mena · Espiritualidad femenina · Ayurveda · Astrología</title>
-<meta name="description" content="Sabiduría antigua para la mujer moderna. Mentoría privada, carta natal, ayurveda y coaching de amor con Moni Mena. Sesiones en línea por Zoom, en español e inglés.">
+<title translate="no">Monica Mena · Espiritualidad femenina · Ayurveda · Astrología</title>
+<meta name="description" content="Sabiduría antigua para la mujer moderna. Mentoría privada, carta natal, ayurveda y coaching de amor con Monica Mena. Sesiones en línea por Zoom, en español e inglés.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -626,6 +626,39 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
   .arch .frame img{width:100%;height:auto}
   .arch .frame img{height:auto}
 }
+/* ── EL CAJÓN DEL MENÚ: HASTA 800px, NO 720 ──
+   Iba en 720 y dejaba una franja fea de 721 a 785, justo donde cae
+   el iPad vertical (768). Ahí todavía salía el menú de escritorio,
+   pero ya no cabía junto al logo: "Monica Mena" se partía en dos
+   renglones y quedaba pegadito a los enlaces, sin un pixel de por
+   medio. Pasaba igual con "Moni Brujita", o sea que no es por el
+   cambio de nombre, es que el corte estaba bajo.
+
+   Sólo se mudan las reglas del cajón y del botón. Todo lo demás
+   (los rótulos, el portal, las fotos) se queda en 720, que ahí sí
+   es cosa de pantalla chica.                                    */
+@media(max-width:800px){
+  /* Esta va junto al cajón, no en el bloque de 720: el header con
+     backdrop-filter se vuelve el marco de referencia de lo fixed que
+     lleva dentro, y entonces el cajón se ancla al header (60px de
+     alto, y recorta) en vez de a la pantalla. Si se queda en 720,
+     entre 721 y 800 el cajón existe pero el blur también, y vuelve a
+     salir la tirita rota de arriba. */
+  header.stuck{backdrop-filter:none;-webkit-backdrop-filter:none;
+    background:var(--cream)}
+
+  nav{position:fixed;top:0;right:0;bottom:0;width:min(78vw,310px);background:var(--cream);flex-direction:column;
+    justify-content:center;gap:26px;padding:38px;transform:translateX(100%);
+    transition:transform .42s cubic-bezier(.4,0,.2,1), visibility .42s;
+    border-left:1.5px solid rgba(82,16,47,.2);
+    visibility:hidden;pointer-events:none;overscroll-behavior:contain}
+  nav.open{transform:none;visibility:visible;pointer-events:auto}
+  nav a{font-size:18px}
+  .menu-btn{display:block;z-index:5}
+  /* el nombre nunca se parte en dos renglones */
+  .brand{white-space:nowrap}
+}
+
 @media(max-width:720px){
   /* ── EL MENÚ QUE SE ROMPÍA AL HABER SCROLLEADO ──
      El <nav> vive dentro del <header>, y al bajar la página el
@@ -642,17 +675,6 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
      En teléfono el header se queda sin blur y con fondo sólido: se
      ve prácticamente igual y el menú vuelve a medirse contra la
      pantalla. En escritorio el blur sigue intacto.              */
-  header.stuck{backdrop-filter:none;-webkit-backdrop-filter:none;
-    background:var(--cream)}
-
-  nav{position:fixed;top:0;right:0;bottom:0;width:min(78vw,310px);background:var(--cream);flex-direction:column;
-    justify-content:center;gap:26px;padding:38px;transform:translateX(100%);
-    transition:transform .42s cubic-bezier(.4,0,.2,1), visibility .42s;
-    border-left:1.5px solid rgba(82,16,47,.2);
-    visibility:hidden;pointer-events:none;overscroll-behavior:contain}
-  nav.open{transform:none;visibility:visible;pointer-events:auto}
-  nav a{font-size:18px}
-  .menu-btn{display:block;z-index:5}
   /* Los rótulos de sección caben en un renglón: las rayitas de los
      costados se acortan, el tipo se aprieta y se prohíbe el salto.
      "HOUSE XI · THE ONES WHO CAME BEFORE" era el que se partía. */
@@ -693,7 +715,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     <button type="button" data-lang="es" class="on">Español</button><i>/</i><button type="button" data-lang="en">English</button>
   </div>
   <div class="gate-inner" id="gateInner">
-    <span class="eyebrow" translate="no">Moni Mena</span>
+    <span class="eyebrow" translate="no">Monica Mena</span>
     <h1 class="h-lg" data-en="<span class='print ital'>What is your sign?</span>"><span class="print ital">¿Cuál es tu signo?</span></h1>
     <div class="signs" id="signGrid"></div>
   </div>
@@ -704,7 +726,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 
 <!-- ═══════════ HEADER ═══════════ -->
 <header id="hdr">
-  <a href="#home" class="brand" translate="no">Moni <span>Mena</span></a>
+  <a href="#home" class="brand" translate="no">Monica <span>Mena</span></a>
   <nav id="nav">
     <a href="#about" data-en="About">Sobre mí</a>
     <a href="#services" data-en="Services">Servicios</a>
@@ -728,7 +750,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     <div class="heroline">
       <div class="eyesun" id="sunL" aria-hidden="true"></div>
       <div class="herotext">
-        <h1 class="wordmark" translate="no"><img src="wordmark.png" alt="Moni Mena" width="1800" height="246"></h1>
+        <h1 class="wordmark" translate="no"><img src="wordmark.png" alt="Monica Mena" width="1800" height="246"></h1>
         <p class="disciplines" data-en="Feminine spirituality · Embodiment + Movement&lt;br&gt;Ayurveda + Yoga · Astrology">Espiritualidad femenina · Encarnación + Movimiento<br>Ayurveda + Yoga · Astrología</p>
       </div>
       <div class="eyesun" id="sunR" aria-hidden="true"></div>
@@ -757,7 +779,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     <div class="about-grid">
       <div class="reveal">
         <div class="arch">
-          <div class="frame"><img src="moni.JPG" alt="Moni Mena"></div>
+          <div class="frame"><img src="moni.JPG" alt="Monica Mena"></div>
         </div>
       </div>
       <div class="reveal">
@@ -975,7 +997,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     </div>
   </div>
   <div class="copy">
-    <p>© <span id="yr"></span> <span translate="no">Moni Mena</span> · <span data-en="Feminine spirituality · Embodiment · Ayurveda · Astrology">Espiritualidad femenina · Encarnación · Ayurveda · Astrología</span></p>
+    <p>© <span id="yr"></span> <span translate="no">Monica Mena</span> · <span data-en="Feminine spirituality · Embodiment · Ayurveda · Astrology">Espiritualidad femenina · Encarnación · Ayurveda · Astrología</span></p>
     <p class="credit" data-en="Website and Branding by: &lt;a href=&quot;https://www.mommasboys.com&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Momma's Boys&lt;/a&gt;">Sitio web e identidad por: <a href="https://www.mommasboys.com" target="_blank" rel="noopener">Momma's Boys</a></p>
   </div>
   <div class="sunbar inside" data-sunbar data-ink="#FFD0E4" aria-hidden="true"></div>
