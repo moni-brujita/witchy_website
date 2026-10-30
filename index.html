@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<!-- ════════════════════════════════════════════════════════
+     VERSION: 2026-10-29 19:25
+     Si estás viendo una copia y no sabes cuál es, busca esta
+     fecha. La más nueva es la buena. (Al bajar el archivo
+     varias veces quedan index(1).html, index(2).html, etc.)
+     ════════════════════════════════════════════════════════ -->
 <meta charset="UTF-8">
+<meta name="version" content="2026-10-29 19:25">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title translate="no">Monica Mena · Espiritualidad femenina · Ayurveda · Astrología</title>
 <meta name="description" content="Sabiduría antigua para la mujer moderna. Mentoría privada, carta natal, ayurveda y coaching de amor con Monica Mena. Sesiones en línea por Zoom, en español e inglés.">
@@ -384,8 +391,12 @@ section{position:relative;padding:var(--gap) var(--pad) calc(var(--gap) + 16px)}
    párrafo de entrada no se estire de más cuando va suelto en la
    página. Aquí no aplica: ya está metido en una columna angosta, y
    ese tope lo cortaba como a la mitad del ancho de los párrafos de
-   abajo. Se quita para que todos midan lo mismo. */
-.about-grid p.lede{font-size:clamp(19px,1.5vw,25px);max-width:none}
+   abajo. Se quita para que todos midan lo mismo.
+
+   Con #about delante gana por goleada: no hay regla de .lede que la
+   pueda pisar, sin importar el orden ni de dónde venga. */
+#about .about-grid p.lede{font-size:clamp(19px,1.5vw,25px);
+  max-width:none;width:100%}
 /* La línea de credenciales se reparte en renglones parejos, así nunca
    queda una palabra sola colgando al final. */
 .about-grid p.soft{text-wrap:balance}
