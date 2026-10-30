@@ -250,7 +250,18 @@ section{position:relative;padding:var(--gap) var(--pad) calc(var(--gap) + 16px)}
 .sunbar.inside.top{top:0;bottom:auto}
 
 /* ═══════════════ HERO ═══════════════ */
-#home{min-height:auto;padding:clamp(96px,11vh,124px) var(--pad) 38px;overflow:hidden}
+#home{min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(96px,11vh,124px) var(--pad) 38px;overflow:hidden}
+/* svh no existe en navegadores viejos: ahí vale el 100vh de siempre */
+@supports not (height:100svh){ #home{min-height:100vh} }
+.hero{flex:0 0 auto}
+/* flex:1 1 0 (no "auto") es lo que obliga a la tira a medir lo que
+   le sobra al hero, en vez de medir lo que miden las fotos. Con auto
+   las fotos mandaban y el hero se pasaba de pantalla.              */
+#home .strip{flex:1 1 0;min-height:clamp(190px,22vh,300px);
+  display:flex;align-items:center;overflow:hidden}
+#home .strip .track{height:100%;min-height:0;align-items:center}
+#home .strip .track img{height:100%;width:auto;max-height:100%}
 
 /* ── SECUENCIA DE APERTURA ──
    Todo se controla con un solo atributo en la sección, #home[data-seq]:
@@ -270,7 +281,7 @@ section{position:relative;padding:var(--gap) var(--pad) calc(var(--gap) + 16px)}
    central. --sun controla el tamaño de los dos.                 */
 .heroline{display:flex;align-items:center;justify-content:center;gap:clamp(14px,3vw,56px)}
 .herotext{flex:0 1 auto;min-width:0}
-.eyesun{position:relative;flex:0 0 auto;width:var(--sun);--sun:clamp(84px,11vw,190px)}
+.eyesun{position:relative;flex:0 0 auto;width:var(--sun);--sun:clamp(120px,15.5vw,270px)}
 .eyesun svg{width:100%;height:auto;display:block}
 .eyesun .eye{position:absolute;top:50%;left:50%;width:41%;height:auto;
   transform:translate(-50%,-50%);pointer-events:none;
@@ -281,7 +292,11 @@ section{position:relative;padding:var(--gap) var(--pad) calc(var(--gap) + 16px)}
 @media(max-width:900px){
   .heroline{flex-direction:column;gap:14px}
   #sunR{display:none}
-  .eyesun{--sun:clamp(74px,20vw,130px)}
+  .eyesun{--sun:clamp(96px,27vw,180px)}
+  /* En teléfono el hero llena la pantalla igual, pero las fotos se
+     topan aquí: si no, una sola foto se come todo el ancho y se
+     pierde el collage. Lo que sobra se reparte arriba y abajo. */
+  #home .strip{max-height:min(38vh,340px)}
 }
 
 
