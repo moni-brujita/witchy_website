@@ -627,6 +627,24 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
   .arch .frame img{height:auto}
 }
 @media(max-width:720px){
+  /* ── EL MENÚ QUE SE ROMPÍA AL HABER SCROLLEADO ──
+     El <nav> vive dentro del <header>, y al bajar la página el
+     header se pone .stuck, que traía backdrop-filter:blur(12px).
+
+     Un backdrop-filter (igual que un transform o un filter) vuelve
+     al elemento el marco de referencia de todo lo fixed que lleve
+     adentro. O sea: arriba del todo el menú se anclaba a la
+     pantalla y abría bien, pero en cuanto habías scrolleado se
+     anclaba al header, que mide sesenta pixeles y recorta, y el
+     panel salía como una tirita pegada arriba con los enlaces
+     desparramados. De ahí que sólo pasara después de scrollear.
+
+     En teléfono el header se queda sin blur y con fondo sólido: se
+     ve prácticamente igual y el menú vuelve a medirse contra la
+     pantalla. En escritorio el blur sigue intacto.              */
+  header.stuck{backdrop-filter:none;-webkit-backdrop-filter:none;
+    background:var(--cream)}
+
   nav{position:fixed;top:0;right:0;bottom:0;width:min(78vw,310px);background:var(--cream);flex-direction:column;
     justify-content:center;gap:26px;padding:38px;transform:translateX(100%);
     transition:transform .42s cubic-bezier(.4,0,.2,1), visibility .42s;
@@ -873,7 +891,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
       <a href="#" class="reveal" data-soon><svg class="ic" viewBox="0 0 24 24"><path d="M12 3c5 4 8 7 8 11a8 8 0 0 1-16 0c0-4 3-7 8-11Z"/><path d="M8.5 14c1.5 2 5.5 2 7 0"/></svg>
         <h3 data-en="Dosha quiz">Test de dosha</h3><p data-en="Ten questions to find out if you're vata, pitta or kapha, plus what to do about it.">Diez preguntas para saber si eres vata, pitta o kapha. Con guía de qué hacer.</p><span class="type" data-en="PDF · download">PDF · descarga</span></a>
       <a href="https://www.instagram.com/monibrujita_/" target="_blank" rel="noopener" class="reveal" data-soon><svg class="ic" viewBox="0 0 24 24"><path d="M2 12s4-6.5 10-6.5S22 12 22 12s-4 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
-        <h3 data-en="Weekly oracle reading">Lectura de oráculo semanal</h3><p data-en="Every week I read charts on stories. Free, first come first served.">Cada semana leo cartas en historias. Sin costo, por orden de llegada.</p><span class="type">Instagram</span></a>
+        <h3 data-en="Weekly chart reading">Lectura de carta semanal</h3><p data-en="Every week I read charts on stories. Free, first come first served.">Cada semana leo cartas en historias. Sin costo, por orden de llegada.</p><span class="type">Instagram</span></a>
     </div>
     <div class="sub reveal">
       <div>
