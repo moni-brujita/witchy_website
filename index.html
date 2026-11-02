@@ -2,17 +2,21 @@
 <html lang="es">
 <head>
 <!-- ════════════════════════════════════════════════════════
-     VERSION: 2026-10-29 19:25
+     VERSION: 2026-11-02 08:40
      Si estás viendo una copia y no sabes cuál es, busca esta
      fecha. La más nueva es la buena. (Al bajar el archivo
      varias veces quedan index(1).html, index(2).html, etc.)
      ════════════════════════════════════════════════════════ -->
 <meta charset="UTF-8">
-<meta name="version" content="2026-10-29 19:25">
+<meta name="version" content="2026-11-02 08:40">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title translate="no">Monica Mena · Espiritualidad femenina · Ayurveda · Astrología</title>
 <meta name="description" content="Sabiduría antigua para la mujer moderna. Mentoría privada, carta natal, ayurveda y coaching de amor con Monica Mena. Sesiones en línea por Zoom, en español e inglés.">
 
+<!-- El fondo del portal es lo único que se ve al abrir, pero el
+     navegador no se entera de él hasta que termina de leer el CSS.
+     Este preload lo pide desde el primer instante. -->
+<link rel="preload" as="image" href="bg-zodiac.jpg" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Hanken+Grotesk:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
@@ -602,7 +606,7 @@ a.inline:hover{color:var(--shock);border-color:var(--shock)}
    más fuerte (0) o más suave (1). No bajes mucho de .55 o el
    texto rosa deja de leerse. */
 footer{background-color:var(--wine);color:var(--rose);position:relative;
-  background-image:url("cheetah.png");background-size:cover;
+  background-image:var(--img);background-size:cover;
   background-position:center;background-repeat:no-repeat;--veil-foot:.74}
 footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
   background:rgba(82,16,47,var(--veil-foot))}
@@ -766,7 +770,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     <div class="heroline">
       <div class="eyesun" id="sunL" aria-hidden="true"></div>
       <div class="herotext">
-        <h1 class="wordmark" translate="no"><img src="wordmark.png" alt="Monica Mena" width="1800" height="246"></h1>
+        <h1 class="wordmark" translate="no"><img src="wordmark.png" alt="Monica Mena" width="1800" height="246" fetchpriority="high" decoding="async"></h1>
         <p class="disciplines" data-en="Feminine spirituality · Embodiment + Movement&lt;br&gt;Ayurveda + Yoga · Astrology">Espiritualidad femenina · Encarnación + Movimiento<br>Ayurveda + Yoga · Astrología</p>
       </div>
       <div class="eyesun" id="sunR" aria-hidden="true"></div>
@@ -786,7 +790,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 
 
 <!-- ═══════════ SOBRE MÍ ═══════════ -->
-<section id="about" class="band-cream bg" style="--img:url(&quot;bg-tiger.png&quot;); --veil:.80">
+<section id="about" class="band-cream bg" style="--veil:.80" data-img="bg-tiger.jpg">
   <div class="wrap">
     <div class="head reveal">
       <span class="eyebrow" data-en="House I · identity">Casa I · identidad</span>
@@ -795,7 +799,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     <div class="about-grid">
       <div class="reveal">
         <div class="arch">
-          <div class="frame"><img src="moni.JPG" alt="Monica Mena"></div>
+          <div class="frame"><img src="moni.jpg" alt="Monica Mena" loading="lazy" decoding="async"></div>
         </div>
       </div>
       <div class="reveal">
@@ -812,7 +816,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 
 
 <!-- ═══════════ SERVICIOS ═══════════ -->
-<section id="services" class="bg" style="--img:url(&quot;bg-services.jpg&quot;); --veil:.74">
+<section id="services" class="bg" style="--veil:.74" data-img="bg-services.jpg">
   <div class="wrap">
     <div class="head reveal">
       <span class="eyebrow" data-en="House II · what it's worth">Casa II · lo que vale</span>
@@ -822,7 +826,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
     <div class="cards">
       <article class="card reveal" data-card="0">
         <svg class="em" viewBox="0 0 24 24"><path d="M12 21c0-6 3-9 8-10-5-1-8-4-8-10 0 6-3 9-8 10 5 1 8 4 8 10Z"/></svg>
-        <h3 data-en="Private mentorship">Mentoría privada</h3><p class="dur" data-en="55 min · online via Zoom">55 min · en línea por Zoom</p>
+        <h3 data-en="Life Coaching / Private Mentorship">Coaching de vida / Mentoría privada</h3><p class="dur" data-en="55 min · online via Zoom">55 min · en línea por Zoom</p>
         <p data-en="A space to slow down, reconnect with yourself, and explore what sits underneath the patterns in your life. This is where we go deep.">Un espacio para bajarle al ritmo, reconectar contigo y explorar lo que hay debajo de los patrones de tu vida. Aquí es donde vamos profundo.</p>
         <ul>
           <li data-en="Emotions, relationships, self-love and childhood">Emociones, relaciones, amor propio e infancia</li>
@@ -831,7 +835,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
           <li data-en="A safe space for your wild nature">Un espacio seguro para tu naturaleza salvaje</li>
           <li data-en="Includes a birth chart reading">Incluye tu lectura de carta natal</li>
         </ul>
-        <div class="foot"><p class="price">$120<small>USD</small></p><a href="https://cal.com/moni-brujita/coaching-holistico" class="go" target="_blank" rel="noopener" data-en="Book">Reservar</a></div>
+        <div class="foot"><p class="price">$95<small>USD</small></p><a href="https://cal.com/moni-brujita/coaching-holistico" class="go" target="_blank" rel="noopener" data-en="Book">Reservar</a></div>
       </article>
 
       <article class="card reveal" data-card="1">
@@ -844,7 +848,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
           <li data-en="What it means for your relationships">Qué significa para tus relaciones</li>
           <li data-en="For a first reading, or a second opinion">Para una primera lectura o una segunda opinión</li>
         </ul>
-        <div class="foot"><p class="price">$144<small>USD</small></p><a href="https://cal.com/moni-brujita/carta-astral" class="go" target="_blank" rel="noopener" data-en="Book">Reservar</a></div>
+        <div class="foot"><p class="price">$122<small>USD</small></p><a href="https://cal.com/moni-brujita/carta-astral" class="go" target="_blank" rel="noopener" data-en="Book">Reservar</a></div>
       </article>
 
       <article class="card reveal" data-card="2">
@@ -858,7 +862,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
           <li data-en="Fertility, metabolism and digestion">Fertilidad, metabolismo y digestión</li>
           <li data-en="Follow-ups 30 min · $45 USD">Seguimientos de 30 min · $45 USD</li>
         </ul>
-        <div class="foot"><p class="price">$144<small data-en="USD · first consultation">USD · consulta inicial</small></p><a href="https://cal.com/moni-brujita/ayurveda-follow-up" class="go" target="_blank" rel="noopener" data-en="Book">Reservar</a></div>
+        <div class="foot"><p class="price">$144<small data-en="USD · first consultation">USD · consulta inicial</small></p><a href="https://cal.com/moni-brujita/ayurveda-consultation" class="go" target="_blank" rel="noopener" data-en="Book">Reservar</a></div>
       </article>
 
       <article class="card reveal" data-card="3">
@@ -895,7 +899,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 
 
 <!-- ═══════════ TESTIMONIOS ═══════════ -->
-<section id="voces" class="band-paper bg" style="--img:url(&quot;snake.png&quot;); --veil:.62">
+<section id="voces" class="band-paper bg" style="--veil:.62" data-img="snake.jpg">
   <div class="wrap">
     <div class="head reveal">
       <span class="eyebrow" data-en="House XI · the ones who came before">Casa XI · las que ya pasaron por aquí</span>
@@ -914,7 +918,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 </section>
 
 <!-- ═══════════ GRATIS ═══════════ -->
-<section id="free" class="band-pulp on-dark bg dark" style="--img:url(&quot;bg-free.jpg&quot;); --veil:.72">
+<section id="free" class="band-pulp on-dark bg dark" style="--veil:.72" data-img="bg-free.jpg">
   <div class="wrap">
     <div class="head reveal">
       <span class="eyebrow" data-en="House IX · what gets shared">Casa IX · lo que se comparte</span>
@@ -1003,7 +1007,7 @@ footer::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:non
 </section>
 
 <!-- ═══════════ PIE ═══════════ -->
-<footer>
+<footer data-img="cheetah.jpg">
   <div class="foot-in">
     <p class="big" data-en="Remember, you are<br>THE GODDESS.">Recuerda, tú eres<br>LA DIOSA.</p>
     <div class="foot-links">
@@ -1252,16 +1256,16 @@ var ELEMENT_PINK = {fuego:"#FF2E86", tierra:"#C4506E", aire:"#E667C9", agua:"#E0
 var UI = {
   copied:{es:"Texto copiado.",en:"Text copied."},
   soon:{es:"Muy pronto.",en:"Coming soon."},
-  svc:{es:["Mentoría privada","Lectura de carta natal","Consulta ayurvédica","Masaje sagrado de cabeza","Coaching de amor (10 semanas)","Todavía no sé"],
-       en:["Private mentorship","Birth chart reading","Ayurvedic consultation","Sacred scalp massage","Love coaching (10 weeks)","Not sure yet"]},
+  svc:{es:["Coaching de vida / Mentoría privada","Lectura de carta natal","Consulta ayurvédica","Masaje sagrado de cabeza","Coaching de amor (10 semanas)","Todavía no sé"],
+       en:["Life Coaching / Private Mentorship","Birth chart reading","Ayurvedic consultation","Sacred scalp massage","Love coaching (10 weeks)","Not sure yet"]},
   /* precios: pesos en español, dólares en inglés.
      El orden es el de las tarjetas (data-card 0 a 4).
      Cambia estos textos cuando ajustes tus tarifas.            */
   /* precios: la misma moneda en los dos idiomas (ella cotiza en USD).
      El orden es el de las tarjetas (data-card 0 a 4). */
-  price:{es:["$120<small>USD</small>","$144<small>USD</small>","$144<small>USD</small>",
+  price:{es:["$95<small>USD</small>","$122<small>USD</small>","$144<small>USD</small>",
              "Consultar<small>Escríbeme</small>","$888<small>USD</small>"],
-         en:["$120<small>USD</small>","$144<small>USD</small>","$144<small>USD</small>",
+         en:["$95<small>USD</small>","$122<small>USD</small>","$144<small>USD</small>",
              "Ask<small>Message me</small>","$888<small>USD</small>"]},
   mailPH:{es:"tu@correo.com",en:"you@email.com"},
   mailYa:{es:"Ese correo ya está en la lista. Nos vemos en la próxima luna.",
@@ -1742,7 +1746,7 @@ var GAL=["gallery-1.jpg","gallery-2.jpg","gallery-3.jpg","gallery-4.jpg","galler
   var t=document.getElementById("galTrack");
   if (!t) return;
   var one=GAL.map(function(src){
-    return '<img src="'+src+'" alt="" decoding="async">';
+    return '<img src="'+src+'" alt="" decoding="async" fetchpriority="low">';
   }).join("");
   t.innerHTML = one + one;          /* dos copias = vuelta sin salto */
 
@@ -1762,6 +1766,41 @@ var GAL=["gallery-1.jpg","gallery-2.jpg","gallery-3.jpg","gallery-4.jpg","galler
   });
   addEventListener("load", sizeTrack);
   var gt; addEventListener("resize", function(){ clearTimeout(gt); gt=setTimeout(sizeTrack,180); });
+})();
+
+/* ═════════ FONDOS QUE ESPERAN SU TURNO ═════════
+   Las secciones de abajo llevan su foto en data-img en vez de en el
+   style. Así el navegador no la ve al abrir la página y no se pone a
+   bajar cuatro fondos grandes mientras la visitante está mirando el
+   portal. Cada uno se enciende cuando faltan 600px para que su
+   sección entre en pantalla, que da tiempo de sobra a que llegue
+   antes de que se vea.
+
+   Si el navegador no tiene IntersectionObserver, se encienden todos
+   de una vez: queda como estaba antes, nunca sin fondo.          */
+(function(){
+  var secs = document.querySelectorAll("[data-img]");
+  if (!secs.length) return;
+
+  function encender(el){
+    var f = el.getAttribute("data-img");
+    if (!f) return;
+    el.style.setProperty("--img", 'url("' + f + '")');
+    el.removeAttribute("data-img");
+  }
+
+  if (!window.IntersectionObserver){
+    Array.prototype.forEach.call(secs, encender);
+    return;
+  }
+  var vigia = new IntersectionObserver(function(entradas){
+    entradas.forEach(function(e){
+      if (!e.isIntersecting) return;
+      encender(e.target);
+      vigia.unobserve(e.target);
+    });
+  }, {rootMargin:"600px 0px"});
+  Array.prototype.forEach.call(secs, function(el){ vigia.observe(el); });
 })();
 
 /* ═════════ 5. ESTRELLAS DE FONDO ═════════ */
